@@ -7,4 +7,6 @@ AC_PROG_RANLIB
 
 AC_CHECK_HEADERS([assert.h stdlib.h dlfcn.h])
 
-AC_OUTPUT(Makefile)
+AC_OUTPUT(Makefile \
+	problem_2/Makefile \
+)
