@@ -1,6 +1,7 @@
 SUBDIRS = \
 	problem_1 \
-	problem_2
+	problem_2 \
+	problem_3
 
 AM_CPPFLAGS  = -Wall
 AM_CPPFLAGS += -Wextra
