@@ -9,4 +9,5 @@ AC_CHECK_HEADERS([assert.h stdlib.h dlfcn.h])
 
 AC_OUTPUT(Makefile \
 	problem_1/Makefile \
+	problem_2/Makefile \
 )
