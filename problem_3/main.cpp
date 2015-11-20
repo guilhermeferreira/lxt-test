@@ -95,9 +95,9 @@ bool isValid(
 	}
 
 	// each character must be in set {'.', 'L', 'R'}
-	int dot_count = count(init.begin(), init.end(), '.');
-	int left_count = count(init.begin(), init.end(), 'L');
-	int right_count = count(init.begin(), init.end(), 'R');
+	int dot_count = static_cast<int>(count(init.begin(), init.end(), '.'));
+	int left_count = static_cast<int>(count(init.begin(), init.end(), 'L'));
+	int right_count = static_cast<int>(count(init.begin(), init.end(), 'R'));
 	int valid_chars = dot_count + left_count + right_count;
 	if (valid_chars != chamber_size) {
 		return false;
