@@ -2,12 +2,13 @@
  Problem #4
 ------------------------------------------------------------------------------
 
-Luxoft job application test #4
+Job Application Test #4
+Company: Luxoft
 Author: Guilherme Maciel Ferreira <guilherme.maciel.ferreira@gmail.com>
 
 
 ------------------------------------------------------------------------------
- Problem description
+ 1. Problem description
 ------------------------------------------------------------------------------
 
 Test task is to create code for simplified billing of a mobile network operator.
@@ -40,15 +41,140 @@ example data, but do not make it overly complicated.
 
 
 ------------------------------------------------------------------------------
- Implementation details
+ 2. Solution description
 ------------------------------------------------------------------------------
 
-In order to allow a easy modifiable set of rules. I moded it to a configuration
-file. The rules file is a kind of domain language, where the user has a level
-of freedom to define call cost formula.
+In order to make the rules easy to extend and modify, I created a very simple
+interpreted domain language called "Call Cost Calculation Language", or C3L.
+This principle follows the ones presented in sections 12 (Domain Languages) and
+20 (Code Generators) of the book "The Pragmatic Programmer". The user specify
+the calls records through a serie of input files. Section 2.1 explains how to
+use the program.
 
-Each variable name in rules.conf is composed of the following elements:
-- Units (minute, day, etc) are suffix;
-- Objects (call, call_inside, call_outside) are prefix;
-- Object attributes (duration, period, fee, cost) are at the middle.
+The call cost rules are described through a file in which the user has high 
+degree of freedom to define call cost formula. Each line represents a statement
+in the rules file. Basically, each language element has three methods:
+ - tokenize() that performs the lexical analysis, breaking the input string into
+   tokens recognized by the language;
+ - parse() that performs the syntactic analysis of the tokesn, creating a parse-
+   tree as result; and
+ - execute() that performs the semantic analysis.
+Section 2.2 describes the C3L grammar.
+
+The other input is a file with a list of call records. Each line in this file
+represents a unique call. Section 2.3 describes the calls record file.
+
+My solution consists to interpret the call cost calculation rules (i.e. create
+a parse-tree of the rules) and apply these rules to each call record.
+
+
+------------------------------------------------------------------------------
+ 2.1. Program usage
+------------------------------------------------------------------------------
+
+Enter a input file with list of calls
+Each .call file has
+  $ ./problem_4 <call-rules-file> <list-of-call-input>
+
+Example command line:
+  $ ./problem_4 rules.c3l input1.call input2.call
+
+
+------------------------------------------------------------------------------
+ 2.2. Call rules file
+------------------------------------------------------------------------------
+
+The rules are defined in the Call Cost Calculation Language (C3L). This is a
+simple context-free grammar I created for this sample application.
+
+The C3L grammar is described bellow in Backus-Naur Form. A symbol delimited by
+angle brackets (i.e. <non-terminal>) is a non terminal symbol. A symbol delimted
+by double quotes (i.e. "terminal") is a terminal symbol. Each line must contain
+one and only one rule:
+
+  <rules>                ::= <rule_line> <rules>
+
+  <rule_line>            ::= <statement>
+
+  <statement>            ::= <command_statement>
+                           | <assignment_statement>
+
+  <command_statement>    ::= <command> <expression>
+  
+  <command>              ::= "print"
+  
+  <assignment_statement> ::= <object> "=" <expression>
+
+  <object>               ::= "call_cost_total"
+                           | "call_bonus_amount_minute"
+                           | "call_bonus_duration_minute"
+                           | "call_bonus_period_day"
+                           | "call_connection_cost_total"
+                           | "call_inside_items"
+                           | "call_inside_cost_minute"
+                           | "call_inside_bonus_amount_minute"
+                           | "call_outside_cost_minute"
+                           | "call_outside_bonus_amount_minute"
+                           | "call_connection_cost_total"
+                           | "call_duration_minute"
+                           | "call_cost_minute
+
+  <expression>           ::= <object> "+" <expression>
+                           | <object> "-" <expression>
+                           | <object> "*" <expression>
+                           | <object> "/" <expression>
+                           | <object>
+                           | <constant>
+
+  <constant>             ::= <floating_constant>
+                           | <integer_constant>
+
+  <floating_constant>    ::= <integer_constant> "." <integer_constant>
+
+  <integer_constant>     ::= <digit><numeric_constant>
+                           | <digit>
+
+  <digit>                ::= "0"
+                           | "1"
+                           | "2"
+                           | "3"
+                           | "4"
+                           | "5"
+                           | "6"
+                           | "7"
+                           | "8"
+                           | "9"
+
+
+------------------------------------------------------------------------------
+ 2.3. Call records file
+------------------------------------------------------------------------------
+
+start; end; destination; source
+
+start - date and time for call start;
+end - date and time for call start end;
+destination - number called;
+source - subscriber account information.
+
+
+------------------------------------------------------------------------------
+ 2.4. Implementation notes
+------------------------------------------------------------------------------
+
+a. I didn't use smart pointers (i.e. std::shared_ptr or std::unique_ptr) because
+   I'm not sure that you have a C++11 compatible compiler. Neither I use Boost
+   smart pointers because you said "Try to use only STL library";
+   
+b. I use assertation to ensure that code satisfies the methods pre-conditions;
+
+c. 
+
+d. 
+
+e. 
+
+f. 
+
+g. 
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 Guilherme M. Ferreira <guilherme.maciel.ferreira at gmail dot com>
+ * Copyright(c) 2015 Guilherme M. Ferreira <guilherme.maciel.ferreira@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,51 +23,43 @@
 
 #include <algorithm>
 #include <iostream>
+#include <vector>
 
 #include "rules.h"
 
 using namespace std;
+using namespace luxoft;
 
 //-----------------------------------------------------------------------------
 
-//
-// General: code for simplified billing of a mobile network operator.
-//
 int main(int argc, char *argv[])
 {
 	cout << "Problem #4" << endl;
 
-	string callStartDate;
-	string callEndDate;
-	string phoneDestination;
-	string phoneSource;
+	string rulesFile;
+	vector<string> callFiles;
 
-	// input: call start date and time
-	//        call end date and time
-	//        number called
-	//        subscriber account information
+	// ./program_4 rules.c3l input1.call input2.call ... inputn.call
 	if (argc >= 3) {
-		callStartDate = argv[1];
-		callEndDate = argv[2];
-		phoneDestination = argv[3];
-		phoneSource = argv[4];
+		rulesFile = argv[1]; // i.e. rules.c3l
+
+		for (int callFileIdx = 2; callFileIdx < argc; ++callFileIdx) {
+			callFiles.push_back(argv[callFileIdx]); // i.e. inputx.call
+		}
+
+		Rules rules;
+		rules.tokenize(rulesFile);
+		rules.parse();
+
+		for (vector<string>::iterator it = callFiles.begin(); it != callFiles.end(); ++it) {
+			rules.execute(*it);
+		}
+
+	} else {
+		cerr << "Usage: " << argv[0]
+		     << " <rules-file> <call-file-1> [<call-file-2> ... <call-file-n>]"
+		     << endl;
 	}
-
-	// objective: calculate call cost
-
-	// rules:
-	// - "connection-fee" is added to any call cost;
-	// - "minute-fee" is charged at the beginning of each minute, so if call
-	//    duration is 1:03, two minutes cost should be paid;
-	// - Each subscriber has "minutes-free" equal to 30 minutes of free talking
-	//   inside his operator network, valid for 30 days since the date when
-	//   last credit was added;
-	// - After free minutes expire, calls inside home operator network are
-	//   charged 0.50 per minute;
-	// - When calling numbers outside of home network, minute cost is 0.95;
-	// - On weekends, first five minutes of every call are free.
-	Rules rules("rules.conf");
-	rules.parse();
 
 	return EXIT_SUCCESS;
 }
