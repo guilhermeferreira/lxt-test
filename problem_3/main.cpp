@@ -7,39 +7,9 @@
 #include <string>
 #include <vector>
 
+#include "linearchamber.h"
+
 using namespace std;
-
-//-----------------------------------------------------------------------------
-
-class Particle {
-public:
-	enum Direction {
-		DirectionLeft,
-		DirectionRight
-	};
-
-	Particle(Direction dir);
-	virtual ~Particle();
-
-private:
-	Direction dir_;
-};
-
-Particle::Particle(Direction dir) : dir_(dir)
-{
-}
-
-Particle::~Particle()
-{
-
-}
-
-//-----------------------------------------------------------------------------
-
-class Chamber {
-public:
-
-};
 
 //-----------------------------------------------------------------------------
 
@@ -80,19 +50,25 @@ int main(int argc, char *argv[])
 	}
 	// The user didn't provide the strings in the command line
 	else {
-		cout << "Enter init [string of 'L', 'R' or '.']: ";
+		cout << "Enter a string composed of 'L', 'R' or '.': ";
 		cin >> init;
 		cout << "Enter speed: ";
 		cin >> speed;
 	}
 
+	cout << "Init : '" << init << "'" << endl;
+	cout << "Speed: " << speed << endl;
+
 	if (!isValid(init, speed)) {
+		cerr << "Error: invalid input" << endl;
 		return EXIT_FAILURE;
 	}
 
 	vector<string> animation = animate(init, speed);
 
 	for_each(animation.begin(), animation.end(), show);
+
+	cout << endl;
 
 	return EXIT_SUCCESS;
 }
@@ -105,21 +81,29 @@ int main(int argc, char *argv[])
  * \param init    contains all the positions in the chamber.
  * \param speed   The number of positions each particle moves in one time unit.
  *
- * \return true if the inputs are within range, or false otherwise.
+ * \return true if the input are within range, or false otherwise.
  */
 bool isValid(
 	const string &init,
 	const int speed)
 {
-	// init contains between 1 and 50 characters inclusive
-	if ((init.length() < 1) || (50 < init.length())) {
+	const int chamber_size = static_cast<int>(init.length());
+
+	// character count must be in range [1, 50]
+	if ((chamber_size < 1) || (50 < chamber_size)) {
 		return false;
 	}
 
-	// each character in init will be '.' or 'L' or 'R'
-	// TODO check if init contains other characters besides
+	// each character must be in set {'.', 'L', 'R'}
+	int dot_count = count(init.begin(), init.end(), '.');
+	int left_count = count(init.begin(), init.end(), 'L');
+	int right_count = count(init.begin(), init.end(), 'R');
+	int valid_chars = dot_count + left_count + right_count;
+	if (valid_chars != chamber_size) {
+		return false;
+	}
 
-	// speed will be between 1 and 10 inclusive
+	// speed must be between in range [1, 10]
 	if ((speed < 1) || (10 < speed)) {
 		return false;
 	}
@@ -157,13 +141,16 @@ vector<string> animate(
 
 	vector<string> animation;
 
-	/*
-	 * For each 'R' and 'L', create a Particle object
-	 * Particle has (int) speed and (string) direction
-	 * Chamber prints dots '.' and set bounds and
-	 */
+	Chamber *chamber = new LinearChamber(init, speed);
+	chamber->createParticles();
 
-	animation.push_back(init);
+	do {
+		animation.push_back(chamber->printParticles());
+
+		chamber->moveParticles();
+	} while (!chamber->isEmpty());
+
+	delete chamber;
 
 	return animation;
 }
@@ -177,5 +164,5 @@ vector<string> animate(
  */
 void show(const string &element)
 {
-	cout << element << endl;
+	cout << "  " << element << endl;
 }

@@ -1,9 +1,12 @@
 bin_PROGRAMS = problem_3
 
-problem_3_SOURCES = main.cpp
+problem_3_SOURCES  = main.cpp
+problem_3_SOURCES += chamber.cpp
+problem_3_SOURCES += linearchamber.cpp
+problem_3_SOURCES += particle.cpp
 
 problem_3_CPPFLAGS  = -I.
-problem_3_CPPFLAGS += -std=c++11
+#problem_3_CPPFLAGS += -std=c++11
 problem_3_CPPFLAGS += -Wall
 problem_3_CPPFLAGS += -Wextra
 problem_3_CPPFLAGS += -Weffc++
