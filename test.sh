@@ -12,7 +12,7 @@ for problem_x in $PROBLEMS; do
 	echo "|                                     |"
 	echo "+-------------------------------------+";
 	echo ""
-	cd $BASEDIR/$problem_x && ./test.sh;
+	cd $BASEDIR/$problem_x && ./test.sh $1;
 	cd $BASEDIR;
 done
 

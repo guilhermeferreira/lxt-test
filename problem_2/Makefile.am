@@ -20,5 +20,3 @@ problem_2_CPPFLAGS += -Wswitch-default
 problem_2_CPPFLAGS += -Wfloat-equal
 problem_2_CPPFLAGS += -Wcast-qual
 problem_2_CPPFLAGS += -Wconversion
-
-problem_2_LDFLAGS = -pg
