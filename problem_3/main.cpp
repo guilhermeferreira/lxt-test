@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <memory>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -40,9 +41,10 @@ int main(int argc, char *argv[])
 		init = argv[1];
 
 #if __cplusplus >= 201103L // Macro value defined at section 16.8. Predefined macro names [ISO/IEC 14882:2011]
-		speed = stoi(argv[2]); // New C++11 feature described in section 21.5. Numeric conversions [ISO/IEC 14882:2011]
-
-#else // Use C++98 style described in section 27.7.2. Template class basic_istringstream [ISO/IEC 14882:1998]
+		// New C++11 feature described in section 21.5. Numeric conversions [ISO/IEC 14882:2011]
+		speed = stoi(argv[2]);
+#else
+		// Use C++98 style described in section 27.7.2. Template class basic_istringstream [ISO/IEC 14882:1998]
 		istringstream stream(argv[2]);
 		stream >> speed;
 #endif
@@ -141,7 +143,14 @@ vector<string> animate(
 
 	vector<string> animation;
 
-	Chamber *chamber = new LinearChamber(init, speed);
+#if __cplusplus >= 201103L // Macro value defined in section 16.8. Predefined macro names [ISO/IEC 14882:2011]
+	// Use C++11 smart pointer described in section 20.7.1. Class template unique_ptr [ISO/IEC 14882:2011]
+	unique_ptr<Chamber> chamber(new LinearChamber(init, speed));
+#else
+	// Use C++98 smart pointer described in section 20.4.5. Template class auto_ptr [ISO/IEC 14882:1998]
+	auto_ptr<Chamber> chamber(new LinearChamber(init, speed));
+#endif
+
 	chamber->createParticles();
 
 	do {
@@ -149,8 +158,6 @@ vector<string> animate(
 
 		chamber->moveParticles();
 	} while (!chamber->isEmpty());
-
-	delete chamber;
 
 	return animation;
 }
