@@ -19,46 +19,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <cstdlib>
+#ifndef RULES_FILE_H
+#define RULES_FILE_H
 
-#include <algorithm>
-#include <iostream>
 #include <vector>
 
-#include "rules_file.h"
+#include "rules.h"
 
-using namespace std;
-using namespace luxoft;
+
+namespace luxoft {
 
 //-----------------------------------------------------------------------------
+// RulesFile class
+//-----------------------------------------------------------------------------
 
-int main(int argc, char *argv[])
-{
-	cout << "Problem #4" << endl;
+/**
+ * TODO
+ */
+class RulesFile {
+public:
 
-	string rulesFileName;
-	vector<string> callsFilesNames;
+	/**
+	 * TODO
+	 */
+	RulesFile(std::string rulesFileName);
 
-	// ./program_4 rules.c3l input1.call input2.call ... inputn.call
-	if (argc >= 3) {
-		rulesFileName = argv[1]; // i.e. rules.c3l
+	/**
+	 * TODO
+	 */
+	virtual ~RulesFile();
 
-		for (int callFileIdx = 2; callFileIdx < argc; ++callFileIdx) {
-			callsFilesNames.push_back(argv[callFileIdx]); // i.e. inputx.call
-		}
+	/**
+	 * \brief Perform the lexical analysis
+	 *
+	 * Read the rules file to build a list of tokens
+	 */
+	void tokenize() /* TODO throws SyntaxError */;
 
-		RulesFile rulesFile(rulesFileName);
-		rulesFile.tokenize();
-		rulesFile.parse();
+	/**
+	 * \brief Parse the rules file to build a Parse-Tree
+	 */
+	void parse() /* TODO throws SyntaxError */;
 
-		for (vector<string>::iterator it = callsFilesNames.begin(); it != callsFilesNames.end(); ++it) {
-			rulesFile.execute();
-		}
-	} else {
-		cerr << "Usage: " << argv[0]
-		     << " <rules-file> <call-file-1> [<call-file-2> ... <call-file-n>]"
-		     << endl;
-	}
+	/**
+	 * \brief Apply the rules into the call record file
+	 */
+	void execute() /* TODO throws SemanticError */;
 
-	return EXIT_SUCCESS;
-}
+private:
+	std::string rulesFileName_;
+	Rules rules_;
+
+};
+
+} // namespace luxoft
+
+#endif /* RULES_FILE_H */

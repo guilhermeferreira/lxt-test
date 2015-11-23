@@ -19,63 +19,74 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULES_H
-#define RULES_H
+#include "rules_file.h"
 
+#include <cassert>
+
+#include <fstream>
 #include <iostream>
 #include <string>
-#include <vector>
 
-#include "rule_line.h"
-#include "object_table.h"
+#include "rules.h"
+
 
 namespace luxoft {
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
-// Rules class
+// RulesFile class
 //-----------------------------------------------------------------------------
 
-/**
- * TODO
- */
-class Rules {
-public:
+RulesFile::RulesFile(string rulesFileName)
+: rulesFileName_(rulesFileName)
+{
+}
 
-	/**
-	 * TODO
-	 */
-	Rules();
+//-----------------------------------------------------------------------------
 
-	/**
-	 * TODO
-	 */
-	virtual ~Rules();
+RulesFile::~RulesFile()
+{
+}
 
-	/**
-	 * \brief Perform the lexical analysis
-	 *
-	 * Read the rules file to build a list of tokens
-	 */
-	void tokenize(std::istream &ruleStream) /* TODO throws SyntaxError */;
+//-----------------------------------------------------------------------------
 
-	/**
-	 * \brief Perform the syntax analysis, parsing the rules file to build a Parse-Tree
-	 */
-	void parse() /* TODO throws SyntaxError */;
+void RulesFile::tokenize() /* TODO throws SyntaxError */
+{
+	assert(!rulesFileName_.empty());
 
-	/**
-	 * \brief Apply the rules into the call record file
-	 */
-	void execute() /* TODO throws SemanticError */;
+	ifstream rulesFile(rulesFileName_.c_str());
+	if (!rulesFile) {
+		cerr << "File '" << rulesFileName_ << "' not found" << endl;
+	}
 
-private:
-	bool isValidLine(const std::string &line);
+	if (!rulesFile.is_open()) {
+		cerr << "File '" << rulesFileName_ << "' could not be open" << endl;
+	}
 
-	std::vector<RuleLine*> ruleLines_;
-	ObjectTable objectTable_;
+	rules_.tokenize(rulesFile);
 
-};
+	rulesFile.close();
+}
+
+//-----------------------------------------------------------------------------
+
+void RulesFile::parse()  /* TODO throws SyntaxError */
+{
+	assert(!rulesFileName_.empty());
+
+	rules_.parse();
+}
+
+//-----------------------------------------------------------------------------
+
+void RulesFile::execute() /* TODO throws SemanticError */
+{
+	assert(!rulesFileName_.empty());
+
+	rules_.execute();
+}
+
+//-----------------------------------------------------------------------------
 
 } // namespace luxoft
-
-#endif /* RULES_H */

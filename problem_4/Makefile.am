@@ -2,6 +2,7 @@ bin_PROGRAMS  = problem_4
 bin_PROGRAMS += problem_4_test
 
 problem_4_SOURCES  = src/main.cpp
+problem_4_SOURCES += src/rules/rules_file.cpp
 problem_4_SOURCES += src/rules/rules.cpp
 problem_4_SOURCES += src/rules/rule_line.cpp
 problem_4_SOURCES += src/rules/statement.cpp

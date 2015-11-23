@@ -37,7 +37,7 @@ using namespace std;
 //-----------------------------------------------------------------------------
 
 Rules::Rules()
-: ruleLines_(), objectTable_(new ObjectTable)
+: ruleLines_()
 {
 }
 
@@ -45,12 +45,11 @@ Rules::Rules()
 
 Rules::~Rules()
 {
-	delete objectTable_;
 }
 
 //-----------------------------------------------------------------------------
 
-void Rules::tokenize(const string &fileName)
+void Rules::tokenize(std::istream &ruleStream) /* TODO throws SyntaxError */
 {
 	/*
 	 1. Lexical analysis breaks the source code text into small pieces called tokens.
@@ -63,21 +62,8 @@ void Rules::tokenize(const string &fileName)
 	    parsing, in which case parsing is done at the character level, not the token level.
 	 */
 
-	assert(!fileName.empty());
-
-	// TODO openFile()
-	ifstream rulesFile(fileName.c_str());
-	if (!rulesFile) {
-		cerr << "File '" << fileName << "' not found" << endl;
-	}
-
-	if (!rulesFile.is_open()) {
-		cerr << "File '" << fileName << "' could not be open" << endl;
-	}
-	// TODO openFile()
-
 	string line;
-	while (getline(rulesFile, line)) {
+	while (getline(ruleStream, line)) {
 		// Discard comments and white space characters
 		if (isValidLine(line)) {
 
@@ -87,8 +73,6 @@ void Rules::tokenize(const string &fileName)
 			ruleLines_.push_back(ruleLine);
 		}
 	}
-
-	rulesFile.close();
 }
 
 //-----------------------------------------------------------------------------
@@ -108,14 +92,14 @@ void Rules::parse()  /* TODO throws SyntaxError */
 	string line;
 	for (vector<RuleLine*>::iterator it = ruleLines_.begin(); it != ruleLines_.end(); ++it) {
 		RuleLine *ruleLine = *it;
-		ruleLine->parse(objectTable_);
+		ruleLine->parse(&objectTable_);
 	}
 
 }
 
 //-----------------------------------------------------------------------------
 
-void Rules::execute(const string &callFileName) /* TODO throws SemanticError */
+void Rules::execute() /* TODO throws SemanticError */
 {
 	/*
 	3. Semantic analysis is the phase in which the compiler adds semantic information
