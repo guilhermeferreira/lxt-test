@@ -38,17 +38,17 @@ namespace luxoft {
  */
 class ObjectTable {
 public:
-	static const std::string callConnectionCostTotal;
-	static const std::string callBonusAmountMinute;
-	static const std::string callBonusDurationMinute;
-	static const std::string callBonusPeriodDay;
-	static const std::string callInsideItems;
-	static const std::string callInsideBonusAmountMinute;
-	static const std::string callInsideCostMinute;
-	static const std::string callOutsideCostMinute;
-	static const std::string callCostTotal;
-	static const std::string callDurationMinute;
-	static const std::string callCostMinute;
+	static const std::string CALL_CONNECTION_COST_TOTAL;
+	static const std::string CALL_BONUS_AMOUNT_MINUTE;
+	static const std::string CALL_BONUS_DURATION_MINUTE;
+	static const std::string CALL_BONUS_PERIOD_DAY;
+	static const std::string CALL_INSIDE_ITEMS;
+	static const std::string CALL_INSIDE_BONUS_AMOUNT_MINUTE;
+	static const std::string CALL_INSIDE_COST_MINUTE;
+	static const std::string CALL_OUTSIDE_COST_MINUTE;
+	static const std::string CALL_DURATION_MINUTE;
+	static const std::string CALL_COST_MINUTE;
+	static const std::string CALL_COST_TOTAL;
 
 public:
 	ObjectTable();
@@ -60,6 +60,18 @@ private:
 	// When we reference "call_bonus_duration_minute", for example, we reference
 	// one single object
 	std::map<std::string, Object*> symbolTable_;
+
+	Object callConnectionCostTotal;
+	Object callBonusAmountMinute;
+	Object callBonusDurationMinute;
+	Object callBonusPeriodDay;
+	Object callInsideItems;
+	Object callInsideBonusAmountMinute;
+	Object callInsideCostMinute;
+	Object callOutsideCostMinute;
+	Object callDurationMinute;
+	Object callCostMinute;
+	Object callCostTotal;
 };
 
 } // namespace luxoft

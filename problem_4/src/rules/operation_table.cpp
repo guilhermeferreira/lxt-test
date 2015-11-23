@@ -37,21 +37,28 @@ using namespace std;
 // OperationTable class
 //-----------------------------------------------------------------------------
 
-Operation *OperationTable::getOperation(const string &symbol)
+static const AdditionOperation addOp;
+static const SubtractionOperation subOp;
+static const MultiplicationOperation mulOp;
+static const DivisionOperation divOp;
+
+//-----------------------------------------------------------------------------
+
+const Operation *OperationTable::getOperation(const string &symbol)
 {
 	assert(!symbol.empty());
 
 	if (symbol == "+") {
-		return new AdditionOperation;
+		return &addOp;
 	}
 	else if (symbol == "-") {
-		return new SubtractionOperation;
+		return &subOp;
 	}
 	else if (symbol == "*") {
-		return new MultiplicationOperation;
+		return &mulOp;
 	}
 	else if (symbol == "/") {
-		return new DivisionOperation;
+		return &divOp;
 	}
 	else {
 		return NULL;

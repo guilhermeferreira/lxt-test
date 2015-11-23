@@ -53,7 +53,7 @@ public:
 private:
 	Object *object_;
 	Expression *expression_;
-	Operation *operation_;
+	const Operation *operation_;
 	float constant_;
 
 };

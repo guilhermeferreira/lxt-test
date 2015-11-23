@@ -32,33 +32,44 @@ using namespace std;
 // ObjectTable class
 //-----------------------------------------------------------------------------
 
-const string ObjectTable::callConnectionCostTotal = "call_connection_cost_total";
-const string ObjectTable::callBonusAmountMinute = "call_bonus_amount_minute";
-const string ObjectTable::callBonusDurationMinute = "call_bonus_duration_minute";
-const string ObjectTable::callBonusPeriodDay = "call_bonus_period_day";
-const string ObjectTable::callInsideItems = "call_inside_items";
-const string ObjectTable::callInsideBonusAmountMinute = "call_inside_bonus_amount_minute";
-const string ObjectTable::callInsideCostMinute = "call_inside_cost_minute";
-const string ObjectTable::callOutsideCostMinute = "call_outside_cost_minute";
-const string ObjectTable::callCostTotal = "call_cost_total";
-const string ObjectTable::callDurationMinute = "call_duration_minute";
-const string ObjectTable::callCostMinute = "call_cost_minute";
+const string ObjectTable::CALL_CONNECTION_COST_TOTAL = "call_connection_cost_total";
+const string ObjectTable::CALL_BONUS_AMOUNT_MINUTE = "call_bonus_amount_minute";
+const string ObjectTable::CALL_BONUS_DURATION_MINUTE = "call_bonus_duration_minute";
+const string ObjectTable::CALL_BONUS_PERIOD_DAY = "call_bonus_period_day";
+const string ObjectTable::CALL_INSIDE_ITEMS = "call_inside_items";
+const string ObjectTable::CALL_INSIDE_BONUS_AMOUNT_MINUTE = "call_inside_bonus_amount_minute";
+const string ObjectTable::CALL_INSIDE_COST_MINUTE = "call_inside_cost_minute";
+const string ObjectTable::CALL_OUTSIDE_COST_MINUTE = "call_outside_cost_minute";
+const string ObjectTable::CALL_DURATION_MINUTE = "call_duration_minute";
+const string ObjectTable::CALL_COST_MINUTE = "call_cost_minute";
+const string ObjectTable::CALL_COST_TOTAL = "call_cost_total";
 
 //-----------------------------------------------------------------------------
 
-ObjectTable::ObjectTable() : symbolTable_()
+ObjectTable::ObjectTable()
+: callConnectionCostTotal(ObjectTable::CALL_CONNECTION_COST_TOTAL),
+  callBonusAmountMinute(ObjectTable::CALL_BONUS_AMOUNT_MINUTE),
+  callBonusDurationMinute(ObjectTable::CALL_BONUS_DURATION_MINUTE),
+  callBonusPeriodDay(ObjectTable::CALL_BONUS_PERIOD_DAY),
+  callInsideItems(ObjectTable::CALL_INSIDE_ITEMS),
+  callInsideBonusAmountMinute(ObjectTable::CALL_INSIDE_BONUS_AMOUNT_MINUTE),
+  callInsideCostMinute(ObjectTable::CALL_INSIDE_COST_MINUTE),
+  callOutsideCostMinute(ObjectTable::CALL_OUTSIDE_COST_MINUTE),
+  callDurationMinute(ObjectTable::CALL_DURATION_MINUTE),
+  callCostMinute(ObjectTable::CALL_COST_MINUTE),
+  callCostTotal(ObjectTable::CALL_COST_TOTAL)
 {
-	symbolTable_[ObjectTable::callConnectionCostTotal] = new Object(ObjectTable::callConnectionCostTotal);
-	symbolTable_[ObjectTable::callBonusAmountMinute] = new Object(ObjectTable::callBonusAmountMinute);
-	symbolTable_[ObjectTable::callBonusDurationMinute] = new Object(ObjectTable::callBonusDurationMinute);
-	symbolTable_[ObjectTable::callBonusPeriodDay] = new Object(ObjectTable::callBonusPeriodDay);
-	symbolTable_[ObjectTable::callInsideItems] = new Object(ObjectTable::callInsideItems);
-	symbolTable_[ObjectTable::callInsideBonusAmountMinute] = new Object(ObjectTable::callInsideBonusAmountMinute);
-	symbolTable_[ObjectTable::callInsideCostMinute] = new Object(ObjectTable::callInsideCostMinute);
-	symbolTable_[ObjectTable::callOutsideCostMinute] = new Object(ObjectTable::callOutsideCostMinute);
-	symbolTable_[ObjectTable::callCostTotal] = new Object(ObjectTable::callCostTotal);
-	symbolTable_[ObjectTable::callDurationMinute] = new Object(ObjectTable::callDurationMinute);
-	symbolTable_[ObjectTable::callCostMinute] = new Object(ObjectTable::callCostMinute);
+	symbolTable_[ObjectTable::CALL_CONNECTION_COST_TOTAL] = &callConnectionCostTotal;
+	symbolTable_[ObjectTable::CALL_BONUS_AMOUNT_MINUTE] = &callBonusAmountMinute;
+	symbolTable_[ObjectTable::CALL_BONUS_DURATION_MINUTE] = &callBonusDurationMinute;
+	symbolTable_[ObjectTable::CALL_BONUS_PERIOD_DAY] = &callBonusPeriodDay;
+	symbolTable_[ObjectTable::CALL_INSIDE_ITEMS] = &callInsideItems;
+	symbolTable_[ObjectTable::CALL_INSIDE_BONUS_AMOUNT_MINUTE] = &callInsideBonusAmountMinute;
+	symbolTable_[ObjectTable::CALL_INSIDE_COST_MINUTE] = &callInsideCostMinute;
+	symbolTable_[ObjectTable::CALL_OUTSIDE_COST_MINUTE] = &callOutsideCostMinute;
+	symbolTable_[ObjectTable::CALL_DURATION_MINUTE] = &callDurationMinute;
+	symbolTable_[ObjectTable::CALL_COST_MINUTE] = &callCostMinute;
+	symbolTable_[ObjectTable::CALL_COST_TOTAL] = &callCostTotal;
 }
 
 //-----------------------------------------------------------------------------

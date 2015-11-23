@@ -45,7 +45,7 @@ public:
 	 *
 	 * \return An Operation subclass
 	 */
-	static Operation *getOperation(const std::string &symbol);
+	static const Operation *getOperation(const std::string &symbol);
 
 };
 

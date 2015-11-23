@@ -41,6 +41,12 @@ AssignmentStatement::AssignmentStatement()
 
 AssignmentStatement::~AssignmentStatement()
 {
+	// TODO don't destroy lvalueObject_, because this class does not instantiate it
+
+	if (rvalueExpression_ != NULL) {
+		delete rvalueExpression_;
+		rvalueExpression_ = NULL;
+	}
 }
 
 //-----------------------------------------------------------------------------

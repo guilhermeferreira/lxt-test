@@ -45,6 +45,10 @@ Expression::Expression()
 
 Expression::~Expression()
 {
+	if (expression_ != NULL) {
+		delete expression_;
+		expression_ = NULL;
+	}
 }
 
 //-----------------------------------------------------------------------------

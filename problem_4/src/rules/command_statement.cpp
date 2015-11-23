@@ -43,6 +43,7 @@ CommandStatement::CommandStatement()
 
 CommandStatement::~CommandStatement()
 {
+	// TODO don't destroy object_, because this class does not instantiate it
 }
 
 //-----------------------------------------------------------------------------
