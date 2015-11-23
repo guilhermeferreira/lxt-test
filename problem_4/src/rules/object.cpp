@@ -60,15 +60,6 @@ string Object::getName() const
 
 //-----------------------------------------------------------------------------
 
-void Object::setName(const string &name)
-{
-	assert(!name.empty());
-
-	name_ = name;
-}
-
-//-----------------------------------------------------------------------------
-
 float Object::getValue() const
 {
 	return value_;
@@ -80,6 +71,8 @@ void Object::setValue(const float value)
 {
 	value_ = value;
 }
+
+//-----------------------------------------------------------------------------
 
 
 } // namespace luxoft

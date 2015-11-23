@@ -48,10 +48,8 @@ public:
 	Token(const std:: string &value, TokenType type);
 
 	std::string getValue() const;
-	void setValue(const std::string &value);
 
 	TokenType getType() const;
-	void setType(const TokenType type);
 
 	static TokenType discoverType(const std::string &value);
 

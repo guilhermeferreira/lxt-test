@@ -41,7 +41,6 @@ public:
 	virtual ~Object();
 
 	std::string getName() const;
-	void setName(const std::string &name);
 
 	float getValue() const;
 	void setValue(const float value);
