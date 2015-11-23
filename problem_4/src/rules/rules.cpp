@@ -37,7 +37,6 @@ using namespace std;
 //-----------------------------------------------------------------------------
 
 Rules::Rules()
-: ruleLines_()
 {
 }
 
@@ -92,7 +91,7 @@ void Rules::parse()  /* TODO throws SyntaxError */
 	string line;
 	for (vector<RuleLine*>::iterator it = ruleLines_.begin(); it != ruleLines_.end(); ++it) {
 		RuleLine *ruleLine = *it;
-		ruleLine->parse(&objectTable_);
+		ruleLine->parse(objectTable_);
 	}
 
 }

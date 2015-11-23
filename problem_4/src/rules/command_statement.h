@@ -46,8 +46,8 @@ public:
 	virtual ~CommandStatement();
 
 	virtual void parse(
-		ObjectTable *objectTable,
-		const std::vector<Token*> &tokens);
+		const std::vector<Token*> &tokens,
+		ObjectTable &objectTable);
 
 	virtual void execute();
 

@@ -59,7 +59,7 @@ public:
 	/**
 	 * TODO
 	 */
-	void parse(ObjectTable *objectTable) /* TODO throws SyntaxError */;
+	void parse(ObjectTable &objectTable) /* TODO throws SyntaxError */;
 
 	/**
 	 * TODO

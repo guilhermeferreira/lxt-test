@@ -162,9 +162,11 @@ source - subscriber account information.
  2.4. Implementation notes
 ------------------------------------------------------------------------------
 
-a. I didn't use smart pointers (i.e. std::shared_ptr or std::unique_ptr) because
-   I'm not sure that you have a C++11 compatible compiler. Neither I use Boost
-   smart pointers because you said "Try to use only STL library";
+a. I didn't use any STL smart pointers because std::auto_ptr ownership transfer
+   issue is a huge headache. And I'm not sure if you have a C++11 compliant
+   compiler to use std::shared_ptr and std::unique_ptr. Neither I used Boost's
+   smart pointers (i.e. boost::shared_ptr and boost::scoped_ptr) because you
+   said "Try to use only STL library";
    
 b. I use assertation to ensure that code satisfies the methods pre-conditions;
 

@@ -48,10 +48,9 @@ CommandStatement::~CommandStatement()
 //-----------------------------------------------------------------------------
 
 void CommandStatement::parse(
-	ObjectTable *objectTable,
-	const vector<Token*> &tokens)
+	const vector<Token*> &tokens,
+	ObjectTable &objectTable)
 {
-	assert(objectTable != NULL);
 	assert(!tokens.empty());
 	assert(object_ == NULL);
 
@@ -59,7 +58,7 @@ void CommandStatement::parse(
 	assert(commandName == "print");
 
 	string objectName = tokens[1]->getValue();
-	object_ = objectTable->getObject(objectName);
+	object_ = objectTable.getObject(objectName);
 }
 
 //-----------------------------------------------------------------------------

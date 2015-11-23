@@ -45,8 +45,8 @@ public:
 	virtual ~Expression();
 
 	void parse(
-		ObjectTable *objectTable,
-		const std::vector<Token*> &tokens);
+		const std::vector<Token*> &tokens,
+		ObjectTable &objectTable);
 
 	float getValue() const;
 

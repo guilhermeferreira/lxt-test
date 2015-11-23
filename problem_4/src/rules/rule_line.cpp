@@ -76,9 +76,8 @@ void RuleLine::tokenize(const string &line)
 
 //-----------------------------------------------------------------------------
 
-void RuleLine::parse(ObjectTable *objectTable)
+void RuleLine::parse(ObjectTable &objectTable)
 {
-	assert(objectTable != NULL);
 	assert(!tokens_.empty());
 	assert(statement_ == NULL);
 
@@ -91,10 +90,10 @@ void RuleLine::parse(ObjectTable *objectTable)
 	const string firstTokenPrefix = firstToken.substr(0, firstTokenPrefixEndPos);
 	if (firstTokenPrefix == "call") {
 		statement_ = new AssignmentStatement;
-		statement_->parse(objectTable, tokens_);
+		statement_->parse(tokens_, objectTable);
 	} else if (firstTokenPrefix == "print") {
 		statement_ = new CommandStatement;
-		statement_->parse(objectTable, tokens_);
+		statement_->parse(tokens_, objectTable);
 	} else {
 		// TODO throw SyntaxError("Invalid statement prefix", firstTokenPrefix)
 	}

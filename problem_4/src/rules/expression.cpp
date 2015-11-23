@@ -50,10 +50,9 @@ Expression::~Expression()
 //-----------------------------------------------------------------------------
 
 void Expression::parse(
-	ObjectTable *objectTable,
-	const vector<Token*> &tokens)
+	const vector<Token*> &tokens,
+	ObjectTable &objectTable)
 {
-	assert(objectTable != NULL);
 	assert(!tokens.empty());
 
 	// This loop process only the first 1 or 2 elements:
@@ -74,7 +73,7 @@ void Expression::parse(
 	switch (firstToken->getType()) {
 		case TOKEN_TYPE_OBJECT: {
 			string objectName = firstToken->getValue();
-			object_ = objectTable->getObject(objectName);
+			object_ = objectTable.getObject(objectName);
 			break;
 		}
 		case TOKEN_TYPE_NUMERIC_CONSTANT: {
@@ -105,7 +104,7 @@ void Expression::parse(
 
 		vector<Token*> remainingTokens(tokens.begin() + 2, tokens.end());
 		expression_ = new Expression;
-		expression_->parse(objectTable, remainingTokens);
+		expression_->parse(remainingTokens, objectTable);
 	}
 
 }

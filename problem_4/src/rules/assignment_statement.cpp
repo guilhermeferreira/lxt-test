@@ -46,17 +46,16 @@ AssignmentStatement::~AssignmentStatement()
 //-----------------------------------------------------------------------------
 
 void AssignmentStatement::parse(
-	ObjectTable *objectTable,
-	const vector<Token*> &tokens)
+	const vector<Token*> &tokens,
+	ObjectTable &objectTable)
 {
-	assert(objectTable != NULL);
 	assert(!tokens.empty());
 	assert(lvalueObject_ == NULL);
 	assert(rvalueExpression_ == NULL);
 
 	// Consume left hand side token, that is the variable (object) name
 	string objectName = tokens[0]->getValue();
-	lvalueObject_ = objectTable->getObject(objectName);
+	lvalueObject_ = objectTable.getObject(objectName);
 
 	// Consume the assignment operator
 	string operatorSymbol = tokens[1]->getValue();
@@ -65,7 +64,7 @@ void AssignmentStatement::parse(
 	// Expression can consume only the right hand side tokens
 	vector<Token*> remainingTokens(tokens.begin() + 2, tokens.end());
 	rvalueExpression_ = new Expression;
-	rvalueExpression_->parse(objectTable, remainingTokens);
+	rvalueExpression_->parse(remainingTokens, objectTable);
 }
 
 //-----------------------------------------------------------------------------
