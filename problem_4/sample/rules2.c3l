@@ -1,0 +1,17 @@
+# -------------------------------------
+# Call rules
+# -------------------------------------
+# Units (minute, day, etc) are suffix
+# Objects (call, call_inside, call_outside) are prefix
+# Object attributes (duration, period, fee, cost) are at the middle
+#
+
+call_connection_cost_total = 0.45
+
+call_inside_cost_minute = 0.50
+
+call_cost_total = call_connection_cost_total + call_inside_cost_minute * 10
+
+print call_cost_total
+print call_inside_cost_minute
+print call_connection_cost_total
