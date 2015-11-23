@@ -19,63 +19,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULES_H
-#define RULES_H
+#ifndef RULE_LINE_H
+#define RULE_LINE_H
 
 #include <string>
 #include <vector>
 
-#include "rule_line.h"
 #include "object_table.h"
+#include "statement.h"
+#include "token.h"
+
 
 namespace luxoft {
 
 //-----------------------------------------------------------------------------
-// Rules class
+// RuleLine class
 //-----------------------------------------------------------------------------
 
 /**
  * TODO
  */
-class Rules {
+class RuleLine {
 public:
+	/**
+	 * TODO
+	 */
+	RuleLine();
 
 	/**
 	 * TODO
 	 */
-	Rules();
+	virtual ~RuleLine();
+
+	/**
+	 * \brief Separate (tokenize) all elements of a line
+	 */
+	void tokenize(const std::string &line);
 
 	/**
 	 * TODO
 	 */
-	virtual ~Rules();
+	void parse(ObjectTable *objectTable) /* TODO throws SyntaxError */;
 
 	/**
-	 * \brief Perform the lexical analysis
-	 *
-	 * Read the rules file to build a list of tokens
+	 * TODO
 	 */
-	void tokenize(const std::string &fileName);
-
-	/**
-	 * \brief Parse the rules file to build a Parse-Tree
-	 */
-	void parse() /* TODO throws SyntaxError */;
-
-	/**
-	 * \brief Apply the rules into the call record file
-	 */
-	void execute(const std::string &callFileName) /* TODO throws SemanticError */;
+	void execute() /* TODO throws SemanticError */;
 
 private:
-	bool isValidLine(const std::string &line);
-
-
-	std::vector<RuleLine*> ruleLines_;
-	ObjectTable *objectTable_;
+	std::vector<Token*> tokens_;
+	Statement *statement_;
 
 };
 
+
 } // namespace luxoft
 
-#endif /* RULES_H */
+#endif /* RULE_LINE_H */

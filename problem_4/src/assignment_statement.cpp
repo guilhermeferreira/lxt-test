@@ -19,63 +19,64 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULES_H
-#define RULES_H
+#include "assignment_statement.h"
 
-#include <string>
-#include <vector>
+#include <cassert>
 
-#include "rule_line.h"
-#include "object_table.h"
 
 namespace luxoft {
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
-// Rules class
+// AssignmentStatement class
 //-----------------------------------------------------------------------------
 
-/**
- * TODO
- */
-class Rules {
-public:
+AssignmentStatement::AssignmentStatement()
+: lvalueObject_(NULL), rvalueExpression_(NULL)
+{
+}
 
-	/**
-	 * TODO
-	 */
-	Rules();
+//-----------------------------------------------------------------------------
 
-	/**
-	 * TODO
-	 */
-	virtual ~Rules();
+AssignmentStatement::~AssignmentStatement()
+{
+}
 
-	/**
-	 * \brief Perform the lexical analysis
-	 *
-	 * Read the rules file to build a list of tokens
-	 */
-	void tokenize(const std::string &fileName);
+//-----------------------------------------------------------------------------
 
-	/**
-	 * \brief Parse the rules file to build a Parse-Tree
-	 */
-	void parse() /* TODO throws SyntaxError */;
+void AssignmentStatement::parse(
+	ObjectTable *objectTable,
+	const vector<Token*> &tokens)
+{
+	assert(objectTable != NULL);
+	assert(!tokens.empty());
+	assert(lvalueObject_ == NULL);
+	assert(rvalueExpression_ == NULL);
 
-	/**
-	 * \brief Apply the rules into the call record file
-	 */
-	void execute(const std::string &callFileName) /* TODO throws SemanticError */;
+	// Consume left hand side token, that is the variable (object) name
+	string objectName = tokens[0]->getValue();
+	lvalueObject_ = objectTable->getObject(objectName);
 
-private:
-	bool isValidLine(const std::string &line);
+	// Consume the assignment operator
+	string operatorSymbol = tokens[1]->getValue();
+	assert(operatorSymbol == "=");
 
+	// Expression can consume only the right hand side tokens
+	vector<Token*> remainingTokens(tokens.begin() + 2, tokens.end());
+	rvalueExpression_ = new Expression;
+	rvalueExpression_->parse(objectTable, remainingTokens);
+}
 
-	std::vector<RuleLine*> ruleLines_;
-	ObjectTable *objectTable_;
+//-----------------------------------------------------------------------------
 
-};
+void AssignmentStatement::execute()
+{
+	assert(lvalueObject_ != NULL);
+	assert(rvalueExpression_ != NULL);
+
+	lvalueObject_->setValue(rvalueExpression_->getValue());
+}
+
 
 } // namespace luxoft
-
-#endif /* RULES_H */

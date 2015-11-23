@@ -19,63 +19,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULES_H
-#define RULES_H
+#ifndef COMMAND_STATEMENT_H
+#define COMMAND_STATEMENT_H
 
-#include <string>
 #include <vector>
 
-#include "rule_line.h"
+#include "statement.h"
+#include "object.h"
 #include "object_table.h"
+#include "token.h"
+
 
 namespace luxoft {
 
 //-----------------------------------------------------------------------------
-// Rules class
+// CommandStatement class
 //-----------------------------------------------------------------------------
 
 /**
  * TODO
  */
-class Rules {
+class CommandStatement : public Statement {
 public:
+	CommandStatement();
 
-	/**
-	 * TODO
-	 */
-	Rules();
+	virtual ~CommandStatement();
 
-	/**
-	 * TODO
-	 */
-	virtual ~Rules();
+	virtual void parse(
+		ObjectTable *objectTable,
+		const std::vector<Token*> &tokens);
 
-	/**
-	 * \brief Perform the lexical analysis
-	 *
-	 * Read the rules file to build a list of tokens
-	 */
-	void tokenize(const std::string &fileName);
-
-	/**
-	 * \brief Parse the rules file to build a Parse-Tree
-	 */
-	void parse() /* TODO throws SyntaxError */;
-
-	/**
-	 * \brief Apply the rules into the call record file
-	 */
-	void execute(const std::string &callFileName) /* TODO throws SemanticError */;
+	virtual void execute();
 
 private:
-	bool isValidLine(const std::string &line);
-
-
-	std::vector<RuleLine*> ruleLines_;
-	ObjectTable *objectTable_;
+	Object *object_;
 
 };
 
+
 } // namespace luxoft
 
-#endif /* RULES_H */
+#endif /* COMMAND_STATEMENT_H */

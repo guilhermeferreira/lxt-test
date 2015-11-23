@@ -19,63 +19,67 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULES_H
-#define RULES_H
+#include "object.h"
 
-#include <string>
-#include <vector>
+#include <cassert>
 
-#include "rule_line.h"
-#include "object_table.h"
 
 namespace luxoft {
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
-// Rules class
+// Object class
 //-----------------------------------------------------------------------------
 
-/**
- * TODO
- */
-class Rules {
-public:
+Object::Object()
+: name_(""), value_(0)
+{
+}
 
-	/**
-	 * TODO
-	 */
-	Rules();
+//-----------------------------------------------------------------------------
 
-	/**
-	 * TODO
-	 */
-	virtual ~Rules();
+Object::Object(string name, float value)
+: name_(name), value_(value)
+{
+	assert(!name.empty());
+}
 
-	/**
-	 * \brief Perform the lexical analysis
-	 *
-	 * Read the rules file to build a list of tokens
-	 */
-	void tokenize(const std::string &fileName);
+//-----------------------------------------------------------------------------
 
-	/**
-	 * \brief Parse the rules file to build a Parse-Tree
-	 */
-	void parse() /* TODO throws SyntaxError */;
+Object::~Object()
+{
+}
 
-	/**
-	 * \brief Apply the rules into the call record file
-	 */
-	void execute(const std::string &callFileName) /* TODO throws SemanticError */;
+//-----------------------------------------------------------------------------
 
-private:
-	bool isValidLine(const std::string &line);
+string Object::getName() const
+{
+	return name_;
+}
 
+//-----------------------------------------------------------------------------
 
-	std::vector<RuleLine*> ruleLines_;
-	ObjectTable *objectTable_;
+void Object::setName(const string &name)
+{
+	assert(!name.empty());
 
-};
+	name_ = name;
+}
+
+//-----------------------------------------------------------------------------
+
+float Object::getValue() const
+{
+	return value_;
+}
+
+//-----------------------------------------------------------------------------
+
+void Object::setValue(const float value)
+{
+	value_ = value;
+}
+
 
 } // namespace luxoft
-
-#endif /* RULES_H */

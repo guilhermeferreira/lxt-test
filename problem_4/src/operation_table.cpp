@@ -19,63 +19,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULES_H
-#define RULES_H
+#include "operation_table.h"
 
-#include <string>
-#include <vector>
+#include <cassert>
 
-#include "rule_line.h"
-#include "object_table.h"
+#include "addition_operation.h"
+#include "subtraction_operation.h"
+#include "multiplication_operation.h"
+#include "division_operation.h"
+
 
 namespace luxoft {
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
-// Rules class
+// OperationTable class
 //-----------------------------------------------------------------------------
 
-/**
- * TODO
- */
-class Rules {
-public:
+Operation *OperationTable::getOperation(const string &symbol)
+{
+	assert(!symbol.empty());
 
-	/**
-	 * TODO
-	 */
-	Rules();
+	if (symbol == "+") {
+		return new AdditionOperation;
+	}
+	else if (symbol == "-") {
+		return new SubtractionOperation;
+	}
+	else if (symbol == "*") {
+		return new MultiplicationOperation;
+	}
+	else if (symbol == "/") {
+		return new DivisionOperation;
+	}
+	else {
+		return NULL;
+	}
 
-	/**
-	 * TODO
-	 */
-	virtual ~Rules();
-
-	/**
-	 * \brief Perform the lexical analysis
-	 *
-	 * Read the rules file to build a list of tokens
-	 */
-	void tokenize(const std::string &fileName);
-
-	/**
-	 * \brief Parse the rules file to build a Parse-Tree
-	 */
-	void parse() /* TODO throws SyntaxError */;
-
-	/**
-	 * \brief Apply the rules into the call record file
-	 */
-	void execute(const std::string &callFileName) /* TODO throws SemanticError */;
-
-private:
-	bool isValidLine(const std::string &line);
-
-
-	std::vector<RuleLine*> ruleLines_;
-	ObjectTable *objectTable_;
-
-};
+}
 
 } // namespace luxoft
-
-#endif /* RULES_H */

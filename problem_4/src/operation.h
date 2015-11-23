@@ -19,63 +19,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULES_H
-#define RULES_H
+#ifndef OPERATION_H
+#define OPERATION_H
 
-#include <string>
-#include <vector>
-
-#include "rule_line.h"
-#include "object_table.h"
 
 namespace luxoft {
 
 //-----------------------------------------------------------------------------
-// Rules class
+// Operation class
 //-----------------------------------------------------------------------------
 
 /**
- * TODO
+ * Arithmetic operation
  */
-class Rules {
+class Operation {
 public:
+	Operation();
+	virtual ~Operation();
 
-	/**
-	 * TODO
-	 */
-	Rules();
-
-	/**
-	 * TODO
-	 */
-	virtual ~Rules();
-
-	/**
-	 * \brief Perform the lexical analysis
-	 *
-	 * Read the rules file to build a list of tokens
-	 */
-	void tokenize(const std::string &fileName);
-
-	/**
-	 * \brief Parse the rules file to build a Parse-Tree
-	 */
-	void parse() /* TODO throws SyntaxError */;
-
-	/**
-	 * \brief Apply the rules into the call record file
-	 */
-	void execute(const std::string &callFileName) /* TODO throws SemanticError */;
-
-private:
-	bool isValidLine(const std::string &line);
-
-
-	std::vector<RuleLine*> ruleLines_;
-	ObjectTable *objectTable_;
+	virtual float execute(const float a, const float b) const = 0;
 
 };
 
+
 } // namespace luxoft
 
-#endif /* RULES_H */
+#endif /* OPERATION_H */

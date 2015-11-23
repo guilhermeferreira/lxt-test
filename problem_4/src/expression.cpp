@@ -1,0 +1,132 @@
+/**
+ * Copyright(c) 2015 Guilherme M. Ferreira <guilherme.maciel.ferreira@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ * of the Software, and to permit persons to whom the Software is furnished to do
+ * so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+#include "expression.h"
+
+#include <cassert>
+
+#include <sstream>
+
+#include "operation_table.h"
+
+
+namespace luxoft {
+
+using namespace std;
+
+//-----------------------------------------------------------------------------
+// Expression class
+//-----------------------------------------------------------------------------
+
+Expression::Expression()
+: object_(NULL), expression_(NULL), operation_(NULL), constant_(0)
+{
+}
+
+//-----------------------------------------------------------------------------
+
+Expression::~Expression()
+{
+}
+
+//-----------------------------------------------------------------------------
+
+void Expression::parse(
+	ObjectTable *objectTable,
+	const vector<Token*> &tokens)
+{
+	assert(objectTable != NULL);
+	assert(!tokens.empty());
+
+	// This loop process only the first 1 or 2 elements:
+	//
+	//    <object>
+	//    <object> "+"
+	//    <object> "-"
+	//    <object> "*"
+	//    <object> "/"
+	//    <numeric_constant>
+	//
+	// The remaining <expression> is processed recursively (i.e. it's a context-
+	// free grammar anyways)
+
+
+	// process expressions with a single operand, variable (object) or constant
+	Token *firstToken = tokens[0];
+	switch (firstToken->getType()) {
+		case TOKEN_TYPE_OBJECT: {
+			string objectName = firstToken->getValue();
+			object_ = objectTable->getObject(objectName);
+			break;
+		}
+		case TOKEN_TYPE_NUMERIC_CONSTANT: {
+			string numericValue = firstToken->getValue();
+			istringstream stream(numericValue);
+			stream >> constant_;
+			break;
+		}
+		default:
+			/* TODO throw MalformedExpression */
+			break;
+	}
+
+	// process expressions that have an operand, an arithmetic operator and
+	// another expression
+	if (tokens.size() > 1) {
+		Token *secondToken = tokens[1];
+		switch (secondToken->getType()) {
+			case TOKEN_TYPE_ARITHMETIC_OPERATOR: {
+				string operationSymbol = secondToken->getValue();
+				operation_ = OperationTable::getOperation(operationSymbol);
+				break;
+			}
+			default:
+				/* TODO throw MalformedExpression */
+				break;
+		}
+
+		vector<Token*> remainingTokens(tokens.begin() + 2, tokens.end());
+		expression_ = new Expression;
+		expression_->parse(objectTable, remainingTokens);
+	}
+
+}
+
+//-----------------------------------------------------------------------------
+
+float Expression::getValue() const
+{
+	if ((object_ != NULL) && (expression_ != NULL)) {
+		assert(operation_ != NULL);
+
+		return operation_->execute(object_->getValue(), expression_->getValue());
+
+	} else if ((object_ != NULL) && (expression_ == NULL)) {
+		return object_->getValue();
+
+	} else { // ((object_ == NULL) && (expression_ != NULL))
+		return constant_;
+
+	}
+}
+
+
+} // namespace luxoft

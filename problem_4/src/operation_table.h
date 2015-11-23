@@ -19,63 +19,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULES_H
-#define RULES_H
+#ifndef OPERATION_TABLE_H
+#define OPERATION_TABLE_H
 
 #include <string>
-#include <vector>
 
-#include "rule_line.h"
-#include "object_table.h"
+#include "operation.h"
+
 
 namespace luxoft {
 
 //-----------------------------------------------------------------------------
-// Rules class
+// OperationTable class
 //-----------------------------------------------------------------------------
 
 /**
- * TODO
+ * This class maps std::string to Operation instances
  */
-class Rules {
+class OperationTable {
 public:
-
 	/**
-	 * TODO
-	 */
-	Rules();
-
-	/**
-	 * TODO
-	 */
-	virtual ~Rules();
-
-	/**
-	 * \brief Perform the lexical analysis
+	 * \brief Get the operation corresponding to the symbol
 	 *
-	 * Read the rules file to build a list of tokens
+	 * \param symbol Arithmetic operation symbol
+	 *
+	 * \return An Operation subclass
 	 */
-	void tokenize(const std::string &fileName);
-
-	/**
-	 * \brief Parse the rules file to build a Parse-Tree
-	 */
-	void parse() /* TODO throws SyntaxError */;
-
-	/**
-	 * \brief Apply the rules into the call record file
-	 */
-	void execute(const std::string &callFileName) /* TODO throws SemanticError */;
-
-private:
-	bool isValidLine(const std::string &line);
-
-
-	std::vector<RuleLine*> ruleLines_;
-	ObjectTable *objectTable_;
+	static Operation *getOperation(const std::string &symbol);
 
 };
 
+
 } // namespace luxoft
 
-#endif /* RULES_H */
+#endif /* OPERATION_TABLE_H */

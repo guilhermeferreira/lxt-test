@@ -19,63 +19,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULES_H
-#define RULES_H
+#ifndef OBJECT_H
+#define OBJECT_H
 
 #include <string>
-#include <vector>
 
-#include "rule_line.h"
-#include "object_table.h"
 
 namespace luxoft {
 
 //-----------------------------------------------------------------------------
-// Rules class
+// Object class
 //-----------------------------------------------------------------------------
 
 /**
  * TODO
  */
-class Rules {
+class Object {
 public:
+	Object();
+	Object(std::string name, float value = 0);
+	virtual ~Object();
 
-	/**
-	 * TODO
-	 */
-	Rules();
+	std::string getName() const;
+	void setName(const std::string &name);
 
-	/**
-	 * TODO
-	 */
-	virtual ~Rules();
-
-	/**
-	 * \brief Perform the lexical analysis
-	 *
-	 * Read the rules file to build a list of tokens
-	 */
-	void tokenize(const std::string &fileName);
-
-	/**
-	 * \brief Parse the rules file to build a Parse-Tree
-	 */
-	void parse() /* TODO throws SyntaxError */;
-
-	/**
-	 * \brief Apply the rules into the call record file
-	 */
-	void execute(const std::string &callFileName) /* TODO throws SemanticError */;
+	float getValue() const;
+	void setValue(const float value);
 
 private:
-	bool isValidLine(const std::string &line);
-
-
-	std::vector<RuleLine*> ruleLines_;
-	ObjectTable *objectTable_;
+	std::string name_;
+	float value_;
 
 };
 
+
 } // namespace luxoft
 
-#endif /* RULES_H */
+#endif /* OBJECT_H */

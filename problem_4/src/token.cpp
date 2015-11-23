@@ -19,63 +19,73 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULES_H
-#define RULES_H
+#include "token.h"
 
-#include <string>
-#include <vector>
+#include <cassert>
 
-#include "rule_line.h"
-#include "object_table.h"
 
 namespace luxoft {
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
-// Rules class
+// Token class
 //-----------------------------------------------------------------------------
 
-/**
- * TODO
- */
-class Rules {
-public:
+Token::Token(const string &value, TokenType type)
+: value_(value), type_(type)
+{
+}
 
-	/**
-	 * TODO
-	 */
-	Rules();
+//-----------------------------------------------------------------------------
 
-	/**
-	 * TODO
-	 */
-	virtual ~Rules();
+string Token::getValue() const
+{
+	return value_;
+}
 
-	/**
-	 * \brief Perform the lexical analysis
-	 *
-	 * Read the rules file to build a list of tokens
-	 */
-	void tokenize(const std::string &fileName);
+//-----------------------------------------------------------------------------
 
-	/**
-	 * \brief Parse the rules file to build a Parse-Tree
-	 */
-	void parse() /* TODO throws SyntaxError */;
+void Token::setValue(const string &value)
+{
+	assert(!value.empty());
 
-	/**
-	 * \brief Apply the rules into the call record file
-	 */
-	void execute(const std::string &callFileName) /* TODO throws SemanticError */;
+	value_ = value;
+}
 
-private:
-	bool isValidLine(const std::string &line);
+//-----------------------------------------------------------------------------
 
+TokenType Token::getType() const
+{
+	return type_;
+}
 
-	std::vector<RuleLine*> ruleLines_;
-	ObjectTable *objectTable_;
+//-----------------------------------------------------------------------------
 
-};
+void Token::setType(const TokenType type)
+{
+	type_ = type;
+}
+
+//-----------------------------------------------------------------------------
+
+TokenType Token::discoverType(const string &value)
+{
+	assert(!value.empty());
+
+	string operators = "+-*/=";
+	string numeric_literal = "0123456789";
+
+	if (value.find_first_of(operators) != string::npos) {
+		return TOKEN_TYPE_ARITHMETIC_OPERATOR;
+
+	} else if (value.find_first_of(numeric_literal) != string::npos) {
+		return TOKEN_TYPE_NUMERIC_CONSTANT;
+
+	} else {
+		return TOKEN_TYPE_OBJECT;
+	}
+}
+
 
 } // namespace luxoft
-
-#endif /* RULES_H */

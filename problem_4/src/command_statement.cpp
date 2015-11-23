@@ -19,63 +19,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULES_H
-#define RULES_H
+#include "command_statement.h"
 
-#include <string>
-#include <vector>
+#include <cassert>
 
-#include "rule_line.h"
-#include "object_table.h"
+#include <iostream>
+
 
 namespace luxoft {
 
+using namespace std;
+
 //-----------------------------------------------------------------------------
-// Rules class
+// CommandStatement class
 //-----------------------------------------------------------------------------
 
-/**
- * TODO
- */
-class Rules {
-public:
+CommandStatement::CommandStatement()
+: object_(NULL)
+{
+}
 
-	/**
-	 * TODO
-	 */
-	Rules();
+//-----------------------------------------------------------------------------
 
-	/**
-	 * TODO
-	 */
-	virtual ~Rules();
+CommandStatement::~CommandStatement()
+{
+}
 
-	/**
-	 * \brief Perform the lexical analysis
-	 *
-	 * Read the rules file to build a list of tokens
-	 */
-	void tokenize(const std::string &fileName);
+//-----------------------------------------------------------------------------
 
-	/**
-	 * \brief Parse the rules file to build a Parse-Tree
-	 */
-	void parse() /* TODO throws SyntaxError */;
+void CommandStatement::parse(
+	ObjectTable *objectTable,
+	const vector<Token*> &tokens)
+{
+	assert(objectTable != NULL);
+	assert(!tokens.empty());
+	assert(object_ == NULL);
 
-	/**
-	 * \brief Apply the rules into the call record file
-	 */
-	void execute(const std::string &callFileName) /* TODO throws SemanticError */;
+	string commandName = tokens[0]->getValue();
+	assert(commandName == "print");
 
-private:
-	bool isValidLine(const std::string &line);
+	string objectName = tokens[1]->getValue();
+	object_ = objectTable->getObject(objectName);
+}
 
+//-----------------------------------------------------------------------------
 
-	std::vector<RuleLine*> ruleLines_;
-	ObjectTable *objectTable_;
+void CommandStatement::execute()
+{
+	assert(object_ != NULL);
+	assert(!object_->getName().empty());
 
-};
+	cout << object_->getName() << " = " << object_->getValue() << endl;
+}
+
 
 } // namespace luxoft
-
-#endif /* RULES_H */

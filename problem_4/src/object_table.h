@@ -19,63 +19,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULES_H
-#define RULES_H
+#ifndef OBJECT_TABLE_H
+#define OBJECT_TABLE_H
 
+#include <map>
 #include <string>
-#include <vector>
 
-#include "rule_line.h"
-#include "object_table.h"
+#include "object.h"
 
 namespace luxoft {
 
 //-----------------------------------------------------------------------------
-// Rules class
+// ObjectTable class
 //-----------------------------------------------------------------------------
 
 /**
  * TODO
  */
-class Rules {
+class ObjectTable {
 public:
+	static const std::string callConnectionCostTotal;
+	static const std::string callBonusAmountMinute;
+	static const std::string callBonusDurationMinute;
+	static const std::string callBonusPeriodDay;
+	static const std::string callInsideItems;
+	static const std::string callInsideBonusAmountMinute;
+	static const std::string callInsideCostMinute;
+	static const std::string callOutsideCostMinute;
+	static const std::string callCostTotal;
+	static const std::string callDurationMinute;
+	static const std::string callCostMinute;
 
-	/**
-	 * TODO
-	 */
-	Rules();
+public:
+	ObjectTable();
+	virtual ~ObjectTable();
 
-	/**
-	 * TODO
-	 */
-	virtual ~Rules();
-
-	/**
-	 * \brief Perform the lexical analysis
-	 *
-	 * Read the rules file to build a list of tokens
-	 */
-	void tokenize(const std::string &fileName);
-
-	/**
-	 * \brief Parse the rules file to build a Parse-Tree
-	 */
-	void parse() /* TODO throws SyntaxError */;
-
-	/**
-	 * \brief Apply the rules into the call record file
-	 */
-	void execute(const std::string &callFileName) /* TODO throws SemanticError */;
+	Object *getObject(const std::string &objectName);
 
 private:
-	bool isValidLine(const std::string &line);
-
-
-	std::vector<RuleLine*> ruleLines_;
-	ObjectTable *objectTable_;
-
+	// When we reference "call_bonus_duration_minute", for example, we reference
+	// one single object
+	std::map<std::string, Object*> symbolTable_;
 };
 
 } // namespace luxoft
 
-#endif /* RULES_H */
+#endif /* OBJECT_TABLE_H */

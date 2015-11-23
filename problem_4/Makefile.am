@@ -3,6 +3,20 @@ bin_PROGRAMS += problem_4_test
 
 problem_4_SOURCES  = src/main.cpp
 problem_4_SOURCES += src/rules.cpp
+problem_4_SOURCES += src/rule_line.cpp
+problem_4_SOURCES += src/statement.cpp
+problem_4_SOURCES += src/assignment_statement.cpp
+problem_4_SOURCES += src/command_statement.cpp
+problem_4_SOURCES += src/object.cpp
+problem_4_SOURCES += src/object_table.cpp
+problem_4_SOURCES += src/operation.cpp
+problem_4_SOURCES += src/operation_table.cpp
+problem_4_SOURCES += src/token.cpp
+problem_4_SOURCES += src/expression.cpp
+problem_4_SOURCES += src/addition_operation.cpp
+problem_4_SOURCES += src/subtraction_operation.cpp
+problem_4_SOURCES += src/multiplication_operation.cpp
+problem_4_SOURCES += src/division_operation.cpp
 
 problem_4_test_SOURCES  = ${problem_4_SOURCES}
 problem_4_test_SOURCES += test/rules_test.cpp
