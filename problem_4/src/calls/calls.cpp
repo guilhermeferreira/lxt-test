@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include "rules_file.h"
+#include "calls.h"
 
 #include <cassert>
 
@@ -35,65 +35,56 @@ namespace luxoft {
 using namespace std;
 
 //-----------------------------------------------------------------------------
-// RulesFile class
+// Calls class
 //-----------------------------------------------------------------------------
 
-RulesFile::RulesFile(string rulesFileName)
-: rulesFileName_(rulesFileName)
+Calls::Calls()
 {
 }
 
 //-----------------------------------------------------------------------------
 
-RulesFile::~RulesFile()
+Calls::~Calls()
 {
+	// FIXME This is a place where a std::shared_ptr or a boost::shared_ptr would
+	//       save us from deleting all pointers. Because the vector::~vector()
+	//       destroys the elements (pointer), not the element it points to!
+	for (vector<CallRecord*>::iterator it = records_.begin(); it != records_.end(); ++it) {
+		CallRecord *record = *it;
+
+		delete record;
+	}
 }
 
 //-----------------------------------------------------------------------------
 
-void RulesFile::tokenize() /* throws SyntacticErrorException */
+void Calls::process(istream &callsStream, Rules &rules)
 {
-	assert(!rulesFileName_.empty());
+	assert(records_.empty());
 
-	ifstream rulesFile(rulesFileName_.c_str());
-	if (!rulesFile) {
-		cerr << "File '" << rulesFileName_ << "' not found" << endl;
+	string line;
+	int lineNumber = 1;
+	while (getline(callsStream, line)) {
+		CallRecord *record = new CallRecord(lineNumber);
+
+		// WARNING: MAKE A COPY OF OBJECT TABLE for each CallRecord !!!
+		//          DO NOT modify the objects' values, otherwise the next
+		//          record will be computed using the objects' values from
+		//          the previous record computation
+		ObjectTable copyObjTable = rules.getObjectTable();
+
+		record->process(line, copyObjTable);
+
+		rules.evaluate();
+
+		records_.push_back(record);
+
+		++lineNumber;
 	}
 
-	if (!rulesFile.is_open()) {
-		cerr << "File '" << rulesFileName_ << "' could not be open" << endl;
-	}
-
-	rules_.tokenize(rulesFile);
-
-	rulesFile.close();
 }
 
 //-----------------------------------------------------------------------------
 
-void RulesFile::parse()  /* throws SyntacticErrorException */
-{
-	assert(!rulesFileName_.empty());
-
-	rules_.parse();
-}
-
-//-----------------------------------------------------------------------------
-
-void RulesFile::evaluate() /* throws SemanticErrorException */
-{
-	assert(!rulesFileName_.empty());
-
-	rules_.evaluate();
-}
-
-//-----------------------------------------------------------------------------
-
-Rules &RulesFile::getRules()
-{
-	return rules_;
-}
-
-//-----------------------------------------------------------------------------
 
 } // namespace luxoft

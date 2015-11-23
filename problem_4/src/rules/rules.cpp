@@ -133,6 +133,13 @@ void Rules::evaluate() /* throws SemanticErrorException */
 
 //-----------------------------------------------------------------------------
 
+ObjectTable &Rules::getObjectTable()
+{
+	return objectTable_;
+}
+
+//-----------------------------------------------------------------------------
+
 bool Rules::isValidLine(const string &line)
 {
 	bool isComment = (line[0] == '#');

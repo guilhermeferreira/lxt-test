@@ -47,9 +47,13 @@ example data, but do not make it overly complicated.
 In order to make the rules easy to extend and modify, I created a very simple
 interpreted domain language called "Call Cost Calculation Language", or C3L.
 This principle follows the ones presented in sections 12 (Domain Languages) and
-20 (Code Generators) of the book "The Pragmatic Programmer". The user specify
-the calls records through a serie of input files. Section 2.1 explains how to
-use the program.
+20 (Code Generators) of the book "The Pragmatic Programmer". As stated in the
+task document: "Design architecture in the most scalable way, especially
+concerning calls cost calculation algorithm"; the most scalable way to define
+algothms is to leave the definition outside of the compiled code.
+
+The user specify the calls records through a serie of input files. Section 2.1
+explains how to use the program.
 
 The call cost rules are described through a file in which the user has high
 degree of freedom to define call cost formula. Each line represents a statement
@@ -171,12 +175,19 @@ The meaning of each <object> is described bellow:
  2.3. Call records file
 ------------------------------------------------------------------------------
 
-start; end; destination; source
+The call records is a comma-separated values (CSV) file. The separator is a
+semicolon (';') instead of a comma (','). The format is in accordance with the
+RFC 4180. Each line (call record) has the format:
 
-start - date and time for call start;
-end - date and time for call start end;
-destination - number called;
-source - subscriber account information.
+                 Start;End;Destination;Source
+
+Where:
+ - Start is the week date and the time (hh:mm:ss) of the call start;
+ - End indicates the week date and the time (hh:mm:ss) that the call has
+   finished;
+ - Destination contains the number called;
+ - Source describes the caller phone number (subscriber account
+   information).
 
 
 ------------------------------------------------------------------------------
@@ -203,7 +214,10 @@ e. The program is limited to parse 1-digit precision floating point constants
    (e.g. 2.5, 89.6, 14.8). This limitation is to avoid precision loss due the
    IEEE 754 floating-point used internally by the interpreter.
 
-f. 
+f. I'd limited the exception handling to language's syntax and semantic
+   analysis. Because those steps are critical and it is better kill the
+   program than run with incorrect parse-tree.
 
-g. 
+g. Once thou shalt "NOT use DB", the calls are recorded in a CSV (RFC 4180).
+   This is the simpler format I'm aware of.
 

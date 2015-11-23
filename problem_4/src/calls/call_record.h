@@ -19,68 +19,72 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULES_H
-#define RULES_H
+#ifndef CALL_RECORD_H
+#define CALL_RECORD_H
 
-#include <iostream>
 #include <string>
 #include <vector>
 
-#include "rule_line.h"
+#include "object.h"
 #include "object_table.h"
+
 
 namespace luxoft {
 
 //-----------------------------------------------------------------------------
-// Rules class
+// CallRecord class
 //-----------------------------------------------------------------------------
 
 /**
- * TODO
+ * This class represents a line of the call records file
  */
-class Rules {
+class CallRecord {
 public:
 
-	/**
-	 * TODO
-	 */
-	Rules();
+	explicit CallRecord(const int lineNumber);
+
+	virtual ~CallRecord();
 
 	/**
-	 * TODO
+	 * \brief Parse the record line and place the values into the object table
 	 */
-	virtual ~Rules();
-
-	/**
-	 * \brief Perform the lexical analysis
-	 *
-	 * Read the rules file to build a list of tokens
-	 */
-	void tokenize(std::istream &ruleStream) /* throws SyntacticErrorException */;
-
-	/**
-	 * \brief Perform the syntax analysis, parsing the rules file to build a Parse-Tree
-	 */
-	void parse() /* throws SyntacticErrorException */;
-
-	/**
-	 * \brief Apply the rules into the call record file
-	 */
-	void evaluate() /* throws SemanticErrorException */;
-
-	/**
-	 * \brief Get a reference to the object symbol table
-	 */
-	ObjectTable &getObjectTable();
+	void process(
+		const std::string &recordLine,
+		ObjectTable &objectTable);
 
 private:
-	bool isValidLine(const std::string &line);
 
-	std::vector<RuleLine*> ruleLines_;
-	ObjectTable objectTable_;
+	/**
+	 * \brief Extract the values from a record line
+	 */
+	bool getFields(
+		const std::string &recordLine,
+		std::string *callStartDate,
+		std::string *callEndDate,
+		std::string *callDestNumber,
+		std::string *callSrcNumber) const;
+
+	/**
+	 * \brief Get the difference in minutes of the end and start time of the call
+	 */
+	float getCallDuration(
+		std::string &callStartTime,
+		std::string &callEndTime) const;
+
+	/**
+	 * \brief Place the given values into their respective objects of the table
+	 */
+	void setObjects(
+		const float callDuration,
+		const std::string &callDestNumber,
+		const std::string &callDay,
+		ObjectTable &objectTable);
+
+
+	int lineNumber_;
 
 };
 
 } // namespace luxoft
 
-#endif /* RULES_H */
+#endif /* CALL_RECORD_H */

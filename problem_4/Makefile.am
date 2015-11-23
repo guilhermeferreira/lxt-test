@@ -21,6 +21,10 @@ COMMON_SOURCES += src/rules/addition_operation.cpp
 COMMON_SOURCES += src/rules/subtraction_operation.cpp
 COMMON_SOURCES += src/rules/multiplication_operation.cpp
 COMMON_SOURCES += src/rules/division_operation.cpp
+COMMON_SOURCES += src/calls/calls_file.cpp
+COMMON_SOURCES += src/calls/calls.cpp
+COMMON_SOURCES += src/calls/call_record.cpp
+COMMON_SOURCES += src/calls/call_time.cpp
 
 problem_4_SOURCES  = src/main.cpp
 problem_4_SOURCES += ${COMMON_SOURCES}

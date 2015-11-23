@@ -19,81 +19,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include "rules_file.h"
+#ifndef CALLS_H
+#define CALLS_H
 
-#include <cassert>
-
-#include <fstream>
 #include <iostream>
-#include <string>
+#include <vector>
 
+#include "call_record.h"
 #include "rules.h"
 
 
 namespace luxoft {
 
-using namespace std;
-
 //-----------------------------------------------------------------------------
-// RulesFile class
+// Calls class
 //-----------------------------------------------------------------------------
 
-RulesFile::RulesFile(string rulesFileName)
-: rulesFileName_(rulesFileName)
-{
-}
+/**
+ * \brief Represent a set of call record lines
+ */
+class Calls {
+public:
 
-//-----------------------------------------------------------------------------
+	Calls();
 
-RulesFile::~RulesFile()
-{
-}
+	virtual ~Calls();
 
-//-----------------------------------------------------------------------------
+	/**
+	 * \brief Apply the given rules to each call record line of the given input stream
+	 */
+	void process(std::istream &callsStream, Rules &rules);
 
-void RulesFile::tokenize() /* throws SyntacticErrorException */
-{
-	assert(!rulesFileName_.empty());
+private:
+	std::vector<CallRecord*> records_;
 
-	ifstream rulesFile(rulesFileName_.c_str());
-	if (!rulesFile) {
-		cerr << "File '" << rulesFileName_ << "' not found" << endl;
-	}
-
-	if (!rulesFile.is_open()) {
-		cerr << "File '" << rulesFileName_ << "' could not be open" << endl;
-	}
-
-	rules_.tokenize(rulesFile);
-
-	rulesFile.close();
-}
-
-//-----------------------------------------------------------------------------
-
-void RulesFile::parse()  /* throws SyntacticErrorException */
-{
-	assert(!rulesFileName_.empty());
-
-	rules_.parse();
-}
-
-//-----------------------------------------------------------------------------
-
-void RulesFile::evaluate() /* throws SemanticErrorException */
-{
-	assert(!rulesFileName_.empty());
-
-	rules_.evaluate();
-}
-
-//-----------------------------------------------------------------------------
-
-Rules &RulesFile::getRules()
-{
-	return rules_;
-}
-
-//-----------------------------------------------------------------------------
+};
 
 } // namespace luxoft
+
+#endif /* CALLS_H */

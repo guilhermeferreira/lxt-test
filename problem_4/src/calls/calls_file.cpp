@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include "rules_file.h"
+#include "calls_file.h"
 
 #include <cassert>
 
@@ -35,63 +35,39 @@ namespace luxoft {
 using namespace std;
 
 //-----------------------------------------------------------------------------
-// RulesFile class
+// CallsFile class
 //-----------------------------------------------------------------------------
 
-RulesFile::RulesFile(string rulesFileName)
-: rulesFileName_(rulesFileName)
+CallsFile::CallsFile(string callsFilesNames)
+: fileName_(callsFilesNames)
+{
+	assert(!fileName_.empty());
+}
+
+//-----------------------------------------------------------------------------
+
+CallsFile::~CallsFile()
 {
 }
 
 //-----------------------------------------------------------------------------
 
-RulesFile::~RulesFile()
+void CallsFile::process(Rules &rules)
 {
-}
+	assert(!fileName_.empty());
 
-//-----------------------------------------------------------------------------
-
-void RulesFile::tokenize() /* throws SyntacticErrorException */
-{
-	assert(!rulesFileName_.empty());
-
-	ifstream rulesFile(rulesFileName_.c_str());
-	if (!rulesFile) {
-		cerr << "File '" << rulesFileName_ << "' not found" << endl;
+	ifstream callsFile(fileName_.c_str());
+	if (!callsFile) {
+		cerr << "File '" << fileName_ << "' not found" << endl;
 	}
 
-	if (!rulesFile.is_open()) {
-		cerr << "File '" << rulesFileName_ << "' could not be open" << endl;
+	if (!callsFile.is_open()) {
+		cerr << "File '" << fileName_ << "' could not be open" << endl;
 	}
 
-	rules_.tokenize(rulesFile);
+	calls.process(callsFile, rules);
 
-	rulesFile.close();
-}
-
-//-----------------------------------------------------------------------------
-
-void RulesFile::parse()  /* throws SyntacticErrorException */
-{
-	assert(!rulesFileName_.empty());
-
-	rules_.parse();
-}
-
-//-----------------------------------------------------------------------------
-
-void RulesFile::evaluate() /* throws SemanticErrorException */
-{
-	assert(!rulesFileName_.empty());
-
-	rules_.evaluate();
-}
-
-//-----------------------------------------------------------------------------
-
-Rules &RulesFile::getRules()
-{
-	return rules_;
+	callsFile.close();
 }
 
 //-----------------------------------------------------------------------------

@@ -66,6 +66,11 @@ public:
 	 */
 	void evaluate() /* throws SemanticErrorException */;
 
+	/**
+	 * \brief Get a reference to the rules
+	 */
+	Rules &getRules();
+
 private:
 	std::string rulesFileName_;
 	Rules rules_;

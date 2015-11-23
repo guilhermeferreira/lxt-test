@@ -19,58 +19,60 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <cstdlib>
+#ifndef CALL_TIME_H
+#define CALL_TIME_H
 
-#include <algorithm>
-#include <exception>
-#include <iostream>
-#include <vector>
+#include <istream>
+#include <ostream>
+#include <string>
 
-#include "rules_file.h"
-#include "calls_file.h"
 
-using namespace std;
-using namespace luxoft;
+namespace luxoft {
 
 //-----------------------------------------------------------------------------
+// Time class
+//-----------------------------------------------------------------------------
 
-int main(int argc, char *argv[])
-{
-	cout << "Problem #4" << endl;
+/**
+ * \brief Class to manipulate chronological dates
+ *
+ * References:
+ *   Stroustrup, Bjarne. The C++ Programming Language, 4th Edition. Section D.4.4.2 - A Date Class.
+ *   Stroustrup, Bjarne. The C++ Programming Language, Special 3rd Edition. Section 16.3 - Concrete Classes
+ */
+class CallTime {
+public:
+	CallTime();
+	~CallTime();
 
-	string rulesFileName;
-	vector<string> callsFilesNames;
+	/**
+	 * TODO
+	 */
+	CallTime& operator=(const std::string &dateString);
 
-	// ./program_4 rules.c3l input1.call input2.call ... inputn.call
-	if (argc >= 3) {
-		rulesFileName = argv[1]; // e.g. rules.c3l
+	/**
+	 * \brief Compute the difference in minutes between this and another Time
+	 */
+	long long operator-(const CallTime& other);
 
-		for (int callFileIdx = 2; callFileIdx < argc; ++callFileIdx) {
-			callsFilesNames.push_back(argv[callFileIdx]); // e.g. inputx.call
-		}
+	/**
+	 * \brief Read from the input stream a time in "hh mm ss" format
+	 */
+	friend std::istream& operator>>(std::istream &is, CallTime& dt);
 
-		try {
-			RulesFile rulesFile(rulesFileName);
-			rulesFile.tokenize();
-			rulesFile.parse();
+	/**
+	 * \brief Write into the output stream a time in "hh:mm:ss" format
+	 */
+	friend std::ostream& operator<<(std::ostream &os, const CallTime& dt);
 
-			//
-			// Apply the same rules file to each calls file
-			//
-			for (vector<string>::iterator it = callsFilesNames.begin(); it != callsFilesNames.end(); ++it) {
-				CallsFile callsFile(*it);
+private:
+	int hour_;
+	int minutes_;
+	int seconds_;
 
-				callsFile.process(rulesFile.getRules());
-			}
-		} catch (exception &ex) {
-			cerr << "Error: " << ex.what() << endl;
-		}
+};
 
-	} else {
-		cerr << "Usage: " << argv[0]
-		     << " <rules-file> <call-file-1> [<call-file-2> ... <call-file-n>]"
-		     << endl;
-	}
 
-	return EXIT_SUCCESS;
-}
+} // namespace luxoft
+
+#endif /* CALL_TIME_H */

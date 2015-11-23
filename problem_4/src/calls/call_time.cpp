@@ -19,81 +19,87 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include "rules_file.h"
+#include "call_time.h"
 
 #include <cassert>
+#include <cmath>
 
-#include <fstream>
 #include <iostream>
-#include <string>
-
-#include "rules.h"
-
+#include <sstream>
 
 namespace luxoft {
 
 using namespace std;
 
+
 //-----------------------------------------------------------------------------
-// RulesFile class
+// Time class
 //-----------------------------------------------------------------------------
 
-RulesFile::RulesFile(string rulesFileName)
-: rulesFileName_(rulesFileName)
+CallTime::CallTime()
+: hour_(0),
+  minutes_(0),
+  seconds_(0)
 {
 }
 
 //-----------------------------------------------------------------------------
 
-RulesFile::~RulesFile()
+CallTime::~CallTime()
 {
 }
 
 //-----------------------------------------------------------------------------
 
-void RulesFile::tokenize() /* throws SyntacticErrorException */
+CallTime& CallTime::operator=(const std::string &dateString)
 {
-	assert(!rulesFileName_.empty());
+	assert(!dateString.empty());
 
-	ifstream rulesFile(rulesFileName_.c_str());
-	if (!rulesFile) {
-		cerr << "File '" << rulesFileName_ << "' not found" << endl;
-	}
+	size_t weekDayNameLen = dateString.find('-', 0);
+	string weekDayName = dateString.substr(0, weekDayNameLen);
 
-	if (!rulesFile.is_open()) {
-		cerr << "File '" << rulesFileName_ << "' could not be open" << endl;
-	}
-
-	rules_.tokenize(rulesFile);
-
-	rulesFile.close();
+	return *this;
 }
 
 //-----------------------------------------------------------------------------
 
-void RulesFile::parse()  /* throws SyntacticErrorException */
+long long CallTime::operator-(const CallTime& other)
 {
-	assert(!rulesFileName_.empty());
+	// Convert all units to minutes and then subtract
 
-	rules_.parse();
+	// NOTE: Minute fee is charged at the beginning of each minute, so if call
+	//       duration is 1:03, two minutes cost should be paid.
+	//
+	//       I solve this by ceiling the seconds division. Because the unit used
+	//       to compute the difference is minutes, the seconds must be converted
+	//       to minutes. This conversion must evaluate to floating-point, thus
+	//       the use of the 60.0 (floating-point literal) constant instead of
+	//       60 (integer literal).
+	double min1 = (hour_ * 60) + minutes_ + ceil(seconds_ / 60.0);
+	double min2 = (other.hour_ * 60) + other.minutes_+ ceil(other.seconds_ / 60.0);
+
+	return static_cast<long long>(min1 - min2);
 }
 
 //-----------------------------------------------------------------------------
 
-void RulesFile::evaluate() /* throws SemanticErrorException */
+istream& operator>>(istream &is, CallTime& dt)
 {
-	assert(!rulesFileName_.empty());
+	is >> dt.hour_ >> dt.minutes_ >> dt.seconds_;
 
-	rules_.evaluate();
+	return is;
 }
 
 //-----------------------------------------------------------------------------
 
-Rules &RulesFile::getRules()
+ostream& operator<<(ostream &os, const CallTime& dt)
 {
-	return rules_;
+	os << dt.hour_ << ":" << dt.minutes_ << ":" << dt.seconds_;
+
+	return os;
 }
 
 //-----------------------------------------------------------------------------
+
 
 } // namespace luxoft
