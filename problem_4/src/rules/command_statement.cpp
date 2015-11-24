@@ -64,7 +64,7 @@ void CommandStatement::parse(
 
 //-----------------------------------------------------------------------------
 
-void CommandStatement::execute()
+void CommandStatement::evaluate()
 {
 	assert(object_ != NULL);
 	assert(!object_->getName().empty());

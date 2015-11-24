@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 			rulesFile.parse();
 
 			for (vector<string>::iterator it = callsFilesNames.begin(); it != callsFilesNames.end(); ++it) {
-				rulesFile.execute();
+				rulesFile.evaluate();
 			}
 
 		} catch (exception &ex) {

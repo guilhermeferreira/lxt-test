@@ -50,7 +50,7 @@ public:
 		const std::vector<Token*> &tokens,
 		ObjectTable &objectTable);
 
-	virtual void execute();
+	virtual void evaluate();
 
 private:
 	Object *lvalueObject_;

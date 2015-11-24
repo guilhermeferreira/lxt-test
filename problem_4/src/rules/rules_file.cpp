@@ -80,11 +80,11 @@ void RulesFile::parse()  /* throws SyntacticErrorException */
 
 //-----------------------------------------------------------------------------
 
-void RulesFile::execute() /* throws SemanticErrorException */
+void RulesFile::evaluate() /* throws SemanticErrorException */
 {
 	assert(!rulesFileName_.empty());
 
-	rules_.execute();
+	rules_.evaluate();
 }
 
 //-----------------------------------------------------------------------------

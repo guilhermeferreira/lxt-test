@@ -54,7 +54,7 @@ public:
 	/**
 	 * \brief Evaluate recursively the expression (and its sub-expressions) value
 	 */
-	float getValue() const;
+	float evaluate() const;
 
 private:
 	Object *object_;

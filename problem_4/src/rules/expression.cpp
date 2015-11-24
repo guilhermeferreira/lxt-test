@@ -119,20 +119,20 @@ void Expression::parse(
 
 //-----------------------------------------------------------------------------
 
-float Expression::getValue() const
+float Expression::evaluate() const
 {
 	// i.e. <expression> ::= <object> "+" <expression>
 	if ((object_ != NULL) && (operation_ != NULL) && (expression_ != NULL)) {
 		assert(operation_ != NULL);
 
-		return operation_->execute(object_->getValue(), expression_->getValue());
+		return operation_->execute(object_->getValue(), expression_->evaluate());
 
 	}
 	// i.e. <expression> ::= <constant> "+" <expression>
 	else if ((object_ == NULL) && (operation_ != NULL) && (expression_ != NULL)) {
 		assert(operation_ != NULL);
 
-		return operation_->execute(constant_, expression_->getValue());
+		return operation_->execute(constant_, expression_->evaluate());
 
 	}
 	// i.e. <expression> ::= <object>

@@ -117,12 +117,12 @@ void RuleLine::parse(ObjectTable &objectTable)
 
 //-----------------------------------------------------------------------------
 
-void RuleLine::execute()
+void RuleLine::evaluate()
 {
 	assert(!tokens_.empty());
 	assert(statement_ != NULL);
 
-	statement_->execute();
+	statement_->evaluate();
 }
 
 

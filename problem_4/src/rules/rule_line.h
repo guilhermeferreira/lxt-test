@@ -44,7 +44,7 @@ public:
 	/**
 	 * TODO
 	 */
-	RuleLine(int lineNumber);
+	explicit RuleLine(int lineNumber);
 
 	/**
 	 * TODO
@@ -64,7 +64,7 @@ public:
 	/**
 	 * TODO
 	 */
-	void execute() /* throws SemanticErrorException */;
+	void evaluate() /* throws SemanticErrorException */;
 
 private:
 	std::vector<Token*> tokens_;

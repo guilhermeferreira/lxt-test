@@ -99,7 +99,6 @@ void Rules::parse()  /* throws SyntacticErrorException */
 
 	assert(!ruleLines_.empty());
 
-	string line;
 	for (vector<RuleLine*>::iterator it = ruleLines_.begin(); it != ruleLines_.end(); ++it) {
 		RuleLine *ruleLine = *it;
 		ruleLine->parse(objectTable_);
@@ -109,7 +108,7 @@ void Rules::parse()  /* throws SyntacticErrorException */
 
 //-----------------------------------------------------------------------------
 
-void Rules::execute() /* throws SemanticErrorException */
+void Rules::evaluate() /* throws SemanticErrorException */
 {
 	/*
 	3. Semantic analysis is the phase in which the compiler adds semantic information
@@ -125,10 +124,9 @@ void Rules::execute() /* throws SemanticErrorException */
 
 	assert(!ruleLines_.empty());
 
-	string line;
 	for (vector<RuleLine*>::iterator it = ruleLines_.begin(); it != ruleLines_.end(); ++it) {
 		RuleLine *ruleLine = *it;
-		ruleLine->execute();
+		ruleLine->evaluate();
 	}
 
 }

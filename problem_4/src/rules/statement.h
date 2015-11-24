@@ -47,7 +47,7 @@ public:
 		const std::vector<Token*> &tokens,
 		ObjectTable &objectTable) = 0;
 
-	virtual void execute() = 0;
+	virtual void evaluate() = 0;
 
 };
 

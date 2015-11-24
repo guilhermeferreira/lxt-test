@@ -42,7 +42,7 @@ public:
 	/**
 	 * TODO
 	 */
-	RulesFile(std::string rulesFileName);
+	explicit RulesFile(std::string rulesFileName);
 
 	/**
 	 * TODO
@@ -64,7 +64,7 @@ public:
 	/**
 	 * \brief Apply the rules into the call record file
 	 */
-	void execute() /* throws SemanticErrorException */;
+	void evaluate() /* throws SemanticErrorException */;
 
 private:
 	std::string rulesFileName_;

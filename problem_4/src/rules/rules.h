@@ -66,7 +66,7 @@ public:
 	/**
 	 * \brief Apply the rules into the call record file
 	 */
-	void execute() /* throws SemanticErrorException */;
+	void evaluate() /* throws SemanticErrorException */;
 
 private:
 	bool isValidLine(const std::string &line);

@@ -75,12 +75,12 @@ void AssignmentStatement::parse(
 
 //-----------------------------------------------------------------------------
 
-void AssignmentStatement::execute()
+void AssignmentStatement::evaluate()
 {
 	assert(lvalueObject_ != NULL);
 	assert(rvalueExpression_ != NULL);
 
-	lvalueObject_->setValue(rvalueExpression_->getValue());
+	lvalueObject_->setValue(rvalueExpression_->evaluate());
 }
 
 

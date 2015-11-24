@@ -64,7 +64,7 @@ void ExpressionTest::parse_IntegerConstant_Test()
 
 	Expression expression;
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(expression.getValue() == 20);
+	TEST_ASSERT(expression.evaluate() == 20);
 }
 
 //-----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ void ExpressionTest::parse_FloatConstant_Test()
 
 	Expression expression;
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(expression.getValue() == 20.5);
+	TEST_ASSERT(expression.evaluate() == 20.5);
 }
 
 //-----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ void ExpressionTest::parse_Object_Test()
 
 	Expression expression;
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(expression.getValue() == 30);
+	TEST_ASSERT(expression.evaluate() == 30);
 }
 
 //-----------------------------------------------------------------------------
@@ -117,7 +117,7 @@ void ExpressionTest::parse_Addition_2_ConstantOperands_Test()
 
 	Expression expression;
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(expression.getValue() == 60);
+	TEST_ASSERT(expression.evaluate() == 60);
 }
 
 //-----------------------------------------------------------------------------
@@ -142,7 +142,7 @@ void ExpressionTest::parse_Addition_2_ObjectOperands_Test()
 
 	Expression expression;
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(expression.getValue() == 60);
+	TEST_ASSERT(expression.evaluate() == 60);
 }
 
 //-----------------------------------------------------------------------------
@@ -171,7 +171,7 @@ void ExpressionTest::parse_Addition_3_Operands_Test()
 
 	Expression expression;
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(expression.getValue() == 111.5);
+	TEST_ASSERT(expression.evaluate() == 111.5);
 }
 
 //-----------------------------------------------------------------------------
@@ -208,7 +208,7 @@ void ExpressionTest::parse_Addition_4_Operands_Test()
 
 	Expression expression;
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(expression.getValue() == 112.5);
+	TEST_ASSERT(expression.evaluate() == 112.5);
 }
 
 //-----------------------------------------------------------------------------
@@ -230,7 +230,7 @@ void ExpressionTest::parse_Subtraction_2_ConstantOperands_Test()
 	Expression expression;
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(expression.getValue() == 5)
+	TEST_ASSERT(expression.evaluate() == 5)
 }
 
 //-----------------------------------------------------------------------------
@@ -256,7 +256,7 @@ void ExpressionTest::parse_Subtraction_2_ObjectOperands_Test()
 	Expression expression;
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(expression.getValue() == 5)
+	TEST_ASSERT(expression.evaluate() == 5)
 }
 
 //-----------------------------------------------------------------------------
@@ -278,7 +278,7 @@ void ExpressionTest::parse_Multiplication_2_ConstantOperands_Test()
 	Expression expression;
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(expression.getValue() == 4)
+	TEST_ASSERT(expression.evaluate() == 4)
 }
 
 //-----------------------------------------------------------------------------
@@ -304,7 +304,7 @@ void ExpressionTest::parse_Multiplication_2_ObjectOperands_Test()
 	Expression expression;
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(expression.getValue() == 4)
+	TEST_ASSERT(expression.evaluate() == 4)
 }
 
 //-----------------------------------------------------------------------------
@@ -326,7 +326,7 @@ void ExpressionTest::parse_Division_2_ConstantOperands_Test()
 	Expression expression;
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(expression.getValue() == 25)
+	TEST_ASSERT(expression.evaluate() == 25)
 }
 
 //-----------------------------------------------------------------------------
@@ -352,7 +352,7 @@ void ExpressionTest::parse_Division_2_ObjectOperands_Test()
 	Expression expression;
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(expression.getValue() == 25)
+	TEST_ASSERT(expression.evaluate() == 25)
 }
 
 //-----------------------------------------------------------------------------
@@ -382,7 +382,7 @@ void ExpressionTest::parse_3_Operands_Test()
 	Expression expression;
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(expression.getValue() == 40)
+	TEST_ASSERT(expression.evaluate() == 40)
 }
 
 //-----------------------------------------------------------------------------
@@ -420,6 +420,5 @@ void ExpressionTest::parse_4_Operands_Test()
 	Expression expression;
 	expression.parse(tokens, objTable);
 
-	cout << "expression.getValue() = " << expression.getValue() << endl; // TODO
-	TEST_ASSERT(expression.getValue() == 20)
+	TEST_ASSERT(expression.evaluate() == 20)
 }
