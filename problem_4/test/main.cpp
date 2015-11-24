@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2015 Guilherme M. Ferreira <guilherme.maciel.ferreira at gmail dot com>
+ * Copyright(c) 2015 Guilherme M. Ferreira <guilherme.maciel.ferreira@gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,5 +19,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include "rules.h"
+#include <cstdlib>
 
+#include <iostream>
+
+#include "expression_test.h"
+
+using namespace std;
+using namespace luxoft;
+
+//-----------------------------------------------------------------------------
+
+int main(int argc, char *argv[])
+{
+	cout << "Problem #4 Test" << endl;
+
+	ExpressionTest expressionTest;
+	Test::TextOutput output(Test::TextOutput::Verbose);
+	expressionTest.run(output, false);
+
+	return EXIT_SUCCESS;
+}

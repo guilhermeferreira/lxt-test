@@ -108,6 +108,7 @@ void Expression::parse(
 		}
 
 		vector<Token*> remainingTokens(tokens.begin() + 2, tokens.end());
+		assert(expression_ == NULL); // Avoid dangling pointers (and memory leak)
 		expression_ = new Expression;
 		expression_->parse(remainingTokens, objectTable);
 	}

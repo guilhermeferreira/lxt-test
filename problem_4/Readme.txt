@@ -166,11 +166,13 @@ a. I didn't use any STL smart pointers because std::auto_ptr ownership transfer
    issue is a huge headache. And I'm not sure if you have a C++11 compliant
    compiler to use std::shared_ptr and std::unique_ptr. Neither I used Boost's
    smart pointers (i.e. boost::shared_ptr and boost::scoped_ptr) because you
-   said "Try to use only STL library";
+   said "Try to use only STL library".
    
-b. I use assertation to ensure that code satisfies the methods pre-conditions;
+b. I use assertation to ensure that code satisfies the methods pre-conditions.
 
-c. 
+c. I decided to use a 3rd party test suite. Simply because there are options
+   much better (vesatile, robust and scalable) than what I can develope in a
+   few days.
 
 d. I chose the Autotools buildsystems instead of CMake because I'm not sure if
    you had the cmake installed. The automake and autoconf are more common in

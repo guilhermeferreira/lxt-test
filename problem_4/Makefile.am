@@ -1,48 +1,77 @@
 bin_PROGRAMS  = problem_4
 bin_PROGRAMS += problem_4_test
 
+###############################################################################
+# Source Code
+###############################################################################
+
+COMMON_SOURCES  = src/rules/rules_file.cpp
+COMMON_SOURCES += src/rules/rules.cpp
+COMMON_SOURCES += src/rules/rule_line.cpp
+COMMON_SOURCES += src/rules/statement.cpp
+COMMON_SOURCES += src/rules/assignment_statement.cpp
+COMMON_SOURCES += src/rules/command_statement.cpp
+COMMON_SOURCES += src/rules/object.cpp
+COMMON_SOURCES += src/rules/object_table.cpp
+COMMON_SOURCES += src/rules/operation.cpp
+COMMON_SOURCES += src/rules/operation_table.cpp
+COMMON_SOURCES += src/rules/token.cpp
+COMMON_SOURCES += src/rules/expression.cpp
+COMMON_SOURCES += src/rules/addition_operation.cpp
+COMMON_SOURCES += src/rules/subtraction_operation.cpp
+COMMON_SOURCES += src/rules/multiplication_operation.cpp
+COMMON_SOURCES += src/rules/division_operation.cpp
+
 problem_4_SOURCES  = src/main.cpp
-problem_4_SOURCES += src/rules/rules_file.cpp
-problem_4_SOURCES += src/rules/rules.cpp
-problem_4_SOURCES += src/rules/rule_line.cpp
-problem_4_SOURCES += src/rules/statement.cpp
-problem_4_SOURCES += src/rules/assignment_statement.cpp
-problem_4_SOURCES += src/rules/command_statement.cpp
-problem_4_SOURCES += src/rules/object.cpp
-problem_4_SOURCES += src/rules/object_table.cpp
-problem_4_SOURCES += src/rules/operation.cpp
-problem_4_SOURCES += src/rules/operation_table.cpp
-problem_4_SOURCES += src/rules/token.cpp
-problem_4_SOURCES += src/rules/expression.cpp
-problem_4_SOURCES += src/rules/addition_operation.cpp
-problem_4_SOURCES += src/rules/subtraction_operation.cpp
-problem_4_SOURCES += src/rules/multiplication_operation.cpp
-problem_4_SOURCES += src/rules/division_operation.cpp
+problem_4_SOURCES += ${COMMON_SOURCES}
 
-problem_4_test_SOURCES  = ${problem_4_SOURCES}
-problem_4_test_SOURCES += test/rules_test.cpp
+TEST_SOURCES  = test/rules/expression_test.cpp
 
-problem_4_CPPFLAGS  = -I.
-problem_4_CPPFLAGS += -I./src
-problem_4_CPPFLAGS += -I./src/excp
-problem_4_CPPFLAGS += -I./src/rules
-problem_4_CPPFLAGS += -g
-problem_4_CPPFLAGS += -Wall
-problem_4_CPPFLAGS += -Wextra
-#problem_4_CPPFLAGS += -Weffc++
-problem_4_CPPFLAGS += -Wshadow
-problem_4_CPPFLAGS += -Wabi
-problem_4_CPPFLAGS += -Winline
-problem_4_CPPFLAGS += -Wmissing-declarations
-problem_4_CPPFLAGS += -Wmissing-format-attribute
-problem_4_CPPFLAGS += -Woverloaded-virtual
-problem_4_CPPFLAGS += -Wpacked
-problem_4_CPPFLAGS += -Wredundant-decls
-problem_4_CPPFLAGS += -Wsign-promo
-problem_4_CPPFLAGS += -Wstack-protector -fstack-protector
-problem_4_CPPFLAGS += -Wswitch-default
-problem_4_CPPFLAGS += -Wfloat-equal
-problem_4_CPPFLAGS += -Wcast-qual
-problem_4_CPPFLAGS += -Wconversion
+problem_4_test_SOURCES  = test/main.cpp
+problem_4_test_SOURCES += ${COMMON_SOURCES}
+problem_4_test_SOURCES += ${TEST_SOURCES}
 
-problem_4_test_CPPFLAGS  = ${problem_4_CPPFLAGS}
+
+###############################################################################
+# Compilation Flags
+###############################################################################
+
+COMMON_CPPFLAGS  = -I.
+COMMON_CPPFLAGS += -I./src
+COMMON_CPPFLAGS += -I./src/calls
+COMMON_CPPFLAGS += -I./src/excp
+COMMON_CPPFLAGS += -I./src/rules
+COMMON_CPPFLAGS += -g
+COMMON_CPPFLAGS += -Wall
+COMMON_CPPFLAGS += -Wextra
+#COMMON_CPPFLAGS += -Weffc++
+COMMON_CPPFLAGS += -Wshadow
+COMMON_CPPFLAGS += -Wabi
+COMMON_CPPFLAGS += -Winline
+COMMON_CPPFLAGS += -Wmissing-declarations
+COMMON_CPPFLAGS += -Wmissing-format-attribute
+COMMON_CPPFLAGS += -Woverloaded-virtual
+COMMON_CPPFLAGS += -Wpacked
+COMMON_CPPFLAGS += -Wredundant-decls
+COMMON_CPPFLAGS += -Wsign-promo
+COMMON_CPPFLAGS += -Wstack-protector -fstack-protector
+COMMON_CPPFLAGS += -Wswitch-default
+COMMON_CPPFLAGS += -Wfloat-equal
+COMMON_CPPFLAGS += -Wcast-qual
+COMMON_CPPFLAGS += -Wconversion
+
+problem_4_CPPFLAGS  = ${COMMON_CPPFLAGS}
+
+TEST_CPPFLAGS  = -I.
+TEST_CPPFLAGS += -I./test
+TEST_CPPFLAGS += -I./test/rules
+
+problem_4_test_CPPFLAGS  = ${COMMON_CPPFLAGS}
+problem_4_test_CPPFLAGS += ${TEST_CPPFLAGS}
+
+
+###############################################################################
+# Linking Flags
+###############################################################################
+
+problem_4_test_LDFLAGS  = -L. -lcpptest
