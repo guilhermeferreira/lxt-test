@@ -124,14 +124,18 @@ one and only one rule:
                            | <object> "*" <expression>
                            | <object> "/" <expression>
                            | <object>
+                           | <constant> "+" <expression>
+                           | <constant> "-" <expression>
+                           | <constant> "*" <expression>
+                           | <constant> "/" <expression>
                            | <constant>
 
   <constant>             ::= <floating_constant>
                            | <integer_constant>
 
-  <floating_constant>    ::= <integer_constant> "." <integer_constant>
+  <floating_constant>    ::= <integer_constant> "." <digit>
 
-  <integer_constant>     ::= <digit><numeric_constant>
+  <integer_constant>     ::= <digit><integer_constant>
                            | <digit>
 
   <digit>                ::= "0"
@@ -178,7 +182,9 @@ d. I chose the Autotools buildsystems instead of CMake because I'm not sure if
    you had the cmake installed. The automake and autoconf are more common in
    Unix systems.
 
-e. 
+e. The program is limited to parse 1-digit precision floating point constants
+   (i.e. 2.5, 89.6, 14.8). This limitation is to avoid precision loss due the
+   IEEE 754 floating-point used internally by the interpreter.
 
 f. 
 

@@ -67,20 +67,22 @@ void Expression::parse(
 	//    <object> "-"
 	//    <object> "*"
 	//    <object> "/"
-	//    <numeric_constant>
+	//    <constant>
 	//
 	// The remaining <expression> is processed recursively (i.e. it's a context-
 	// free grammar anyways)
 
 
-	// process expressions with a single operand, variable (object) or constant
+	// Process expressions with a single operand, variable (object) or constant
 	Token *firstToken = tokens[0];
 	switch (firstToken->getType()) {
+		// The production rule is <expression> ::= <object>
 		case TOKEN_TYPE_OBJECT: {
 			string objectName = firstToken->getValue();
 			object_ = objectTable.getObject(objectName);
 			break;
 		}
+		// The production rule is <expression> ::= <constant>
 		case TOKEN_TYPE_NUMERIC_CONSTANT: {
 			string numericValue = firstToken->getValue();
 			istringstream stream(numericValue);
@@ -92,8 +94,8 @@ void Expression::parse(
 			break;
 	}
 
-	// process expressions that have an operand, an arithmetic operator and
-	// another expression
+	// Process expressions that have operand, arithmetic operator and another
+	// expression (i.e. <expression> ::= <object> "+" <expression>)
 	if (tokens.size() > 1) {
 		Token *secondToken = tokens[1];
 		switch (secondToken->getType()) {
@@ -119,15 +121,27 @@ void Expression::parse(
 
 float Expression::getValue() const
 {
-	if ((object_ != NULL) && (expression_ != NULL)) {
+	// i.e. <expression> ::= <object> "+" <expression>
+	if ((object_ != NULL) && (operation_ != NULL) && (expression_ != NULL)) {
 		assert(operation_ != NULL);
 
 		return operation_->execute(object_->getValue(), expression_->getValue());
 
-	} else if ((object_ != NULL) && (expression_ == NULL)) {
+	}
+	// i.e. <expression> ::= <constant> "+" <expression>
+	else if ((object_ == NULL) && (operation_ != NULL) && (expression_ != NULL)) {
+		assert(operation_ != NULL);
+
+		return operation_->execute(constant_, expression_->getValue());
+
+	}
+	// i.e. <expression> ::= <object>
+	else if ((object_ != NULL) && (operation_ == NULL) && (expression_ == NULL)) {
 		return object_->getValue();
 
-	} else { // ((object_ == NULL) && (expression_ != NULL))
+	}
+	// i.e. <expression> ::= <constant>
+	else { // ((object_ == NULL) && (expression_ != NULL))
 		return constant_;
 
 	}

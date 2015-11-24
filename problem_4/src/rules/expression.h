@@ -36,7 +36,7 @@ namespace luxoft {
 //-----------------------------------------------------------------------------
 
 /**
- * TODO
+ * \brief The <expression> non-terminal symbol
  */
 class Expression {
 public:
@@ -44,10 +44,16 @@ public:
 
 	virtual ~Expression();
 
+	/**
+	 * \brief Recursively build the <exception> non-terminal parsing-tree
+	 */
 	void parse(
 		const std::vector<Token*> &tokens,
 		ObjectTable &objectTable);
 
+	/**
+	 * \brief Evaluate recursively the expression (and its sub-expressions) value
+	 */
 	float getValue() const;
 
 private:
