@@ -26,6 +26,7 @@
 #include <sstream>
 
 #include "operation_table.h"
+#include "syntactic_error_exception.h"
 
 
 namespace luxoft {
@@ -87,7 +88,7 @@ void Expression::parse(
 			break;
 		}
 		default:
-			/* TODO throw MalformedExpression */
+			throw SyntacticErrorException(0);
 			break;
 	}
 
@@ -102,7 +103,7 @@ void Expression::parse(
 				break;
 			}
 			default:
-				/* TODO throw MalformedExpression */
+				throw SyntacticErrorException(0);
 				break;
 		}
 

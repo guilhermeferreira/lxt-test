@@ -172,7 +172,9 @@ b. I use assertation to ensure that code satisfies the methods pre-conditions;
 
 c. 
 
-d. 
+d. I chose the Autotools buildsystems instead of CMake because I'm not sure if
+   you had the cmake installed. The automake and autoconf are more common in
+   Unix systems.
 
 e. 
 

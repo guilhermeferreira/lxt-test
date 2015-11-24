@@ -19,53 +19,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <cstdlib>
+#ifndef SYNTAX_ERROR_EXCEPTION_H
+#define SYNTAX_ERROR_EXCEPTION_H
 
-#include <algorithm>
-#include <exception>
-#include <iostream>
-#include <vector>
+#include "compilation_error_exception.h"
 
-#include "rules_file.h"
 
-using namespace std;
-using namespace luxoft;
+namespace luxoft {
 
 //-----------------------------------------------------------------------------
+// SyntacticErrorException class
+//-----------------------------------------------------------------------------
 
-int main(int argc, char *argv[])
+/**
+ * \brief Syntactic error that occur during syntactic analysis
+ */
+class SyntacticErrorException: public CompilationErrorException
 {
-	cout << "Problem #4" << endl;
-
-	string rulesFileName;
-	vector<string> callsFilesNames;
-
-	// ./program_4 rules.c3l input1.call input2.call ... inputn.call
-	if (argc >= 3) {
-		rulesFileName = argv[1]; // i.e. rules.c3l
-
-		for (int callFileIdx = 2; callFileIdx < argc; ++callFileIdx) {
-			callsFilesNames.push_back(argv[callFileIdx]); // i.e. inputx.call
-		}
-
-		try {
-			RulesFile rulesFile(rulesFileName);
-			rulesFile.tokenize();
-			rulesFile.parse();
-
-			for (vector<string>::iterator it = callsFilesNames.begin(); it != callsFilesNames.end(); ++it) {
-				rulesFile.execute();
-			}
-
-		} catch (exception &ex) {
-			cerr << "Error: " << ex.what() << endl;
-		}
-
-	} else {
-		cerr << "Usage: " << argv[0]
-		     << " <rules-file> <call-file-1> [<call-file-2> ... <call-file-n>]"
-		     << endl;
+public:
+	SyntacticErrorException(int lineNumber)
+	: CompilationErrorException(lineNumber, "Syntactic error")
+	{
 	}
 
-	return EXIT_SUCCESS;
-}
+	virtual ~SyntacticErrorException() throw()
+	{
+	}
+
+};
+
+
+} // namespace luxoft
+
+#endif /* SYNTAX_ERROR_EXCEPTION_H */

@@ -25,6 +25,7 @@
 
 #include "assignment_statement.h"
 #include "command_statement.h"
+#include "syntactic_error_exception.h"
 
 
 namespace luxoft {
@@ -35,8 +36,8 @@ using namespace std;
 // RuleLine class
 //-----------------------------------------------------------------------------
 
-RuleLine::RuleLine()
-: statement_(NULL)
+RuleLine::RuleLine(int lineNumber)
+: statement_(NULL), lineNumber_(lineNumber)
 {
 }
 
@@ -97,7 +98,7 @@ void RuleLine::parse(ObjectTable &objectTable)
 	const string firstToken = tokens_[0]->getValue();
 	size_t firstTokenPrefixEndPos = firstToken.find_first_of("_");
 	if (firstTokenPrefixEndPos == string::npos) {
-		// TODO throw SyntaxError("")
+		firstTokenPrefixEndPos = firstToken.length();
 	}
 
 	const string firstTokenPrefix = firstToken.substr(0, firstTokenPrefixEndPos);
@@ -108,7 +109,7 @@ void RuleLine::parse(ObjectTable &objectTable)
 		statement_ = new CommandStatement;
 		statement_->parse(tokens_, objectTable);
 	} else {
-		// TODO throw SyntaxError("Invalid statement prefix", firstTokenPrefix)
+		throw SyntacticErrorException(lineNumber_);
 	}
 
 

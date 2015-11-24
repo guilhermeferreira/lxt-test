@@ -56,17 +56,17 @@ public:
 	 *
 	 * Read the rules file to build a list of tokens
 	 */
-	void tokenize(std::istream &ruleStream) /* TODO throws SyntaxError */;
+	void tokenize(std::istream &ruleStream) /* throws SyntacticErrorException */;
 
 	/**
 	 * \brief Perform the syntax analysis, parsing the rules file to build a Parse-Tree
 	 */
-	void parse() /* TODO throws SyntaxError */;
+	void parse() /* throws SyntacticErrorException */;
 
 	/**
 	 * \brief Apply the rules into the call record file
 	 */
-	void execute() /* TODO throws SemanticError */;
+	void execute() /* throws SemanticErrorException */;
 
 private:
 	bool isValidLine(const std::string &line);

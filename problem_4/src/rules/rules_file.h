@@ -54,17 +54,17 @@ public:
 	 *
 	 * Read the rules file to build a list of tokens
 	 */
-	void tokenize() /* TODO throws SyntaxError */;
+	void tokenize() /* throws SyntacticErrorException */;
 
 	/**
 	 * \brief Parse the rules file to build a Parse-Tree
 	 */
-	void parse() /* TODO throws SyntaxError */;
+	void parse() /* throws SyntacticErrorException */;
 
 	/**
 	 * \brief Apply the rules into the call record file
 	 */
-	void execute() /* TODO throws SemanticError */;
+	void execute() /* throws SemanticErrorException */;
 
 private:
 	std::string rulesFileName_;

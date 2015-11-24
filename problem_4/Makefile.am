@@ -24,10 +24,12 @@ problem_4_test_SOURCES += test/rules_test.cpp
 
 problem_4_CPPFLAGS  = -I.
 problem_4_CPPFLAGS += -I./src
+problem_4_CPPFLAGS += -I./src/excp
 problem_4_CPPFLAGS += -I./src/rules
+problem_4_CPPFLAGS += -g
 problem_4_CPPFLAGS += -Wall
 problem_4_CPPFLAGS += -Wextra
-problem_4_CPPFLAGS += -Weffc++
+#problem_4_CPPFLAGS += -Weffc++
 problem_4_CPPFLAGS += -Wshadow
 problem_4_CPPFLAGS += -Wabi
 problem_4_CPPFLAGS += -Winline

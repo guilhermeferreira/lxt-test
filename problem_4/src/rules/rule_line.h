@@ -44,7 +44,7 @@ public:
 	/**
 	 * TODO
 	 */
-	RuleLine();
+	RuleLine(int lineNumber);
 
 	/**
 	 * TODO
@@ -59,16 +59,17 @@ public:
 	/**
 	 * TODO
 	 */
-	void parse(ObjectTable &objectTable) /* TODO throws SyntaxError */;
+	void parse(ObjectTable &objectTable) /* throws SyntacticErrorException */;
 
 	/**
 	 * TODO
 	 */
-	void execute() /* TODO throws SemanticError */;
+	void execute() /* throws SemanticErrorException */;
 
 private:
 	std::vector<Token*> tokens_;
 	Statement *statement_;
+	int lineNumber_;
 
 };
 

@@ -51,7 +51,7 @@ RulesFile::~RulesFile()
 
 //-----------------------------------------------------------------------------
 
-void RulesFile::tokenize() /* TODO throws SyntaxError */
+void RulesFile::tokenize() /* throws SyntacticErrorException */
 {
 	assert(!rulesFileName_.empty());
 
@@ -71,7 +71,7 @@ void RulesFile::tokenize() /* TODO throws SyntaxError */
 
 //-----------------------------------------------------------------------------
 
-void RulesFile::parse()  /* TODO throws SyntaxError */
+void RulesFile::parse()  /* throws SyntacticErrorException */
 {
 	assert(!rulesFileName_.empty());
 
@@ -80,7 +80,7 @@ void RulesFile::parse()  /* TODO throws SyntaxError */
 
 //-----------------------------------------------------------------------------
 
-void RulesFile::execute() /* TODO throws SemanticError */
+void RulesFile::execute() /* throws SemanticErrorException */
 {
 	assert(!rulesFileName_.empty());
 

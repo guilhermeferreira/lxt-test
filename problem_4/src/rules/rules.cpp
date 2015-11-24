@@ -56,7 +56,7 @@ Rules::~Rules()
 
 //-----------------------------------------------------------------------------
 
-void Rules::tokenize(std::istream &ruleStream) /* TODO throws SyntaxError */
+void Rules::tokenize(std::istream &ruleStream) /* throws SyntacticErrorException */
 {
 	/*
 	 1. Lexical analysis breaks the source code text into small pieces called tokens.
@@ -70,21 +70,24 @@ void Rules::tokenize(std::istream &ruleStream) /* TODO throws SyntaxError */
 	 */
 
 	string line;
+	int lineNumber = 1;
 	while (getline(ruleStream, line)) {
 		// Discard comments and white space characters
 		if (isValidLine(line)) {
 
-			RuleLine *ruleLine = new RuleLine;
+			RuleLine *ruleLine = new RuleLine(lineNumber);
 			ruleLine->tokenize(line);
 
 			ruleLines_.push_back(ruleLine);
+
+			++lineNumber;
 		}
 	}
 }
 
 //-----------------------------------------------------------------------------
 
-void Rules::parse()  /* TODO throws SyntaxError */
+void Rules::parse()  /* throws SyntacticErrorException */
 {
 	/*
 	2. Syntax analysis involves parsing the token sequence to identify the syntactic
@@ -106,7 +109,7 @@ void Rules::parse()  /* TODO throws SyntaxError */
 
 //-----------------------------------------------------------------------------
 
-void Rules::execute() /* TODO throws SemanticError */
+void Rules::execute() /* throws SemanticErrorException */
 {
 	/*
 	3. Semantic analysis is the phase in which the compiler adds semantic information
