@@ -37,8 +37,12 @@ using namespace std;
 // Expression class
 //-----------------------------------------------------------------------------
 
-Expression::Expression()
-: object_(NULL), expression_(NULL), operation_(NULL), constant_(0)
+Expression::Expression(const int lineNumber)
+: object_(NULL),
+  expression_(NULL),
+  operation_(NULL),
+  constant_(0),
+  lineNumber_(lineNumber)
 {
 }
 
@@ -80,6 +84,9 @@ void Expression::parse(
 		case TOKEN_TYPE_OBJECT: {
 			string objectName = firstToken->getValue();
 			object_ = objectTable.getObject(objectName);
+			if (object_ == NULL) {
+				throw SyntacticErrorException(lineNumber_);
+			}
 			break;
 		}
 		// The production rule is <expression> ::= <constant>
@@ -95,7 +102,7 @@ void Expression::parse(
 	}
 
 	// Process expressions that have operand, arithmetic operator and another
-	// expression (i.e. <expression> ::= <object> "+" <expression>)
+	// expression (e.g. <expression> ::= <object> "+" <expression>)
 	if (tokens.size() > 1) {
 		Token *secondToken = tokens[1];
 		switch (secondToken->getType()) {
@@ -111,7 +118,7 @@ void Expression::parse(
 
 		vector<Token*> remainingTokens(tokens.begin() + 2, tokens.end());
 		assert(expression_ == NULL); // Avoid dangling pointers (and memory leak)
-		expression_ = new Expression;
+		expression_ = new Expression(lineNumber_);
 		expression_->parse(remainingTokens, objectTable);
 	}
 
@@ -121,14 +128,18 @@ void Expression::parse(
 
 float Expression::evaluate() const
 {
-	// i.e. <expression> ::= <object> "+" <expression>
+	// FIXME Due the lack of operator precedence in the grammar, non-
+	//       commutative operations (i.e. subtraction and division) are not
+	//       evaluated properly when expressions contain more than two operands
+
+	// e.g. <expression> ::= <object> "+" <expression>
 	if ((object_ != NULL) && (operation_ != NULL) && (expression_ != NULL)) {
 		assert(operation_ != NULL);
 
 		return operation_->execute(object_->getValue(), expression_->evaluate());
 
 	}
-	// i.e. <expression> ::= <constant> "+" <expression>
+	// e.g. <expression> ::= <constant> "+" <expression>
 	else if ((object_ == NULL) && (operation_ != NULL) && (expression_ != NULL)) {
 		assert(operation_ != NULL);
 

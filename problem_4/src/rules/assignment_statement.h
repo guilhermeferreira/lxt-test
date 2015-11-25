@@ -42,7 +42,7 @@ namespace luxoft {
  */
 class AssignmentStatement : public Statement {
 public:
-	AssignmentStatement();
+	explicit AssignmentStatement(const int lineNumber);
 
 	virtual ~AssignmentStatement();
 
@@ -55,6 +55,7 @@ public:
 private:
 	Object *lvalueObject_;
 	Expression *rvalueExpression_;
+	int lineNumber_;
 
 };
 

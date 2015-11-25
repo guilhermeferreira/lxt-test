@@ -40,7 +40,7 @@ namespace luxoft {
  */
 class Expression {
 public:
-	Expression();
+	explicit Expression(const int lineNumber);
 
 	virtual ~Expression();
 
@@ -61,6 +61,7 @@ private:
 	Expression *expression_;
 	const Operation *operation_;
 	float constant_;
+	int lineNumber_;
 
 };
 

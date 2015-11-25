@@ -25,6 +25,8 @@
 
 #include <iostream>
 
+#include "syntactic_error_exception.h"
+#include "semantic_error_exception.h"
 
 namespace luxoft {
 
@@ -34,8 +36,9 @@ using namespace std;
 // CommandStatement class
 //-----------------------------------------------------------------------------
 
-CommandStatement::CommandStatement()
-: object_(NULL)
+CommandStatement::CommandStatement(const int lineNumber)
+: object_(NULL),
+  lineNumber_(lineNumber)
 {
 }
 
@@ -60,6 +63,10 @@ void CommandStatement::parse(
 
 	string objectName = tokens[1]->getValue();
 	object_ = objectTable.getObject(objectName);
+	if (object_ == NULL) {
+		throw SyntacticErrorException(lineNumber_);
+	}
+	assert(object_ != NULL);
 }
 
 //-----------------------------------------------------------------------------

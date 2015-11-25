@@ -36,8 +36,9 @@ using namespace std;
 // RuleLine class
 //-----------------------------------------------------------------------------
 
-RuleLine::RuleLine(int lineNumber)
-: statement_(NULL), lineNumber_(lineNumber)
+RuleLine::RuleLine(const int lineNumber)
+: statement_(NULL),
+  lineNumber_(lineNumber)
 {
 }
 
@@ -103,10 +104,10 @@ void RuleLine::parse(ObjectTable &objectTable)
 
 	const string firstTokenPrefix = firstToken.substr(0, firstTokenPrefixEndPos);
 	if (firstTokenPrefix == "call") {
-		statement_ = new AssignmentStatement;
+		statement_ = new AssignmentStatement(lineNumber_);
 		statement_->parse(tokens_, objectTable);
 	} else if (firstTokenPrefix == "print") {
-		statement_ = new CommandStatement;
+		statement_ = new CommandStatement(lineNumber_);
 		statement_->parse(tokens_, objectTable);
 	} else {
 		throw SyntacticErrorException(lineNumber_);

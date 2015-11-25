@@ -23,6 +23,8 @@
 
 #include <cassert>
 
+#include "syntactic_error_exception.h"
+#include "semantic_error_exception.h"
 
 namespace luxoft {
 
@@ -32,8 +34,10 @@ using namespace std;
 // AssignmentStatement class
 //-----------------------------------------------------------------------------
 
-AssignmentStatement::AssignmentStatement()
-: lvalueObject_(NULL), rvalueExpression_(NULL)
+AssignmentStatement::AssignmentStatement(const int lineNumber)
+: lvalueObject_(NULL),
+  rvalueExpression_(NULL),
+  lineNumber_(lineNumber)
 {
 }
 
@@ -41,7 +45,8 @@ AssignmentStatement::AssignmentStatement()
 
 AssignmentStatement::~AssignmentStatement()
 {
-	// TODO don't destroy lvalueObject_, because this class does not instantiate it
+	// WARNING: Don't destroy the "lvalueObject_" pointer, because this
+	//          class has not not instantiated it!
 
 	if (rvalueExpression_ != NULL) {
 		delete rvalueExpression_;
@@ -59,9 +64,16 @@ void AssignmentStatement::parse(
 	assert(lvalueObject_ == NULL);
 	assert(rvalueExpression_ == NULL);
 
+	// Parse the production rule:
+	//     <assignment_statement> ::= <readwrite_object> "=" <expression>
+
 	// Consume left hand side token, that is the variable (object) name
 	string objectName = tokens[0]->getValue();
 	lvalueObject_ = objectTable.getObject(objectName);
+	if (lvalueObject_ == NULL) {
+		throw SyntacticErrorException(lineNumber_);
+	}
+	assert(lvalueObject_ != NULL);
 
 	// Consume the assignment operator
 	string operatorSymbol = tokens[1]->getValue();
@@ -69,7 +81,8 @@ void AssignmentStatement::parse(
 
 	// Expression can consume only the right hand side tokens
 	vector<Token*> remainingTokens(tokens.begin() + 2, tokens.end());
-	rvalueExpression_ = new Expression;
+	rvalueExpression_ = new Expression(lineNumber_);
+	assert(rvalueExpression_ != NULL);
 	rvalueExpression_->parse(remainingTokens, objectTable);
 }
 

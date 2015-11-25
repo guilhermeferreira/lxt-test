@@ -62,7 +62,7 @@ void ExpressionTest::parse_IntegerConstant_Test()
 	Token t1("20", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t1);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 	TEST_ASSERT(expression.evaluate() == 20);
 }
@@ -77,7 +77,7 @@ void ExpressionTest::parse_FloatConstant_Test()
 	Token t1("20.5", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t1);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 	TEST_ASSERT(expression.evaluate() == 20.5);
 }
@@ -94,7 +94,7 @@ void ExpressionTest::parse_Object_Test()
 	Token t1(ObjectTable::CALL_COST_TOTAL, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t1);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 	TEST_ASSERT(expression.evaluate() == 30);
 }
@@ -115,7 +115,7 @@ void ExpressionTest::parse_Addition_2_ConstantOperands_Test()
 	Token t3("10", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t3);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 	TEST_ASSERT(expression.evaluate() == 60);
 }
@@ -140,7 +140,7 @@ void ExpressionTest::parse_Addition_2_ObjectOperands_Test()
 	Token t3(ObjectTable::CALL_COST_MINUTE, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t3);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 	TEST_ASSERT(expression.evaluate() == 60);
 }
@@ -169,7 +169,7 @@ void ExpressionTest::parse_Addition_3_Operands_Test()
 	Token t5(ObjectTable::CALL_COST_TOTAL, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t5);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 	TEST_ASSERT(expression.evaluate() == 111.5);
 }
@@ -206,7 +206,7 @@ void ExpressionTest::parse_Addition_4_Operands_Test()
 	Token t7("10", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t7);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 	TEST_ASSERT(expression.evaluate() == 112.5);
 }
@@ -227,7 +227,7 @@ void ExpressionTest::parse_Subtraction_2_ConstantOperands_Test()
 	Token t3("5", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t3);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(expression.evaluate() == 5)
@@ -253,7 +253,7 @@ void ExpressionTest::parse_Subtraction_2_ObjectOperands_Test()
 	Token t3(ObjectTable::CALL_COST_MINUTE, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t3);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(expression.evaluate() == 5)
@@ -275,7 +275,7 @@ void ExpressionTest::parse_Multiplication_2_ConstantOperands_Test()
 	Token t3("2", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t3);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(expression.evaluate() == 4)
@@ -301,7 +301,7 @@ void ExpressionTest::parse_Multiplication_2_ObjectOperands_Test()
 	Token t3(ObjectTable::CALL_COST_MINUTE, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t3);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(expression.evaluate() == 4)
@@ -323,7 +323,7 @@ void ExpressionTest::parse_Division_2_ConstantOperands_Test()
 	Token t3("2", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t3);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(expression.evaluate() == 25)
@@ -349,7 +349,7 @@ void ExpressionTest::parse_Division_2_ObjectOperands_Test()
 	Token t3(ObjectTable::CALL_COST_MINUTE, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t3);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(expression.evaluate() == 25)
@@ -379,7 +379,7 @@ void ExpressionTest::parse_3_Operands_Test()
 	Token t5(ObjectTable::CALL_COST_TOTAL, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t5);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(expression.evaluate() == 40)
@@ -417,7 +417,7 @@ void ExpressionTest::parse_4_Operands_Test()
 	Token t7("2", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t7);
 
-	Expression expression;
+	Expression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(expression.evaluate() == 20)

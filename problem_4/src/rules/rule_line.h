@@ -44,7 +44,7 @@ public:
 	/**
 	 * TODO
 	 */
-	explicit RuleLine(int lineNumber);
+	explicit RuleLine(const int lineNumber);
 
 	/**
 	 * TODO

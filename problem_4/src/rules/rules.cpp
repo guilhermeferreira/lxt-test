@@ -79,9 +79,9 @@ void Rules::tokenize(std::istream &ruleStream) /* throws SyntacticErrorException
 			ruleLine->tokenize(line);
 
 			ruleLines_.push_back(ruleLine);
-
-			++lineNumber;
 		}
+
+		++lineNumber;
 	}
 }
 

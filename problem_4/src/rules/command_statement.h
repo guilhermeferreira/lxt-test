@@ -41,7 +41,7 @@ namespace luxoft {
  */
 class CommandStatement : public Statement {
 public:
-	CommandStatement();
+	explicit CommandStatement(const int lineNumber);
 
 	virtual ~CommandStatement();
 
@@ -53,6 +53,7 @@ public:
 
 private:
 	Object *object_;
+	int lineNumber_;
 
 };
 
