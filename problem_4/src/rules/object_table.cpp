@@ -32,44 +32,38 @@ using namespace std;
 // ObjectTable class
 //-----------------------------------------------------------------------------
 
-const string ObjectTable::CALL_CONNECTION_COST_TOTAL = "call_connection_cost_total";
-const string ObjectTable::CALL_BONUS_AMOUNT_MINUTE = "call_bonus_amount_minute";
-const string ObjectTable::CALL_BONUS_DURATION_MINUTE = "call_bonus_duration_minute";
-const string ObjectTable::CALL_BONUS_PERIOD_DAY = "call_bonus_period_day";
-const string ObjectTable::CALL_INSIDE_ITEMS = "call_inside_items";
-const string ObjectTable::CALL_INSIDE_BONUS_AMOUNT_MINUTE = "call_inside_bonus_amount_minute";
-const string ObjectTable::CALL_INSIDE_COST_MINUTE = "call_inside_cost_minute";
-const string ObjectTable::CALL_OUTSIDE_COST_MINUTE = "call_outside_cost_minute";
+const string ObjectTable::CALL_TOTAL_COST = "call_total_cost";
+const string ObjectTable::CALL_MINUTE_COST = "call_minute_cost";
+const string ObjectTable::CALL_CONNECTION_COST = "call_connection_cost";
 const string ObjectTable::CALL_DURATION_MINUTE = "call_duration_minute";
-const string ObjectTable::CALL_COST_MINUTE = "call_cost_minute";
-const string ObjectTable::CALL_COST_TOTAL = "call_cost_total";
+const string ObjectTable::CALL_BONUS_QUANTITY_MINUTE = "call_bonus_quantity_minute";
+const string ObjectTable::CALL_BONUS_VALIDITY_MINUTE = "call_bonus_validity_minute";
+const string ObjectTable::CALL_DESTINATION_PREFIX = "call_destination_prefix";
+const string ObjectTable::CALL_PERIOD_DAY = "call_period_day";
+
 
 //-----------------------------------------------------------------------------
 
 ObjectTable::ObjectTable()
-: callConnectionCostTotal(ObjectTable::CALL_CONNECTION_COST_TOTAL),
-  callBonusAmountMinute(ObjectTable::CALL_BONUS_AMOUNT_MINUTE),
-  callBonusDurationMinute(ObjectTable::CALL_BONUS_DURATION_MINUTE),
-  callBonusPeriodDay(ObjectTable::CALL_BONUS_PERIOD_DAY),
-  callInsideItems(ObjectTable::CALL_INSIDE_ITEMS),
-  callInsideBonusAmountMinute(ObjectTable::CALL_INSIDE_BONUS_AMOUNT_MINUTE),
-  callInsideCostMinute(ObjectTable::CALL_INSIDE_COST_MINUTE),
-  callOutsideCostMinute(ObjectTable::CALL_OUTSIDE_COST_MINUTE),
-  callDurationMinute(ObjectTable::CALL_DURATION_MINUTE),
-  callCostMinute(ObjectTable::CALL_COST_MINUTE),
-  callCostTotal(ObjectTable::CALL_COST_TOTAL)
+: callTotalCost(ObjectTable::CALL_TOTAL_COST, 0.0),
+  callMinuteCost(ObjectTable::CALL_MINUTE_COST, 0.0),
+  callConnectionCost(ObjectTable::CALL_CONNECTION_COST, 0.0),
+  callDurationMinute(ObjectTable::CALL_DURATION_MINUTE, 0, true),
+  callBonusQuantityMinute(ObjectTable::CALL_BONUS_QUANTITY_MINUTE, 0),
+  callBonusValityMinute(ObjectTable::CALL_BONUS_VALIDITY_MINUTE, 0),
+  callDestinationPrefix(ObjectTable::CALL_DESTINATION_PREFIX, "", true),
+  callPeriodDay(ObjectTable::CALL_PERIOD_DAY, "", true)
 {
-	symbolTable_[ObjectTable::CALL_CONNECTION_COST_TOTAL] = &callConnectionCostTotal;
-	symbolTable_[ObjectTable::CALL_BONUS_AMOUNT_MINUTE] = &callBonusAmountMinute;
-	symbolTable_[ObjectTable::CALL_BONUS_DURATION_MINUTE] = &callBonusDurationMinute;
-	symbolTable_[ObjectTable::CALL_BONUS_PERIOD_DAY] = &callBonusPeriodDay;
-	symbolTable_[ObjectTable::CALL_INSIDE_ITEMS] = &callInsideItems;
-	symbolTable_[ObjectTable::CALL_INSIDE_BONUS_AMOUNT_MINUTE] = &callInsideBonusAmountMinute;
-	symbolTable_[ObjectTable::CALL_INSIDE_COST_MINUTE] = &callInsideCostMinute;
-	symbolTable_[ObjectTable::CALL_OUTSIDE_COST_MINUTE] = &callOutsideCostMinute;
+	symbolTable_[ObjectTable::CALL_TOTAL_COST] = &callTotalCost;
+	symbolTable_[ObjectTable::CALL_MINUTE_COST] = &callMinuteCost;
+	symbolTable_[ObjectTable::CALL_CONNECTION_COST] = &callConnectionCost;
+
 	symbolTable_[ObjectTable::CALL_DURATION_MINUTE] = &callDurationMinute;
-	symbolTable_[ObjectTable::CALL_COST_MINUTE] = &callCostMinute;
-	symbolTable_[ObjectTable::CALL_COST_TOTAL] = &callCostTotal;
+	symbolTable_[ObjectTable::CALL_BONUS_QUANTITY_MINUTE] = &callBonusQuantityMinute;
+	symbolTable_[ObjectTable::CALL_BONUS_VALIDITY_MINUTE] = &callBonusValityMinute;
+
+	detailSymbolTable_[ObjectTable::CALL_DESTINATION_PREFIX] = &callDestinationPrefix;
+	detailSymbolTable_[ObjectTable::CALL_PERIOD_DAY] = &callPeriodDay;
 }
 
 //-----------------------------------------------------------------------------
@@ -80,12 +74,25 @@ ObjectTable::~ObjectTable()
 
 //-----------------------------------------------------------------------------
 
-Object *ObjectTable::getObject(const string &objectName)
+FloatingObject *ObjectTable::getObject(const string &objectName)
 {
 	assert(!objectName.empty());
 	assert(!symbolTable_.empty());
 
 	return symbolTable_[objectName];
 }
+
+//-----------------------------------------------------------------------------
+
+StringObject *ObjectTable::getDetailObject(const string &objectName)
+{
+	assert(!objectName.empty());
+	assert(!detailSymbolTable_.empty());
+
+	return detailSymbolTable_[objectName];
+}
+
+//-----------------------------------------------------------------------------
+
 
 } // namespace luxoft

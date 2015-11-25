@@ -53,7 +53,7 @@ public:
 	virtual void evaluate();
 
 private:
-	Object *lvalueObject_;
+	FloatingObject *lvalueObject_;
 	Expression *rvalueExpression_;
 	int lineNumber_;
 

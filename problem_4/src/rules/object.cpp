@@ -23,54 +23,103 @@
 
 #include <cassert>
 
+#include <limits>
+
 
 namespace luxoft {
 
 using namespace std;
 
+
 //-----------------------------------------------------------------------------
-// Object class
+// Object template
 //-----------------------------------------------------------------------------
 
-Object::Object()
-: name_(""), value_(0)
+template class Object<float>;
+template class Object<std::string>;
+
+//-----------------------------------------------------------------------------
+
+template <typename T>
+Object<T>::Object()
+: name_(""),
+  value_(),
+  isRulesReadOnly_(false)
 {
 }
+template Object<float>::Object();
+template Object<string>::Object();
 
 //-----------------------------------------------------------------------------
 
-Object::Object(string name, float value)
-: name_(name), value_(value)
+template <typename T>
+Object<T>::Object(string name, T value, bool rulesReadOnly)
+: name_(name),
+  value_(value),
+  isRulesReadOnly_(rulesReadOnly)
 {
-	assert(!name.empty());
+	assert(!name_.empty());
 }
+template Object<float>::Object(string name, float value, bool rulesReadOnly);
+template Object<string>::Object(string name, string value, bool rulesReadOnly);
+
 
 //-----------------------------------------------------------------------------
 
-Object::~Object()
+template <typename T>
+Object<T>::~Object()
 {
 }
+template Object<float>::~Object();
+template Object<string>::~Object();
 
 //-----------------------------------------------------------------------------
 
-string Object::getName() const
+template <typename T>
+string Object<T>::getName() const
 {
+	assert(!name_.empty());
+
 	return name_;
 }
+template string Object<float>::getName() const;
+template string Object<string>::getName() const;
 
 //-----------------------------------------------------------------------------
 
-float Object::getValue() const
+template <typename T>
+bool Object<T>::isRulesReadOnly() const
 {
+	assert(!name_.empty());
+
+	return isRulesReadOnly_;
+}
+template bool Object<float>::isRulesReadOnly() const;
+template bool Object<string>::isRulesReadOnly() const;
+
+//-----------------------------------------------------------------------------
+
+template <typename T>
+T Object<T>::getValue() const
+{
+	assert(!name_.empty());
+
 	return value_;
 }
+template float Object<float>::getValue() const;
+template string Object<string>::getValue() const;
 
 //-----------------------------------------------------------------------------
 
-void Object::setValue(const float value)
+template <typename T>
+void Object<T>::setValue(const T &value)
 {
+	assert(!name_.empty());
+
 	value_ = value;
 }
+template void Object<float>::setValue(const float &value);
+template void Object<string>::setValue(const string &value);
 
 //-----------------------------------------------------------------------------
 

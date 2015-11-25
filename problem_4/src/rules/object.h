@@ -28,28 +28,47 @@
 namespace luxoft {
 
 //-----------------------------------------------------------------------------
-// Object class
+// Object template
 //-----------------------------------------------------------------------------
 
 /**
- * TODO
+ * Represent the non-terminal <object>
  */
+template <typename T>
 class Object {
 public:
 	Object();
-	Object(std::string name, float value = 0);
+	Object(std::string name, T value, bool rulesReadOnly = false);
 	virtual ~Object();
 
 	std::string getName() const;
 
-	float getValue() const;
-	void setValue(const float value);
+	bool isRulesReadOnly() const;
+
+	T getValue() const;
+	void setValue(const T &value);
 
 private:
 	std::string name_;
-	float value_;
+	T value_;
+	bool isRulesReadOnly_;
 
 };
+
+
+//-----------------------------------------------------------------------------
+// FloatingObject specialization
+//-----------------------------------------------------------------------------
+
+typedef Object<float> FloatingObject;
+
+//-----------------------------------------------------------------------------
+// StringObject specialization
+//-----------------------------------------------------------------------------
+
+typedef Object<std::string> StringObject;
+
+//-----------------------------------------------------------------------------
 
 
 } // namespace luxoft

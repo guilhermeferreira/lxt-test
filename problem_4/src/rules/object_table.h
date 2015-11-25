@@ -34,44 +34,52 @@ namespace luxoft {
 //-----------------------------------------------------------------------------
 
 /**
- * TODO
+ * \brief The object store with all variable symbols
  */
 class ObjectTable {
 public:
-	static const std::string CALL_CONNECTION_COST_TOTAL;
-	static const std::string CALL_BONUS_AMOUNT_MINUTE;
-	static const std::string CALL_BONUS_DURATION_MINUTE;
-	static const std::string CALL_BONUS_PERIOD_DAY;
-	static const std::string CALL_INSIDE_ITEMS;
-	static const std::string CALL_INSIDE_BONUS_AMOUNT_MINUTE;
-	static const std::string CALL_INSIDE_COST_MINUTE;
-	static const std::string CALL_OUTSIDE_COST_MINUTE;
+	static const std::string CALL_TOTAL_COST;
+	static const std::string CALL_MINUTE_COST;
+	static const std::string CALL_CONNECTION_COST;
 	static const std::string CALL_DURATION_MINUTE;
-	static const std::string CALL_COST_MINUTE;
-	static const std::string CALL_COST_TOTAL;
+	static const std::string CALL_DESTINATION_PREFIX;
+	static const std::string CALL_PERIOD_DAY;
+	static const std::string CALL_BONUS_QUANTITY_MINUTE;
+	static const std::string CALL_BONUS_VALIDITY_MINUTE;
 
 public:
 	ObjectTable();
 	virtual ~ObjectTable();
 
-	Object *getObject(const std::string &objectName);
+	FloatingObject *getObject(const std::string &objectName);
+	StringObject *getDetailObject(const std::string &objectName);
 
 private:
-	// When we reference "call_bonus_duration_minute", for example, we reference
+	// When we reference "call_total_cost", for example, we reference
 	// one single object
-	std::map<std::string, Object*> symbolTable_;
+	std::map<std::string, FloatingObject*> symbolTable_;
+	std::map<std::string, StringObject*> detailSymbolTable_;
 
-	Object callConnectionCostTotal;
-	Object callBonusAmountMinute;
-	Object callBonusDurationMinute;
-	Object callBonusPeriodDay;
-	Object callInsideItems;
-	Object callInsideBonusAmountMinute;
-	Object callInsideCostMinute;
-	Object callOutsideCostMinute;
-	Object callDurationMinute;
-	Object callCostMinute;
-	Object callCostTotal;
+	// Floating-point monetary costs
+	FloatingObject callTotalCost;
+	FloatingObject callMinuteCost;
+	FloatingObject callConnectionCost;
+
+	// FIXME I decided to make the Minute objects floating-point because
+	//       they are writable and must share the same methods as the costs.
+	//       Otherwise I would have to make a special cases to handle
+	//       integer or floating-point objects. This decision simplifies
+	//       the code
+
+	// Integer duration in minutes
+	FloatingObject callDurationMinute;
+	FloatingObject callBonusQuantityMinute;
+	FloatingObject callBonusValityMinute;
+
+	// String details
+	StringObject callDestinationPrefix;
+	StringObject callPeriodDay;
+
 };
 
 } // namespace luxoft

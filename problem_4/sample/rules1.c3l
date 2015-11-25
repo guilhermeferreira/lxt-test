@@ -1,31 +1,17 @@
 # -------------------------------------
-# Call rules
+# Problem #4 - Call Rules 1
 # -------------------------------------
-# Units (minute, day, etc) are suffix
-# Objects (call, call_inside, call_outside) are prefix
-# Object attributes (duration, period, fee, cost) are at the middle
-#
 
-call_connection_cost_total = 0.33
 
-call_bonus_amount_minute = 30
-call_bonus_duration_minute = 30 * 24 * 60
-#call_bonus_period_day = saturday, sunday
+call_connection_cost = 0.45
 
-#call_inside_items = 050, 066, 095, 099
-call_inside_bonus_amount_minute = 5
-call_inside_cost_minute = 0.50
+call_minute_cost = 0.50
 
-call_outside_cost_minute = 0.95
+call_total_cost = call_connection_cost + call_minute_cost * call_duration_minute
 
-call_cost_total = call_connection_cost_total + call_duration_minute * call_cost_minute
-
-print call_cost_total
-print call_bonus_amount_minute
-print call_bonus_duration_minute
-print call_bonus_period_day
-print call_connection_cost_total
-print call_inside_items
-print call_inside_cost_minute
-print call_inside_bonus_amount_minute
-print call_outside_cost_minute
+print call_total_cost
+print call_minute_cost
+print call_connection_cost
+print call_duration_minute
+print call_destination_prefix
+print call_period_day

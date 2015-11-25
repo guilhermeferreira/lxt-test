@@ -37,7 +37,8 @@ using namespace std;
 //-----------------------------------------------------------------------------
 
 CommandStatement::CommandStatement(const int lineNumber)
-: object_(NULL),
+: floatingObject_(NULL),
+  stringObject_(NULL),
   lineNumber_(lineNumber)
 {
 }
@@ -56,27 +57,50 @@ void CommandStatement::parse(
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
-	assert(object_ == NULL);
+	assert((floatingObject_ == NULL) && (stringObject_ == NULL));
+
+	// Production rules:
+	//
+	//  <command_statement>    ::= <command> <expression>
+	//  <command>              ::= "print"
+	//  <expression>           ::= <operand>
+	//  <operand>              ::= <readwrite_object>
+	//                           | <readonly_object>
+	//                           | <constant>
 
 	string commandName = tokens[0]->getValue();
 	assert(commandName == "print");
 
 	string objectName = tokens[1]->getValue();
-	object_ = objectTable.getObject(objectName);
-	if (object_ == NULL) {
-		throw SyntacticErrorException(lineNumber_);
+	floatingObject_ = objectTable.getObject(objectName);
+	if (floatingObject_ == NULL) {
+		stringObject_ = objectTable.getDetailObject(objectName);
+		if (stringObject_ == NULL) {
+			throw SyntacticErrorException(lineNumber_);
+		}
 	}
-	assert(object_ != NULL);
+	assert((floatingObject_ != NULL) || (stringObject_ != NULL));
 }
 
 //-----------------------------------------------------------------------------
 
 void CommandStatement::evaluate()
 {
-	assert(object_ != NULL);
-	assert(!object_->getName().empty());
+	assert((floatingObject_ != NULL) || (stringObject_ != NULL));
 
-	cout << object_->getName() << " = " << object_->getValue() << endl;
+	if (floatingObject_ != NULL) {
+		assert(!floatingObject_->getName().empty());
+
+		cout << floatingObject_->getName() << " = " << floatingObject_->getValue() << endl;
+	}
+	else if (stringObject_ != NULL) {
+		assert(!stringObject_->getName().empty());
+
+		cout << stringObject_->getName() << " = " << stringObject_->getValue() << endl;
+	}
+	else {
+		throw SemanticErrorException(lineNumber_);
+	}
 }
 
 

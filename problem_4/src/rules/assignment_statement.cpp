@@ -93,6 +93,11 @@ void AssignmentStatement::evaluate()
 	assert(lvalueObject_ != NULL);
 	assert(rvalueExpression_ != NULL);
 
+	// <readonly_object> can't be lvalues!
+	if (lvalueObject_->isRulesReadOnly()) {
+		throw SemanticErrorException(lineNumber_);
+	}
+
 	lvalueObject_->setValue(rvalueExpression_->evaluate());
 }
 

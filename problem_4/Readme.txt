@@ -51,7 +51,7 @@ This principle follows the ones presented in sections 12 (Domain Languages) and
 the calls records through a serie of input files. Section 2.1 explains how to
 use the program.
 
-The call cost rules are described through a file in which the user has high 
+The call cost rules are described through a file in which the user has high
 degree of freedom to define call cost formula. Each line represents a statement
 in the rules file. Basically, each language element has three methods:
  - tokenize() that performs the lexical analysis, breaking the input string into
@@ -88,8 +88,8 @@ The rules are defined in the Call Cost Calculation Language (C3L). This is a
 simple context-free grammar I created for this sample application.
 
 The C3L grammar is described bellow in Backus-Naur Form. A symbol delimited by
-angle brackets (i.e. <non-terminal>) is a non terminal symbol. A symbol delimted
-by double quotes (i.e. "terminal") is a terminal symbol. Each line must contain
+angle brackets (e.g. <non-terminal>) is a non terminal symbol. A symbol delimted
+by double quotes (e.g. "terminal") is a terminal symbol. Each line must contain
 one and only one rule:
 
   <rules>                ::= <rule_line> <rules>
@@ -100,35 +100,30 @@ one and only one rule:
                            | <assignment_statement>
 
   <command_statement>    ::= <command> <expression>
-  
+
   <command>              ::= "print"
-  
-  <assignment_statement> ::= <object> "=" <expression>
 
-  <object>               ::= "call_cost_total"
-                           | "call_bonus_amount_minute"
-                           | "call_bonus_duration_minute"
-                           | "call_bonus_period_day"
-                           | "call_connection_cost_total"
-                           | "call_inside_items"
-                           | "call_inside_cost_minute"
-                           | "call_inside_bonus_amount_minute"
-                           | "call_outside_cost_minute"
-                           | "call_outside_bonus_amount_minute"
-                           | "call_connection_cost_total"
-                           | "call_duration_minute"
-                           | "call_cost_minute
+  <assignment_statement> ::= <readwrite_object> "=" <expression>
 
-  <expression>           ::= <object> "+" <expression>
-                           | <object> "-" <expression>
-                           | <object> "*" <expression>
-                           | <object> "/" <expression>
-                           | <object>
-                           | <constant> "+" <expression>
-                           | <constant> "-" <expression>
-                           | <constant> "*" <expression>
-                           | <constant> "/" <expression>
+  <expression>           ::= <operand> "+" <expression>
+                           | <operand> "-" <expression>
+                           | <operand> "*" <expression>
+                           | <operand> "/" <expression>
+                           | <operand>
+
+  <operand>              ::= <readwrite_object>
+                           | <readonly_object>
                            | <constant>
+
+  <readwrite_object>     ::= "call_total_cost"
+                           | "call_minute_cost"
+                           | "call_connection_cost"
+                           | "call_bonus_quantity_minute"
+                           | "call_bonus_validity_minute"
+
+  <readonly_object>      ::= "call_duration_minute"
+                           | "call_destination_prefix"
+                           | "call_period_day"
 
   <constant>             ::= <floating_constant>
                            | <integer_constant>
@@ -150,6 +145,28 @@ one and only one rule:
                            | "9"
 
 
+The meaning of each <object> is described bellow:
+
+ - call_total_cost = the total cost of the call;
+
+ - call_minute_cost = the cost of the call per minute;
+
+ - call_connection_cost = the fixed connection fee (e.g. $0.33) that is
+   added to any call cost;
+
+ - call_bonus_quantity_minute = subscriber's minutes of free talking (e.g.
+   30 minutes);
+
+ - call_bonus_validity_minute = validity of subscriber's minutes of free
+   talking (e.g. 30 days since the date when last credit was added);
+
+ - call_duration_minute = the duration of the call;
+
+ - call_destination_prefix = the callee phone number prefix;
+
+ - call_period_day = the day of the call;
+
+
 ------------------------------------------------------------------------------
  2.3. Call records file
 ------------------------------------------------------------------------------
@@ -169,9 +186,9 @@ source - subscriber account information.
 a. I didn't use any STL smart pointers because std::auto_ptr ownership transfer
    issue is a huge headache. And I'm not sure if you have a C++11 compliant
    compiler to use std::shared_ptr and std::unique_ptr. Neither I used Boost's
-   smart pointers (i.e. boost::shared_ptr and boost::scoped_ptr) because you
+   smart pointers (e.g. boost::shared_ptr and boost::scoped_ptr) because you
    said "Try to use only STL library".
-   
+
 b. I use assertation to ensure that code satisfies the methods pre-conditions.
 
 c. I decided to use a 3rd party test suite. Simply because there are options
@@ -183,7 +200,7 @@ d. I chose the Autotools buildsystems instead of CMake because I'm not sure if
    Unix systems.
 
 e. The program is limited to parse 1-digit precision floating point constants
-   (i.e. 2.5, 89.6, 14.8). This limitation is to avoid precision loss due the
+   (e.g. 2.5, 89.6, 14.8). This limitation is to avoid precision loss due the
    IEEE 754 floating-point used internally by the interpreter.
 
 f. 

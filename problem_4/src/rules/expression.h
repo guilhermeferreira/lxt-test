@@ -57,7 +57,7 @@ public:
 	float evaluate() const;
 
 private:
-	Object *object_;
+	FloatingObject *object_;
 	Expression *expression_;
 	const Operation *operation_;
 	float constant_;

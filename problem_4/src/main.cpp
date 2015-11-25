@@ -42,10 +42,10 @@ int main(int argc, char *argv[])
 
 	// ./program_4 rules.c3l input1.call input2.call ... inputn.call
 	if (argc >= 3) {
-		rulesFileName = argv[1]; // i.e. rules.c3l
+		rulesFileName = argv[1]; // e.g. rules.c3l
 
 		for (int callFileIdx = 2; callFileIdx < argc; ++callFileIdx) {
-			callsFilesNames.push_back(argv[callFileIdx]); // i.e. inputx.call
+			callsFilesNames.push_back(argv[callFileIdx]); // e.g. inputx.call
 		}
 
 		try {
