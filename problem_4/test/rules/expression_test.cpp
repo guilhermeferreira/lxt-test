@@ -21,6 +21,9 @@
  */
 #include "expression_test.h"
 
+#include <cfloat>
+#include <cmath>
+
 using namespace std;
 using namespace luxoft;
 
@@ -64,7 +67,7 @@ void ExpressionTest::parse_IntegerConstant_Test()
 
 	Expression expression(1);
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(expression.evaluate() == 20);
+	TEST_ASSERT(fabs(expression.evaluate() - 20.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
@@ -79,7 +82,7 @@ void ExpressionTest::parse_FloatConstant_Test()
 
 	Expression expression(1);
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(expression.evaluate() == 20.5);
+	TEST_ASSERT(fabs(expression.evaluate() - 20.5) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
@@ -96,7 +99,7 @@ void ExpressionTest::parse_Object_Test()
 
 	Expression expression(1);
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(expression.evaluate() == 30);
+	TEST_ASSERT(fabs(expression.evaluate() - 30.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
@@ -117,7 +120,7 @@ void ExpressionTest::parse_Addition_2_ConstantOperands_Test()
 
 	Expression expression(1);
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(expression.evaluate() == 60);
+	TEST_ASSERT(fabs(expression.evaluate() - 60.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
@@ -142,7 +145,7 @@ void ExpressionTest::parse_Addition_2_ObjectOperands_Test()
 
 	Expression expression(1);
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(expression.evaluate() == 60);
+	TEST_ASSERT(fabs(expression.evaluate() - 60.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
@@ -171,7 +174,7 @@ void ExpressionTest::parse_Addition_3_Operands_Test()
 
 	Expression expression(1);
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(expression.evaluate() == 111.5);
+	TEST_ASSERT(fabs(expression.evaluate() - 111.5) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
@@ -208,7 +211,7 @@ void ExpressionTest::parse_Addition_4_Operands_Test()
 
 	Expression expression(1);
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(expression.evaluate() == 112.5);
+	TEST_ASSERT(fabs(expression.evaluate() - 112.5) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
@@ -230,7 +233,7 @@ void ExpressionTest::parse_Subtraction_2_ConstantOperands_Test()
 	Expression expression(1);
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(expression.evaluate() == 5)
+	TEST_ASSERT(fabs(expression.evaluate() - 5.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
@@ -256,7 +259,7 @@ void ExpressionTest::parse_Subtraction_2_ObjectOperands_Test()
 	Expression expression(1);
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(expression.evaluate() == 5)
+	TEST_ASSERT(fabs(expression.evaluate() - 5.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
@@ -278,7 +281,7 @@ void ExpressionTest::parse_Multiplication_2_ConstantOperands_Test()
 	Expression expression(1);
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(expression.evaluate() == 4)
+	TEST_ASSERT(fabs(expression.evaluate() - 4.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
@@ -304,7 +307,7 @@ void ExpressionTest::parse_Multiplication_2_ObjectOperands_Test()
 	Expression expression(1);
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(expression.evaluate() == 4)
+	TEST_ASSERT(fabs(expression.evaluate() - 4.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
@@ -326,7 +329,7 @@ void ExpressionTest::parse_Division_2_ConstantOperands_Test()
 	Expression expression(1);
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(expression.evaluate() == 25)
+	TEST_ASSERT(fabs(expression.evaluate() - 25.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
@@ -352,7 +355,7 @@ void ExpressionTest::parse_Division_2_ObjectOperands_Test()
 	Expression expression(1);
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(expression.evaluate() == 25)
+	TEST_ASSERT(fabs(expression.evaluate() - 25.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
@@ -382,7 +385,7 @@ void ExpressionTest::parse_3_Operands_Test()
 	Expression expression(1);
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(expression.evaluate() == 40)
+	TEST_ASSERT(fabs(expression.evaluate() - 40.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
@@ -424,5 +427,5 @@ void ExpressionTest::parse_4_Operands_Test()
 	// commutative operations (i.e. subtraction and division) are not
 	// evaluated properly when expressions contain more than two operands
 
-	TEST_ASSERT(expression.evaluate() == 20)
+	TEST_ASSERT(fabs(expression.evaluate() - 20.0) <= FLT_EPSILON);
 }
