@@ -74,7 +74,7 @@ void CallRecord::process(
 		string callEndTime = callEndDate.substr(callEndDayLen + 1);
 
 		// FIXME The call duration computation is limited to calls on the same day.
-		float callDuration = getCallDuration(callStartTime, callEndTime);
+		int callDuration = getCallDurationInMin(callStartTime, callEndTime);
 		if (callDuration > 0.0) {
 
 			setObjects(callDuration, callDestNumber, callStartDay, objectTable);
@@ -98,7 +98,7 @@ bool CallRecord::getFields(
 	string *callStartDate,
 	string *callEndDate,
 	string *callDestNumber,
-	string *callSrcNumber) const
+	string *callSrcNumber)
 {
 	assert(!recordLine.empty());
 
@@ -123,23 +123,14 @@ bool CallRecord::getFields(
 
 //-----------------------------------------------------------------------------
 
-float CallRecord::getCallDuration(
+int CallRecord::getCallDurationInMin(
 	std::string &callStartTime,
-	std::string &callEndTime) const
+	std::string &callEndTime)
 {
 	assert(!callStartTime.empty());
 	assert(callStartTime.length() == (sizeof("hh:mm:ss") - 1));
 	assert(!callEndTime.empty());
 	assert(callEndTime.length() == (sizeof("hh:mm:ss") - 1));
-
-	// Input in the form of "hh:mm:ss"
-	// Replace ':' by white space ' '! So the tokenizer can parse
-	for (size_t pos = callStartTime.find(':', 0); pos != string::npos; pos = callStartTime.find(':', pos + 1)) {
-		callStartTime.replace(pos, 1, 1, ' ');
-	}
-	for (size_t pos = callEndTime.find(':', 0); pos != string::npos; pos = callEndTime.find(':', pos + 1)) {
-		callEndTime.replace(pos, 1, 1, ' ');
-	}
 
 	stringstream startTimeTokenizer(callStartTime);
 	CallTime startTime;
@@ -149,7 +140,7 @@ float CallRecord::getCallDuration(
 	CallTime endTime;
 	endDateTokenizer >> endTime;
 
-	float callDurationInMinutes = endTime - startTime;
+	int callDurationInMinutes = endTime - startTime;
 
 	return callDurationInMinutes;
 }

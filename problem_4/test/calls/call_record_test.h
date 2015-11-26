@@ -19,65 +19,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef CALL_TIME_H
-#define CALL_TIME_H
+#ifndef CALL_RECORD_TEST_H
+#define CALL_RECORD_TEST_H
 
-#include <istream>
-#include <ostream>
-#include <string>
+#include "call_record.h"
 
+#include <cpptest.h>
 
-namespace luxoft {
 
 //-----------------------------------------------------------------------------
-// Time class
+// CallRecordTest class
 //-----------------------------------------------------------------------------
 
-/**
- * \brief Class to manipulate chronological dates
- *
- * References:
- *   Stroustrup, Bjarne. The C++ Programming Language, 4th Edition. Section D.4.4.2 - A Date Class.
- *   Stroustrup, Bjarne. The C++ Programming Language, Special 3rd Edition. Section 16.3 - Concrete Classes
- */
-class CallTime {
+class CallRecordTest: public Test::Suite
+{
 public:
-	/**
-	 * \brief Build a call time with the default 00:00:00
-	 */
-	CallTime();
-
-	/**
-	 * \brief Build a call time with the given hh:mm:ss
-	 */
-	CallTime(const int hh, const int mm, const int ss);
-
-
-	~CallTime();
-
-	/**
-	 * \brief Compute the difference in minutes between this and another Time
-	 */
-	int operator-(const CallTime& other);
-
-	/**
-	 * \brief Extraction operator reads from the input stream a time in "hh:mm:ss" format
-	 */
-	friend std::istream& operator>>(std::istream &is, CallTime& dt);
-
-	/**
-	 * \brief Insertion operator writes into the output stream a time in "hh:mm:ss" format
-	 */
-	friend std::ostream& operator<<(std::ostream &os, const CallTime& dt);
+	CallRecordTest();
 
 private:
-	int hour_;
-	int minutes_;
-	int seconds_;
+	void process_Test();
+	void getFields_Test();
+	void getCallDurationInMin_Test();
+	void setObjects_Test();
 
 };
 
-
-} // namespace luxoft
-
-#endif /* CALL_TIME_H */
+#endif /* CALL_RECORD_TEST_H */

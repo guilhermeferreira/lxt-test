@@ -30,6 +30,8 @@ problem_4_SOURCES  = src/main.cpp
 problem_4_SOURCES += ${COMMON_SOURCES}
 
 TEST_SOURCES  = test/rules/expression_test.cpp
+TEST_SOURCES += test/calls/call_record_test.cpp
+TEST_SOURCES += test/calls/call_time_test.cpp
 
 problem_4_test_SOURCES  = test/main.cpp
 problem_4_test_SOURCES += ${COMMON_SOURCES}
@@ -68,6 +70,7 @@ problem_4_CPPFLAGS  = ${COMMON_CPPFLAGS}
 
 TEST_CPPFLAGS  = -I.
 TEST_CPPFLAGS += -I./test
+TEST_CPPFLAGS += -I./test/calls
 TEST_CPPFLAGS += -I./test/rules
 
 problem_4_test_CPPFLAGS  = ${COMMON_CPPFLAGS}

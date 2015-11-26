@@ -45,25 +45,22 @@ CallTime::CallTime()
 
 //-----------------------------------------------------------------------------
 
+CallTime::CallTime(const int hh, const int mm, const int ss)
+: hour_(hh),
+  minutes_(mm),
+  seconds_(ss)
+{
+}
+
+//-----------------------------------------------------------------------------
+
 CallTime::~CallTime()
 {
 }
 
 //-----------------------------------------------------------------------------
 
-CallTime& CallTime::operator=(const std::string &dateString)
-{
-	assert(!dateString.empty());
-
-	size_t weekDayNameLen = dateString.find('-', 0);
-	string weekDayName = dateString.substr(0, weekDayNameLen);
-
-	return *this;
-}
-
-//-----------------------------------------------------------------------------
-
-long long CallTime::operator-(const CallTime& other)
+int CallTime::operator-(const CallTime& other)
 {
 	// Convert all units to minutes and then subtract
 
@@ -78,14 +75,22 @@ long long CallTime::operator-(const CallTime& other)
 	double min1 = (hour_ * 60) + minutes_ + ceil(seconds_ / 60.0);
 	double min2 = (other.hour_ * 60) + other.minutes_+ ceil(other.seconds_ / 60.0);
 
-	return static_cast<long long>(min1 - min2);
+	return static_cast<int>(min1 - min2);
 }
 
 //-----------------------------------------------------------------------------
 
 istream& operator>>(istream &is, CallTime& dt)
 {
-	is >> dt.hour_ >> dt.minutes_ >> dt.seconds_;
+	is >> dt.hour_;
+	char hour[3];
+	is.getline(hour, sizeof(hour), ':');
+
+	is >> dt.minutes_;
+	char minutes[3];
+	is.getline(minutes, sizeof(minutes), ':');
+
+	is >> dt.seconds_;
 
 	return is;
 }

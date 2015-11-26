@@ -24,6 +24,8 @@
 #include <iostream>
 
 #include "expression_test.h"
+#include "call_record_test.h"
+#include "call_time_test.h"
 
 using namespace std;
 using namespace luxoft;
@@ -34,9 +36,16 @@ int main(int argc, char *argv[])
 {
 	cout << "Problem #4 Test" << endl;
 
-	ExpressionTest expressionTest;
 	Test::TextOutput output(Test::TextOutput::Verbose);
+
+	ExpressionTest expressionTest;
 	expressionTest.run(output, false);
+
+	CallRecordTest callRecordTest;
+	callRecordTest.run(output, false);
+
+	CallTimeTest callTimeTest;
+	callTimeTest.run(output, false);
 
 	return EXIT_SUCCESS;
 }

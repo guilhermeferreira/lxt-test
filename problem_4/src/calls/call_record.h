@@ -52,35 +52,33 @@ public:
 		const std::string &recordLine,
 		ObjectTable &objectTable);
 
-private:
-
 	/**
 	 * \brief Extract the values from a record line
 	 */
-	bool getFields(
+	static bool getFields(
 		const std::string &recordLine,
 		std::string *callStartDate,
 		std::string *callEndDate,
 		std::string *callDestNumber,
-		std::string *callSrcNumber) const;
+		std::string *callSrcNumber);
 
 	/**
 	 * \brief Get the difference in minutes of the end and start time of the call
 	 */
-	float getCallDuration(
+	static int getCallDurationInMin(
 		std::string &callStartTime,
-		std::string &callEndTime) const;
+		std::string &callEndTime);
 
 	/**
 	 * \brief Place the given values into their respective objects of the table
 	 */
-	void setObjects(
+	static void setObjects(
 		const float callDuration,
 		const std::string &callDestNumber,
 		const std::string &callDay,
 		ObjectTable &objectTable);
 
-
+private:
 	int lineNumber_;
 
 };
