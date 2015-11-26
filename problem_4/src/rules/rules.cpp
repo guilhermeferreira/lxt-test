@@ -44,9 +44,9 @@ Rules::Rules()
 
 Rules::~Rules()
 {
-	// TODO This is a place where a std::shared_ptr or a boost::shared_ptr would
-	//      save us from deleting all pointers. Because the vector::~vector()
-	//      destroys the elements (pointer), not the element it points to!
+	// FIXME This is a place where a std::shared_ptr or a boost::shared_ptr would
+	//       save us from deleting all pointers. Because the vector::~vector()
+	//       destroys the elements (pointer), not the element it points to!
 	for (vector<RuleLine*>::iterator it = ruleLines_.begin(); it != ruleLines_.end(); ++it) {
 		RuleLine *ruleLine = *it;
 

@@ -69,7 +69,7 @@ void AssignmentStatement::parse(
 
 	// Consume left hand side token, that is the variable (object) name
 	string objectName = tokens[0]->getValue();
-	lvalueObject_ = objectTable.getObject(objectName);
+	lvalueObject_ = objectTable.getFloatingObject(objectName);
 	if (lvalueObject_ == NULL) {
 		throw SyntacticErrorException(lineNumber_);
 	}

@@ -35,7 +35,11 @@ namespace luxoft {
 //-----------------------------------------------------------------------------
 
 /**
- * TODO
+ * \brief Statement production rule
+ *   <statement>            ::= <command_statement>
+                              | <assignment_statement>
+                              | <selection_statement>
+ *
  */
 class Statement {
 public:

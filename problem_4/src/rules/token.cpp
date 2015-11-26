@@ -57,7 +57,7 @@ TokenType Token::discoverType(const string &value)
 {
 	assert(!value.empty());
 
-	string operators = "+-*/=";
+	string operators = "+-*/=[]";
 	string numeric_literal = "0123456789";
 
 	if (value.find_first_of(operators) != string::npos) {

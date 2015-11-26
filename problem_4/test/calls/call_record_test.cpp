@@ -43,9 +43,9 @@ void CallRecordTest::process_Test()
 {
 	CallRecord callRecord(1);
 	ObjectTable objTable;
-	FloatingObject *callDurationObject = objTable.getObject(ObjectTable::CALL_DURATION_MINUTE);
-	StringObject *callDestNumberObject = objTable.getDetailObject(ObjectTable::CALL_DESTINATION_PREFIX);
-	StringObject *callDayObject = objTable.getDetailObject(ObjectTable::CALL_PERIOD_DAY);
+	FloatingObject *callDurationObject = objTable.getFloatingObject(ObjectTable::CALL_DURATION_MINUTE);
+	StringObject *callDestNumberObject = objTable.getStringObject(ObjectTable::CALL_DESTINATION_PREFIX);
+	StringObject *callDayObject = objTable.getStringObject(ObjectTable::CALL_PERIOD_DAY);
 	string recLine;
 
 	recLine = "sunday-02:00:00;sunday-12:40:00;01011111111;02022222222;";
@@ -112,9 +112,9 @@ void CallRecordTest::getCallDurationInMin_Test()
 void CallRecordTest::setObjects_Test()
 {
 	ObjectTable objTable;
-	FloatingObject *callDurationObject = objTable.getObject(ObjectTable::CALL_DURATION_MINUTE);
-	StringObject *callDestNumberObject = objTable.getDetailObject(ObjectTable::CALL_DESTINATION_PREFIX);
-	StringObject *callDayObject = objTable.getDetailObject(ObjectTable::CALL_PERIOD_DAY);
+	FloatingObject *callDurationObject = objTable.getFloatingObject(ObjectTable::CALL_DURATION_MINUTE);
+	StringObject *callDestNumberObject = objTable.getStringObject(ObjectTable::CALL_DESTINATION_PREFIX);
+	StringObject *callDayObject = objTable.getStringObject(ObjectTable::CALL_PERIOD_DAY);
 
 	float callDuration = 16.4;
 	string callDestNumber = "011";

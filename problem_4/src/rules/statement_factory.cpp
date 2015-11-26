@@ -25,7 +25,7 @@
 
 #include "assignment_statement.h"
 #include "command_statement.h"
-
+#include "selection_statement.h"
 
 namespace luxoft {
 
@@ -46,7 +46,10 @@ Statement *StatementFactory::createStatement(
 		statement = new AssignmentStatement(lineNumber);
 	} else if (keyword == "print") {
 		statement = new CommandStatement(lineNumber);
-	} /*
+	} else if (keyword == "if") {
+		statement = new SelectionStatement(lineNumber);
+	}
+	/*
 	// TODO What about create an invalid statement object that throws errors
 	//      when parsed or evaluated?
 	else {

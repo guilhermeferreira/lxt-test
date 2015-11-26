@@ -36,19 +36,13 @@ namespace luxoft {
 //-----------------------------------------------------------------------------
 
 /**
- * TODO
+ * \brief Represent a set of C3L rules
  */
 class Rules {
 public:
 
-	/**
-	 * TODO
-	 */
 	Rules();
 
-	/**
-	 * TODO
-	 */
 	virtual ~Rules();
 
 	/**

@@ -90,7 +90,7 @@ void ArithmeticExpressionTest::parse_FloatConstant_Test()
 void ArithmeticExpressionTest::parse_Object_Test()
 {
 	ObjectTable objTable;
-	FloatingObject *obj = objTable.getObject(ObjectTable::CALL_TOTAL_COST);
+	FloatingObject *obj = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj->setValue(30);
 
 	std::vector<Token*> tokens;
@@ -130,7 +130,7 @@ void ArithmeticExpressionTest::parse_Addition_2_ObjectOperands_Test()
 	ObjectTable objTable;
 
 	std::vector<Token*> tokens;
-	FloatingObject *obj1 = objTable.getObject(ObjectTable::CALL_TOTAL_COST);
+	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(50);
 	Token t1(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t1);
@@ -138,7 +138,7 @@ void ArithmeticExpressionTest::parse_Addition_2_ObjectOperands_Test()
 	Token t2("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
 	tokens.push_back(&t2);
 
-	FloatingObject *obj2 = objTable.getObject(ObjectTable::CALL_MINUTE_COST);
+	FloatingObject *obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
 	obj2->setValue(10);
 	Token t3(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t3);
@@ -167,7 +167,7 @@ void ArithmeticExpressionTest::parse_Addition_3_Operands_Test()
 	Token t4("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
 	tokens.push_back(&t4);
 
-	FloatingObject *obj1 = objTable.getObject(ObjectTable::CALL_TOTAL_COST);
+	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(1.5);
 	Token t5(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t5);
@@ -184,7 +184,7 @@ void ArithmeticExpressionTest::parse_Addition_4_Operands_Test()
 	ObjectTable objTable;
 
 	std::vector<Token*> tokens;
-	FloatingObject *obj1 = objTable.getObject(ObjectTable::CALL_TOTAL_COST);
+	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(50);
 	Token t1(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t1);
@@ -198,7 +198,7 @@ void ArithmeticExpressionTest::parse_Addition_4_Operands_Test()
 	Token t4("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
 	tokens.push_back(&t4);
 
-	FloatingObject *obj2 = objTable.getObject(ObjectTable::CALL_MINUTE_COST);
+	FloatingObject *obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
 	obj2->setValue(2.5);
 	Token t5(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t5);
@@ -243,7 +243,7 @@ void ArithmeticExpressionTest::parse_Subtraction_2_ObjectOperands_Test()
 	ObjectTable objTable;
 
 	std::vector<Token*> tokens;
-	FloatingObject *obj1 = objTable.getObject(ObjectTable::CALL_TOTAL_COST);
+	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(10);
 	Token t1(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t1);
@@ -251,7 +251,7 @@ void ArithmeticExpressionTest::parse_Subtraction_2_ObjectOperands_Test()
 	Token t2("-", TOKEN_TYPE_ARITHMETIC_OPERATOR);
 	tokens.push_back(&t2);
 
-	FloatingObject *obj2 = objTable.getObject(ObjectTable::CALL_MINUTE_COST);
+	FloatingObject *obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
 	obj2->setValue(5);
 	Token t3(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t3);
@@ -291,7 +291,7 @@ void ArithmeticExpressionTest::parse_Multiplication_2_ObjectOperands_Test()
 	ObjectTable objTable;
 
 	std::vector<Token*> tokens;
-	FloatingObject *obj1 = objTable.getObject(ObjectTable::CALL_TOTAL_COST);
+	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(2);
 	Token t1(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t1);
@@ -299,7 +299,7 @@ void ArithmeticExpressionTest::parse_Multiplication_2_ObjectOperands_Test()
 	Token t2("*", TOKEN_TYPE_ARITHMETIC_OPERATOR);
 	tokens.push_back(&t2);
 
-	FloatingObject *obj2 = objTable.getObject(ObjectTable::CALL_MINUTE_COST);
+	FloatingObject *obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
 	obj2->setValue(2);
 	Token t3(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t3);
@@ -339,7 +339,7 @@ void ArithmeticExpressionTest::parse_Division_2_ObjectOperands_Test()
 	ObjectTable objTable;
 
 	std::vector<Token*> tokens;
-	FloatingObject *obj1 = objTable.getObject(ObjectTable::CALL_TOTAL_COST);
+	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(50);
 	Token t1(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t1);
@@ -347,7 +347,7 @@ void ArithmeticExpressionTest::parse_Division_2_ObjectOperands_Test()
 	Token t2("/", TOKEN_TYPE_ARITHMETIC_OPERATOR);
 	tokens.push_back(&t2);
 
-	FloatingObject *obj2 = objTable.getObject(ObjectTable::CALL_MINUTE_COST);
+	FloatingObject *obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
 	obj2->setValue(2);
 	Token t3(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t3);
@@ -377,7 +377,7 @@ void ArithmeticExpressionTest::parse_3_Operands_Test()
 	Token t4("-", TOKEN_TYPE_ARITHMETIC_OPERATOR);
 	tokens.push_back(&t4);
 
-	FloatingObject *obj1 = objTable.getObject(ObjectTable::CALL_TOTAL_COST);
+	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(20);
 	Token t5(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t5);
@@ -401,7 +401,7 @@ void ArithmeticExpressionTest::parse_4_Operands_Test()
 	Token t2("/", TOKEN_TYPE_ARITHMETIC_OPERATOR);
 	tokens.push_back(&t2);
 
-	FloatingObject *obj1 = objTable.getObject(ObjectTable::CALL_TOTAL_COST);
+	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(50);
 	Token t3(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t3);
@@ -409,7 +409,7 @@ void ArithmeticExpressionTest::parse_4_Operands_Test()
 	Token t4("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
 	tokens.push_back(&t4);
 
-	FloatingObject *obj2 = objTable.getObject(ObjectTable::CALL_MINUTE_COST);
+	FloatingObject *obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
 	obj2->setValue(10);
 	Token t5(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t5);

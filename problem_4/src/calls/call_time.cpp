@@ -24,7 +24,6 @@
 #include <cassert>
 #include <cmath>
 
-#include <iostream>
 #include <sstream>
 
 namespace luxoft {

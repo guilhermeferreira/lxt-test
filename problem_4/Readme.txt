@@ -107,11 +107,13 @@ one and only one rule:
 
   <statement>            ::= <command_statement>
                            | <assignment_statement>
+                           | <selection_statement>
 
   <command_statement>    ::= <command> <arithmetic_expression>
 
   <assignment_statement> ::= <readwrite_object> "=" <arithmetic_expression>
 
+  <selection_statement>  ::= "if" <condition_expression> "then" <statement> "end"
 
   <command>              ::= "print"
 
@@ -120,6 +122,8 @@ one and only one rule:
                            | <operand> "*" <arithmetic_expression>
                            | <operand> "/" <arithmetic_expression>
                            | <operand>
+
+  <condition_expression> ::= <operand> "in" "[" <constant_list> "]"
 
   <operand>              ::= <readwrite_object>
                            | <readonly_object>
@@ -178,6 +182,19 @@ The meaning of each <object> is described bellow:
  - call_destination_prefix = the callee phone number prefix;
 
  - call_period_day = the day of the call;
+
+
+------------------------------------------------------------------------------
+ 2.2.3. C3L Assumptions
+------------------------------------------------------------------------------
+
+Some limitations, simplifications and assumptions regarding the C3L:
+
+ - All keywords ("print", "if", "call_xxx", etc.) are at the begining of the
+   statement.
+
+ - Selection statements (i.e. "if") must be contained in one line. There is no
+   support for multiple-line statements within a selection statement.
 
 
 ------------------------------------------------------------------------------

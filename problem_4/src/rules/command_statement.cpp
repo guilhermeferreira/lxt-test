@@ -47,7 +47,9 @@ CommandStatement::CommandStatement(const int lineNumber)
 
 CommandStatement::~CommandStatement()
 {
-	// TODO don't destroy object_, because this class does not instantiate it
+	// FIXME Don't destroy the object_, because this class has not
+	//       instantiated it. This a place where a std::shared_ptr or a
+	//       boost::shared_ptr would save us from deleting the object_.
 }
 
 //-----------------------------------------------------------------------------
@@ -77,9 +79,9 @@ void CommandStatement::parse(
 	//             <arithmetic_expression> ::= <operand>
 	//
 	string objectName = tokens[1]->getValue();
-	floatingObject_ = objectTable.getObject(objectName);
+	floatingObject_ = objectTable.getFloatingObject(objectName);
 	if (floatingObject_ == NULL) {
-		stringObject_ = objectTable.getDetailObject(objectName);
+		stringObject_ = objectTable.getStringObject(objectName);
 		if (stringObject_ == NULL) {
 			throw SyntacticErrorException(lineNumber_);
 		}

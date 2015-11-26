@@ -51,8 +51,8 @@ public:
 	ObjectTable();
 	virtual ~ObjectTable();
 
-	FloatingObject *getObject(const std::string &objectName);
-	StringObject *getDetailObject(const std::string &objectName);
+	FloatingObject *getFloatingObject(const std::string &objectName);
+	StringObject *getStringObject(const std::string &objectName);
 
 private:
 	// When we reference "call_total_cost", for example, we reference

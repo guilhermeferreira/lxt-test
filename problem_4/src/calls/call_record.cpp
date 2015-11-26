@@ -164,16 +164,16 @@ void CallRecord::setObjects(
 	//                           | "call_destination_prefix"
 	//                           | "call_period_day"
 
-	FloatingObject *callDurationMinute = objectTable.getObject(ObjectTable::CALL_DURATION_MINUTE);
+	FloatingObject *callDurationMinute = objectTable.getFloatingObject(ObjectTable::CALL_DURATION_MINUTE);
 	assert(callDurationMinute != NULL);
 	callDurationMinute->setValue(callDuration);
 
-	StringObject *callDestinationPrefix = objectTable.getDetailObject(ObjectTable::CALL_DESTINATION_PREFIX);
+	StringObject *callDestinationPrefix = objectTable.getStringObject(ObjectTable::CALL_DESTINATION_PREFIX);
 	assert(callDestinationPrefix != NULL);
 	string callDestNumberPrefix = callDestNumber.substr(0, 3);
 	callDestinationPrefix->setValue(callDestNumberPrefix);
 
-	StringObject *callPeriodDay = objectTable.getDetailObject(ObjectTable::CALL_PERIOD_DAY);
+	StringObject *callPeriodDay = objectTable.getStringObject(ObjectTable::CALL_PERIOD_DAY);
 	assert(callPeriodDay != NULL);
 	callPeriodDay->setValue(callDay);
 }

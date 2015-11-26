@@ -48,9 +48,9 @@ RuleLine::~RuleLine()
 	// This class creates the Tokens, so it must destroy them!
 	assert(!tokens_.empty());
 
-	// TODO This a place where a std::shared_ptr or a boost::shared_ptr would
-	//      save us from deleting all pointers. Because the vector::~vector()
-	//      destroys the elements (pointer), not the element it points to!
+	// FIXME This a place where a std::shared_ptr or a boost::shared_ptr would
+	//       save us from deleting all pointers. Because the vector::~vector()
+	//       destroys the elements (pointer), not the element it points to!
 	for (vector<Token*>::iterator it = tokens_.begin(); it != tokens_.end(); ++it) {
 		Token *token = *it;
 

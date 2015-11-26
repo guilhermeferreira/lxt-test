@@ -34,19 +34,16 @@ namespace luxoft {
 //-----------------------------------------------------------------------------
 
 /**
- * TODO
+ * \brief Represent a file with a set of C3L rules
  */
 class RulesFile {
 public:
 
 	/**
-	 * TODO
+	 * \brief Create a rules file with the given name
 	 */
 	explicit RulesFile(std::string rulesFileName);
 
-	/**
-	 * TODO
-	 */
 	virtual ~RulesFile();
 
 	/**

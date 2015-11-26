@@ -74,7 +74,7 @@ ObjectTable::~ObjectTable()
 
 //-----------------------------------------------------------------------------
 
-FloatingObject *ObjectTable::getObject(const string &objectName)
+FloatingObject *ObjectTable::getFloatingObject(const string &objectName)
 {
 	assert(!objectName.empty());
 	assert(!symbolTable_.empty());
@@ -84,7 +84,7 @@ FloatingObject *ObjectTable::getObject(const string &objectName)
 
 //-----------------------------------------------------------------------------
 
-StringObject *ObjectTable::getDetailObject(const string &objectName)
+StringObject *ObjectTable::getStringObject(const string &objectName)
 {
 	assert(!objectName.empty());
 	assert(!detailSymbolTable_.empty());

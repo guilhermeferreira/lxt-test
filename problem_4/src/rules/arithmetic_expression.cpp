@@ -83,7 +83,7 @@ void ArithmeticExpression::parse(
 		// The production rule is <arithmetic_expression> ::= <object>
 		case TOKEN_TYPE_OBJECT: {
 			string objectName = firstToken->getValue();
-			operand_ = objectTable.getObject(objectName);
+			operand_ = objectTable.getFloatingObject(objectName);
 			if (operand_ == NULL) {
 				throw SyntacticErrorException(lineNumber_);
 			}
