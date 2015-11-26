@@ -1,0 +1,10 @@
+# -------------------------------------
+# Problem #4 - Call Rules 1
+# -------------------------------------
+
+
+call_total_cost = 10
+
+if call_period_day in [ monday friday ] then call_total_cost = 30 end
+
+print call_total_cost
