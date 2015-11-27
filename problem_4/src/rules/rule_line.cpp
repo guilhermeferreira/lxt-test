@@ -108,7 +108,11 @@ void RuleLine::parse(ObjectTable &objectTable)
 	}
 
 	assert(statement_ != NULL);
-	statement_->parse(tokens_, objectTable);
+	vector<Token*> consumableTokens(tokens_);
+	statement_->parse(consumableTokens, objectTable);
+	// Statements MUST consume all tokens, otherwise the rule is mal-formed
+	// and should throw an exception
+	assert(consumableTokens.empty());
 }
 
 //-----------------------------------------------------------------------------

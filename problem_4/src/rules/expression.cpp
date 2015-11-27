@@ -38,11 +38,7 @@ using namespace std;
 //-----------------------------------------------------------------------------
 
 Expression::Expression(const int lineNumber)
-: object_(NULL),
-  expression_(NULL),
-  operation_(NULL),
-  constant_(0),
-  lineNumber_(lineNumber)
+: lineNumber_(lineNumber)
 {
 }
 
@@ -50,113 +46,9 @@ Expression::Expression(const int lineNumber)
 
 Expression::~Expression()
 {
-	if (expression_ != NULL) {
-		delete expression_;
-		expression_ = NULL;
-	}
 }
 
 //-----------------------------------------------------------------------------
-
-void Expression::parse(
-	const vector<Token*> &tokens,
-	ObjectTable &objectTable)
-{
-	assert(!tokens.empty());
-
-	// This loop process only the first 1 or 2 elements:
-	//
-	//    <object>
-	//    <object> "+"
-	//    <object> "-"
-	//    <object> "*"
-	//    <object> "/"
-	//    <constant>
-	//
-	// The remaining <expression> is processed recursively (i.e. it's a context-
-	// free grammar anyways)
-
-
-	// Process expressions with a single operand, variable (object) or constant
-	Token *firstToken = tokens[0];
-	switch (firstToken->getType()) {
-		// The production rule is <expression> ::= <object>
-		case TOKEN_TYPE_OBJECT: {
-			string objectName = firstToken->getValue();
-			object_ = objectTable.getObject(objectName);
-			if (object_ == NULL) {
-				throw SyntacticErrorException(lineNumber_);
-			}
-			break;
-		}
-		// The production rule is <expression> ::= <constant>
-		case TOKEN_TYPE_NUMERIC_CONSTANT: {
-			string numericValue = firstToken->getValue();
-			istringstream stream(numericValue);
-			stream >> constant_;
-			break;
-		}
-		default:
-			throw SyntacticErrorException(0);
-			break;
-	}
-
-	// Process expressions that have operand, arithmetic operator and another
-	// expression (e.g. <expression> ::= <object> "+" <expression>)
-	if (tokens.size() > 1) {
-		Token *secondToken = tokens[1];
-		switch (secondToken->getType()) {
-			case TOKEN_TYPE_ARITHMETIC_OPERATOR: {
-				string operationSymbol = secondToken->getValue();
-				operation_ = OperationTable::getOperation(operationSymbol);
-				break;
-			}
-			default:
-				throw SyntacticErrorException(0);
-				break;
-		}
-
-		vector<Token*> remainingTokens(tokens.begin() + 2, tokens.end());
-		assert(expression_ == NULL); // Avoid dangling pointers (and memory leak)
-		expression_ = new Expression(lineNumber_);
-		expression_->parse(remainingTokens, objectTable);
-	}
-
-}
-
-//-----------------------------------------------------------------------------
-
-float Expression::evaluate() const
-{
-	// FIXME Due the lack of operator precedence in the grammar, non-
-	//       commutative operations (i.e. subtraction and division) are not
-	//       evaluated properly when expressions contain more than two operands
-
-	// e.g. <expression> ::= <object> "+" <expression>
-	if ((object_ != NULL) && (operation_ != NULL) && (expression_ != NULL)) {
-		assert(operation_ != NULL);
-
-		return operation_->execute(object_->getValue(), expression_->evaluate());
-
-	}
-	// e.g. <expression> ::= <constant> "+" <expression>
-	else if ((object_ == NULL) && (operation_ != NULL) && (expression_ != NULL)) {
-		assert(operation_ != NULL);
-
-		return operation_->execute(constant_, expression_->evaluate());
-
-	}
-	// i.e. <expression> ::= <object>
-	else if ((object_ != NULL) && (operation_ == NULL) && (expression_ == NULL)) {
-		return object_->getValue();
-
-	}
-	// i.e. <expression> ::= <constant>
-	else { // ((object_ == NULL) && (expression_ != NULL))
-		return constant_;
-
-	}
-}
 
 
 } // namespace luxoft

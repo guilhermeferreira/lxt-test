@@ -18,6 +18,7 @@ COMMON_SOURCES += src/rules/operation.cpp
 COMMON_SOURCES += src/rules/operation_table.cpp
 COMMON_SOURCES += src/rules/token.cpp
 COMMON_SOURCES += src/rules/expression.cpp
+COMMON_SOURCES += src/rules/arithmetic_expression.cpp
 COMMON_SOURCES += src/rules/addition_operation.cpp
 COMMON_SOURCES += src/rules/subtraction_operation.cpp
 COMMON_SOURCES += src/rules/multiplication_operation.cpp
@@ -30,7 +31,7 @@ COMMON_SOURCES += src/calls/call_time.cpp
 problem_4_SOURCES  = src/main.cpp
 problem_4_SOURCES += ${COMMON_SOURCES}
 
-TEST_SOURCES  = test/rules/expression_test.cpp
+TEST_SOURCES  = test/rules/arithmetic_expression_test.cpp
 TEST_SOURCES += test/calls/call_record_test.cpp
 TEST_SOURCES += test/calls/call_time_test.cpp
 

@@ -57,7 +57,7 @@ AssignmentStatement::~AssignmentStatement()
 //-----------------------------------------------------------------------------
 
 void AssignmentStatement::parse(
-	const vector<Token*> &tokens,
+	vector<Token*> &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
@@ -65,7 +65,7 @@ void AssignmentStatement::parse(
 	assert(rvalueExpression_ == NULL);
 
 	// Parse the production rule:
-	//     <assignment_statement> ::= <readwrite_object> "=" <expression>
+	//     <assignment_statement> ::= <readwrite_object> "=" <arithmetic_expression>
 
 	// Consume left hand side token, that is the variable (object) name
 	string objectName = tokens[0]->getValue();
@@ -74,16 +74,17 @@ void AssignmentStatement::parse(
 		throw SyntacticErrorException(lineNumber_);
 	}
 	assert(lvalueObject_ != NULL);
+	tokens.erase(tokens.begin());
 
 	// Consume the assignment operator
-	string operatorSymbol = tokens[1]->getValue();
+	string operatorSymbol = tokens[0]->getValue();
 	assert(operatorSymbol == "=");
+	tokens.erase(tokens.begin());
 
 	// Expression can consume only the right hand side tokens
-	vector<Token*> remainingTokens(tokens.begin() + 2, tokens.end());
-	rvalueExpression_ = new Expression(lineNumber_);
+	rvalueExpression_ = new ArithmeticExpression(lineNumber_);
 	assert(rvalueExpression_ != NULL);
-	rvalueExpression_->parse(remainingTokens, objectTable);
+	rvalueExpression_->parse(tokens, objectTable);
 }
 
 //-----------------------------------------------------------------------------

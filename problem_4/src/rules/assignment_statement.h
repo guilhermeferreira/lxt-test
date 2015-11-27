@@ -25,7 +25,7 @@
 #include <vector>
 
 #include "statement.h"
-#include "expression.h"
+#include "arithmetic_expression.h"
 #include "object.h"
 #include "object_table.h"
 #include "token.h"
@@ -38,7 +38,9 @@ namespace luxoft {
 //-----------------------------------------------------------------------------
 
 /**
- * TODO
+ * \brief Assignment productions rule
+ *
+ *    <assignment_statement> ::= <object> "=" <arithmetic_expression>
  */
 class AssignmentStatement : public Statement {
 public:
@@ -47,14 +49,14 @@ public:
 	virtual ~AssignmentStatement();
 
 	virtual void parse(
-		const std::vector<Token*> &tokens,
+		std::vector<Token*> &tokens,
 		ObjectTable &objectTable);
 
 	virtual void evaluate();
 
 private:
 	FloatingObject *lvalueObject_;
-	Expression *rvalueExpression_;
+	ArithmeticExpression *rvalueExpression_;
 	int lineNumber_;
 
 };

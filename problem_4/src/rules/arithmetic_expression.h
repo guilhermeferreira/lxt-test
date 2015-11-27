@@ -19,33 +19,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <cstdlib>
+#ifndef ARITHMETIC_EXPRESSION_H
+#define ARITHMETIC_EXPRESSION_H
 
-#include <iostream>
+#include <vector>
 
-#include "arithmetic_expression_test.h"
-#include "call_record_test.h"
-#include "call_time_test.h"
+#include "expression.h"
+#include "object.h"
+#include "object_table.h"
+#include "operation.h"
+#include "token.h"
 
-using namespace std;
-using namespace luxoft;
+namespace luxoft {
 
 //-----------------------------------------------------------------------------
+// ArithmeticExpression class
+//-----------------------------------------------------------------------------
 
-int main(int argc, char *argv[])
-{
-	cout << "Problem #4 Test" << endl;
+/**
+ * \brief The <arithmetic_expression> non-terminal symbol
+ */
+class ArithmeticExpression : public Expression {
+public:
+	explicit ArithmeticExpression(const int lineNumber);
 
-	Test::TextOutput output(Test::TextOutput::Verbose);
+	virtual ~ArithmeticExpression();
 
-	ArithmeticExpressionTest expressionTest;
-	expressionTest.run(output, false);
+	/**
+	 * \brief Recursively build the <arithmetic_expression> non-terminal parsing-tree
+	 */
+	void parse(
+		std::vector<Token*> &tokens,
+		ObjectTable &objectTable);
 
-	CallRecordTest callRecordTest;
-	callRecordTest.run(output, false);
+	/**
+	 * \brief Evaluate recursively the expression (and its sub-expressions) value
+	 */
+	float evaluate() const;
 
-	CallTimeTest callTimeTest;
-	callTimeTest.run(output, false);
+private:
+	FloatingObject *operand_;
+	ArithmeticExpression *expression_;
+	const Operation *operation_;
+	float constant_;
 
-	return EXIT_SUCCESS;
-}
+};
+
+
+} // namespace luxoft
+
+#endif /* ARITHMETIC_EXPRESSION_H */

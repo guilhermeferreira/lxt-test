@@ -37,7 +37,9 @@ namespace luxoft {
 //-----------------------------------------------------------------------------
 
 /**
- * TODO
+ * \brief Command production rule
+ *
+ *    <command_statement>    ::= <command> <arithmetic_expression>
  */
 class CommandStatement : public Statement {
 public:
@@ -46,7 +48,7 @@ public:
 	virtual ~CommandStatement();
 
 	virtual void parse(
-		const std::vector<Token*> &tokens,
+		std::vector<Token*> &tokens,
 		ObjectTable &objectTable);
 
 	virtual void evaluate();

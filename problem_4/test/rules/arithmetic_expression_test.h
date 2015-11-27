@@ -22,19 +22,19 @@
 #ifndef EXPRESSION_TEST_H
 #define EXPRESSION_TEST_H
 
-#include "expression.h"
+#include "arithmetic_expression.h"
 
 #include <cpptest.h>
 
 
 //-----------------------------------------------------------------------------
-// ExpressionTest class
+// ArithmeticExpressionTest class
 //-----------------------------------------------------------------------------
 
-class ExpressionTest: public Test::Suite
+class ArithmeticExpressionTest: public Test::Suite
 {
 public:
-	ExpressionTest();
+	ArithmeticExpressionTest();
 
 private:
 	void parse_IntegerConstant_Test();

@@ -44,7 +44,7 @@ public:
 	virtual ~Statement();
 
 	virtual void parse(
-		const std::vector<Token*> &tokens,
+		std::vector<Token*> &tokens,
 		ObjectTable &objectTable) = 0;
 
 	virtual void evaluate() = 0;

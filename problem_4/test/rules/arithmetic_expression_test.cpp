@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include "expression_test.h"
+#include "arithmetic_expression_test.h"
 
 #include <cfloat>
 #include <cmath>
@@ -29,35 +29,35 @@ using namespace luxoft;
 
 
 //-----------------------------------------------------------------------------
-// ExpressionTest class
+// ArithmeticExpressionTest class
 //-----------------------------------------------------------------------------
 
-ExpressionTest::ExpressionTest()
+ArithmeticExpressionTest::ArithmeticExpressionTest()
 {
-	TEST_ADD(ExpressionTest::parse_IntegerConstant_Test);
-	TEST_ADD(ExpressionTest::parse_FloatConstant_Test);
-	TEST_ADD(ExpressionTest::parse_Object_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_IntegerConstant_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_FloatConstant_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_Object_Test);
 
-	TEST_ADD(ExpressionTest::parse_Addition_2_ConstantOperands_Test);
-	TEST_ADD(ExpressionTest::parse_Addition_2_ObjectOperands_Test);
-	TEST_ADD(ExpressionTest::parse_Addition_3_Operands_Test);
-	TEST_ADD(ExpressionTest::parse_Addition_4_Operands_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_Addition_2_ConstantOperands_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_Addition_2_ObjectOperands_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_Addition_3_Operands_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_Addition_4_Operands_Test);
 
-	TEST_ADD(ExpressionTest::parse_Subtraction_2_ConstantOperands_Test);
-	TEST_ADD(ExpressionTest::parse_Subtraction_2_ObjectOperands_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_Subtraction_2_ConstantOperands_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_Subtraction_2_ObjectOperands_Test);
 
-	TEST_ADD(ExpressionTest::parse_Multiplication_2_ConstantOperands_Test);
-	TEST_ADD(ExpressionTest::parse_Multiplication_2_ObjectOperands_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_Multiplication_2_ConstantOperands_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_Multiplication_2_ObjectOperands_Test);
 
-	TEST_ADD(ExpressionTest::parse_Division_2_ConstantOperands_Test);
-	TEST_ADD(ExpressionTest::parse_Division_2_ObjectOperands_Test);
-	TEST_ADD(ExpressionTest::parse_3_Operands_Test);
-	TEST_ADD(ExpressionTest::parse_4_Operands_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_Division_2_ConstantOperands_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_Division_2_ObjectOperands_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_3_Operands_Test);
+	TEST_ADD(ArithmeticExpressionTest::parse_4_Operands_Test);
 }
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_IntegerConstant_Test()
+void ArithmeticExpressionTest::parse_IntegerConstant_Test()
 {
 	ObjectTable objTable;
 
@@ -65,14 +65,14 @@ void ExpressionTest::parse_IntegerConstant_Test()
 	Token t1("20", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t1);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 	TEST_ASSERT(fabs(expression.evaluate() - 20.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_FloatConstant_Test()
+void ArithmeticExpressionTest::parse_FloatConstant_Test()
 {
 	ObjectTable objTable;
 
@@ -80,14 +80,14 @@ void ExpressionTest::parse_FloatConstant_Test()
 	Token t1("20.5", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t1);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 	TEST_ASSERT(fabs(expression.evaluate() - 20.5) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_Object_Test()
+void ArithmeticExpressionTest::parse_Object_Test()
 {
 	ObjectTable objTable;
 	FloatingObject *obj = objTable.getObject(ObjectTable::CALL_TOTAL_COST);
@@ -97,14 +97,14 @@ void ExpressionTest::parse_Object_Test()
 	Token t1(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t1);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 	TEST_ASSERT(fabs(expression.evaluate() - 30.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_Addition_2_ConstantOperands_Test()
+void ArithmeticExpressionTest::parse_Addition_2_ConstantOperands_Test()
 {
 	ObjectTable objTable;
 
@@ -118,14 +118,14 @@ void ExpressionTest::parse_Addition_2_ConstantOperands_Test()
 	Token t3("10", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t3);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 	TEST_ASSERT(fabs(expression.evaluate() - 60.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_Addition_2_ObjectOperands_Test()
+void ArithmeticExpressionTest::parse_Addition_2_ObjectOperands_Test()
 {
 	ObjectTable objTable;
 
@@ -143,14 +143,14 @@ void ExpressionTest::parse_Addition_2_ObjectOperands_Test()
 	Token t3(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t3);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 	TEST_ASSERT(fabs(expression.evaluate() - 60.0) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_Addition_3_Operands_Test()
+void ArithmeticExpressionTest::parse_Addition_3_Operands_Test()
 {
 	ObjectTable objTable;
 
@@ -172,14 +172,14 @@ void ExpressionTest::parse_Addition_3_Operands_Test()
 	Token t5(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t5);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 	TEST_ASSERT(fabs(expression.evaluate() - 111.5) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_Addition_4_Operands_Test()
+void ArithmeticExpressionTest::parse_Addition_4_Operands_Test()
 {
 	ObjectTable objTable;
 
@@ -209,14 +209,14 @@ void ExpressionTest::parse_Addition_4_Operands_Test()
 	Token t7("10", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t7);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 	TEST_ASSERT(fabs(expression.evaluate() - 112.5) <= FLT_EPSILON);
 }
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_Subtraction_2_ConstantOperands_Test()
+void ArithmeticExpressionTest::parse_Subtraction_2_ConstantOperands_Test()
 {
 	ObjectTable objTable;
 
@@ -230,7 +230,7 @@ void ExpressionTest::parse_Subtraction_2_ConstantOperands_Test()
 	Token t3("5", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t3);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(fabs(expression.evaluate() - 5.0) <= FLT_EPSILON);
@@ -238,7 +238,7 @@ void ExpressionTest::parse_Subtraction_2_ConstantOperands_Test()
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_Subtraction_2_ObjectOperands_Test()
+void ArithmeticExpressionTest::parse_Subtraction_2_ObjectOperands_Test()
 {
 	ObjectTable objTable;
 
@@ -256,7 +256,7 @@ void ExpressionTest::parse_Subtraction_2_ObjectOperands_Test()
 	Token t3(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t3);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(fabs(expression.evaluate() - 5.0) <= FLT_EPSILON);
@@ -264,7 +264,7 @@ void ExpressionTest::parse_Subtraction_2_ObjectOperands_Test()
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_Multiplication_2_ConstantOperands_Test()
+void ArithmeticExpressionTest::parse_Multiplication_2_ConstantOperands_Test()
 {
 	ObjectTable objTable;
 
@@ -278,7 +278,7 @@ void ExpressionTest::parse_Multiplication_2_ConstantOperands_Test()
 	Token t3("2", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t3);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(fabs(expression.evaluate() - 4.0) <= FLT_EPSILON);
@@ -286,7 +286,7 @@ void ExpressionTest::parse_Multiplication_2_ConstantOperands_Test()
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_Multiplication_2_ObjectOperands_Test()
+void ArithmeticExpressionTest::parse_Multiplication_2_ObjectOperands_Test()
 {
 	ObjectTable objTable;
 
@@ -304,7 +304,7 @@ void ExpressionTest::parse_Multiplication_2_ObjectOperands_Test()
 	Token t3(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t3);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(fabs(expression.evaluate() - 4.0) <= FLT_EPSILON);
@@ -312,7 +312,7 @@ void ExpressionTest::parse_Multiplication_2_ObjectOperands_Test()
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_Division_2_ConstantOperands_Test()
+void ArithmeticExpressionTest::parse_Division_2_ConstantOperands_Test()
 {
 	ObjectTable objTable;
 
@@ -326,7 +326,7 @@ void ExpressionTest::parse_Division_2_ConstantOperands_Test()
 	Token t3("2", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t3);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(fabs(expression.evaluate() - 25.0) <= FLT_EPSILON);
@@ -334,7 +334,7 @@ void ExpressionTest::parse_Division_2_ConstantOperands_Test()
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_Division_2_ObjectOperands_Test()
+void ArithmeticExpressionTest::parse_Division_2_ObjectOperands_Test()
 {
 	ObjectTable objTable;
 
@@ -352,7 +352,7 @@ void ExpressionTest::parse_Division_2_ObjectOperands_Test()
 	Token t3(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t3);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(fabs(expression.evaluate() - 25.0) <= FLT_EPSILON);
@@ -360,7 +360,7 @@ void ExpressionTest::parse_Division_2_ObjectOperands_Test()
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_3_Operands_Test()
+void ArithmeticExpressionTest::parse_3_Operands_Test()
 {
 	ObjectTable objTable;
 
@@ -382,7 +382,7 @@ void ExpressionTest::parse_3_Operands_Test()
 	Token t5(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
 	tokens.push_back(&t5);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
 	TEST_ASSERT(fabs(expression.evaluate() - 40.0) <= FLT_EPSILON);
@@ -390,7 +390,7 @@ void ExpressionTest::parse_3_Operands_Test()
 
 //-----------------------------------------------------------------------------
 
-void ExpressionTest::parse_4_Operands_Test()
+void ArithmeticExpressionTest::parse_4_Operands_Test()
 {
 	ObjectTable objTable;
 
@@ -420,7 +420,7 @@ void ExpressionTest::parse_4_Operands_Test()
 	Token t7("2", TOKEN_TYPE_NUMERIC_CONSTANT);
 	tokens.push_back(&t7);
 
-	Expression expression(1);
+	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
 	// FIXME Due the lack of operator precedence in the grammar, non-

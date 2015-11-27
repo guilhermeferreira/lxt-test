@@ -45,22 +45,18 @@ public:
 	virtual ~Expression();
 
 	/**
-	 * \brief Recursively build the <exception> non-terminal parsing-tree
+	 * \brief Build the <expression> non-terminal parsing-tree
 	 */
-	void parse(
-		const std::vector<Token*> &tokens,
-		ObjectTable &objectTable);
+	virtual void parse(
+		std::vector<Token*> &tokens,
+		ObjectTable &objectTable) = 0;
 
 	/**
-	 * \brief Evaluate recursively the expression (and its sub-expressions) value
+	 * \brief Evaluate the <expression> (and its sub-expressions) value
 	 */
-	float evaluate() const;
+	virtual float evaluate() const = 0;
 
-private:
-	FloatingObject *object_;
-	Expression *expression_;
-	const Operation *operation_;
-	float constant_;
+protected:
 	int lineNumber_;
 
 };

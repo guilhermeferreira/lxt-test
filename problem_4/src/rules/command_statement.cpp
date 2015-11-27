@@ -53,7 +53,7 @@ CommandStatement::~CommandStatement()
 //-----------------------------------------------------------------------------
 
 void CommandStatement::parse(
-	const vector<Token*> &tokens,
+	vector<Token*> &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
@@ -61,16 +61,21 @@ void CommandStatement::parse(
 
 	// Production rules:
 	//
-	//  <command_statement>    ::= <command> <expression>
+	//  <command_statement>    ::= <command> <arithmetic_expression>
 	//  <command>              ::= "print"
-	//  <expression>           ::= <operand>
+	//  <arithmetic_expression>::= <operand>
 	//  <operand>              ::= <readwrite_object>
 	//                           | <readonly_object>
 	//                           | <constant>
 
 	string commandName = tokens[0]->getValue();
 	assert(commandName == "print");
+	tokens.erase(tokens.begin());
 
+	// FIXME the rules is limited to one single operand, not an recursive
+	//       expression:
+	//             <arithmetic_expression> ::= <operand>
+	//
 	string objectName = tokens[1]->getValue();
 	floatingObject_ = objectTable.getObject(objectName);
 	if (floatingObject_ == NULL) {
@@ -80,6 +85,7 @@ void CommandStatement::parse(
 		}
 	}
 	assert((floatingObject_ != NULL) || (stringObject_ != NULL));
+	tokens.erase(tokens.begin());
 }
 
 //-----------------------------------------------------------------------------

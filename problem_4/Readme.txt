@@ -91,6 +91,11 @@ Example command line:
 The rules are defined in the Call Cost Calculation Language (C3L). This is a
 simple context-free grammar I created for this sample application.
 
+
+------------------------------------------------------------------------------
+ 2.2.1. C3L Grammar
+------------------------------------------------------------------------------
+
 The C3L grammar is described bellow in Backus-Naur Form. A symbol delimited by
 angle brackets (e.g. <non-terminal>) is a non terminal symbol. A symbol delimted
 by double quotes (e.g. "terminal") is a terminal symbol. Each line must contain
@@ -103,21 +108,22 @@ one and only one rule:
   <statement>            ::= <command_statement>
                            | <assignment_statement>
 
-  <command_statement>    ::= <command> <expression>
+  <command_statement>    ::= <command> <arithmetic_expression>
+
+  <assignment_statement> ::= <readwrite_object> "=" <arithmetic_expression>
+
 
   <command>              ::= "print"
 
-  <assignment_statement> ::= <readwrite_object> "=" <expression>
-
-  <expression>           ::= <operand> "+" <expression>
-                           | <operand> "-" <expression>
-                           | <operand> "*" <expression>
-                           | <operand> "/" <expression>
+  <arithmetic_expression>::= <operand> "+" <arithmetic_expression>
+                           | <operand> "-" <arithmetic_expression>
+                           | <operand> "*" <arithmetic_expression>
+                           | <operand> "/" <arithmetic_expression>
                            | <operand>
 
   <operand>              ::= <readwrite_object>
                            | <readonly_object>
-                           | <constant>
+                           | <numeric_constant>
 
   <readwrite_object>     ::= "call_total_cost"
                            | "call_minute_cost"
@@ -129,7 +135,10 @@ one and only one rule:
                            | "call_destination_prefix"
                            | "call_period_day"
 
-  <constant>             ::= <floating_constant>
+  <constant_list>        ::= <numeric_constant>
+                           | <textual_constant>
+
+  <numeric_constant>     ::= <floating_constant>
                            | <integer_constant>
 
   <floating_constant>    ::= <integer_constant> "." <digit>
@@ -137,17 +146,17 @@ one and only one rule:
   <integer_constant>     ::= <digit><integer_constant>
                            | <digit>
 
-  <digit>                ::= "0"
-                           | "1"
-                           | "2"
-                           | "3"
-                           | "4"
-                           | "5"
-                           | "6"
-                           | "7"
-                           | "8"
-                           | "9"
+  <digit>                ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
 
+  <textual_constant>     ::= <letter><textual_constant>
+                           | <letter>
+
+  <letter>               ::= "a" .. "z"
+
+
+------------------------------------------------------------------------------
+ 2.2.1. C3L Objects
+------------------------------------------------------------------------------
 
 The meaning of each <object> is described bellow:
 
