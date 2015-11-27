@@ -58,7 +58,7 @@ public:
 	/**
 	 * \brief Compute the difference in minutes between this and another Time
 	 */
-	int operator-(const CallTime& other);
+	float operator-(const CallTime& other);
 
 	/**
 	 * \brief Extraction operator reads from the input stream a time in "hh:mm:ss" format

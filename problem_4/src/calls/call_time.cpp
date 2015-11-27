@@ -59,7 +59,7 @@ CallTime::~CallTime()
 
 //-----------------------------------------------------------------------------
 
-int CallTime::operator-(const CallTime& other)
+float CallTime::operator-(const CallTime& other)
 {
 	// Convert all units to minutes and then subtract
 
@@ -71,10 +71,15 @@ int CallTime::operator-(const CallTime& other)
 	//       to minutes. This conversion must evaluate to floating-point, thus
 	//       the use of the 60.0 (floating-point literal) constant instead of
 	//       60 (integer literal).
-	double min1 = (hour_ * 60) + minutes_ + ceil(seconds_ / 60.0);
-	double min2 = (other.hour_ * 60) + other.minutes_+ ceil(other.seconds_ / 60.0);
+	float min1 = (static_cast<float>(hour_) * 60.0f) +
+	              static_cast<float>(minutes_) +
+	              ceil(static_cast<float>(seconds_) / 60.0f);
 
-	return static_cast<int>(min1 - min2);
+	float min2 = (static_cast<float>(other.hour_) * 60.0f) +
+	              static_cast<float>(other.minutes_) +
+	              ceil(static_cast<float>(other.seconds_) / 60.0f);
+
+	return (min1 - min2);
 }
 
 //-----------------------------------------------------------------------------

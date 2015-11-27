@@ -73,16 +73,24 @@ void CallRecord::process(
 		string callEndDay = callEndDate.substr(0, callEndDayLen);
 		string callEndTime = callEndDate.substr(callEndDayLen + 1);
 
-		// FIXME The call duration computation is limited to calls on the same day.
-		int callDuration = getCallDurationInMin(callStartTime, callEndTime);
-		if (callDuration > 0.0) {
+		if (callStartDay == callEndDay) {
 
-			setObjects(callDuration, callDestNumber, callStartDay, objectTable);
+			// FIXME The call duration computation is limited to calls on the same day.
+			float callDuration = getCallDurationInMin(callStartTime, callEndTime);
+			if (callDuration > 0.0) {
+
+				setObjects(callDuration, callDestNumber, callStartDay, objectTable);
+
+			} else {
+				// Negative call durations are invalid
+				cerr << "Error: "  << lineNumber_ << ": invalid call duration" << endl;
+			}
 
 		} else {
-			// Negative call durations are invalid
-			cerr << "Error: "  << lineNumber_ << ": invalid call duration" << endl;
+			// The same call cannot span different days
+			cerr << "Error: "  << lineNumber_ << ": same call cannot span different days" << endl;
 		}
+
 	} else {
 		// If the record is not well-formatted, do not proceed, but don't
 		// throw an exception. So the next record can be processed
@@ -123,7 +131,7 @@ bool CallRecord::getFields(
 
 //-----------------------------------------------------------------------------
 
-int CallRecord::getCallDurationInMin(
+float CallRecord::getCallDurationInMin(
 	std::string &callStartTime,
 	std::string &callEndTime)
 {
@@ -140,7 +148,7 @@ int CallRecord::getCallDurationInMin(
 	CallTime endTime;
 	endDateTokenizer >> endTime;
 
-	int callDurationInMinutes = endTime - startTime;
+	float callDurationInMinutes = endTime - startTime;
 
 	return callDurationInMinutes;
 }

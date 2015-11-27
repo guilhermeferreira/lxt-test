@@ -65,7 +65,7 @@ public:
 	/**
 	 * \brief Get the difference in minutes of the end and start time of the call
 	 */
-	static int getCallDurationInMin(
+	static float getCallDurationInMin(
 		std::string &callStartTime,
 		std::string &callEndTime);
 
