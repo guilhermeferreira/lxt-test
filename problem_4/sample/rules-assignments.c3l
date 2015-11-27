@@ -1,0 +1,15 @@
+# -------------------------------------
+# Problem #4 - Call Rules 2
+# -------------------------------------
+
+
+call_connection_cost = 1.23
+
+call_minute_cost = 0.95
+
+call_total_cost = 2.34
+
+print call_total_cost
+print call_minute_cost
+print call_connection_cost
+print call_duration_minute

@@ -1,0 +1,28 @@
+# -------------------------------------
+# Problem #4 - Call Rules 3
+# -------------------------------------
+
+call_connection_cost = 0.33
+
+if call_destination_prefix in [ 050 066 095 099 ] then call_bonus_quantity_minute = call_bonus_quantity_minute + 30 end
+
+if call_destination_prefix in [ 050 066 095 099 ] then call_bonus_validity_minute = 30 * 24 * 60 end
+
+call_minute_cost = 0.95
+
+if call_destination_prefix in [ 050 066 095 099 ] then call_minute_cost = 0.50 end
+
+if call_period_day in [ saturday sunday ] then call_bonus_quantity_minute = call_bonus_quantity_minute + 5 end
+
+
+call_total_cost = call_connection_cost + call_duration_minute * call_minute_cost
+
+
+print call_total_cost
+print call_minute_cost
+print call_connection_cost
+print call_duration_minute
+print call_bonus_quantity_minute
+print call_bonus_validity_minute
+print call_destination_prefix
+print call_period_day

@@ -11,4 +11,5 @@ AC_OUTPUT(Makefile \
 	problem_1/Makefile \
 	problem_2/Makefile \
 	problem_3/Makefile \
+	problem_4/Makefile \
 )
