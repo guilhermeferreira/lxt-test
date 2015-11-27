@@ -85,4 +85,4 @@ problem_4_test_CPPFLAGS += ${TEST_CPPFLAGS}
 # Linking Flags
 ###############################################################################
 
-problem_4_test_LDFLAGS  = -L. -lcpptest
+problem_4_test_LDADD = -L. -lcpptest
