@@ -36,6 +36,10 @@ using namespace std;
 // CommandStatement class
 //-----------------------------------------------------------------------------
 
+const string CommandStatement::COMMAND_KEYWORD = "print";
+
+//-----------------------------------------------------------------------------
+
 CommandStatement::CommandStatement(const int lineNumber)
 : Statement(lineNumber),
   floatingObject_(NULL),
@@ -69,25 +73,9 @@ void CommandStatement::parse(
 	//  <operand>              ::= <readwrite_object>
 	//                           | <readonly_object>
 	//                           | <constant>
+	parseCommandKeyword(tokens);
 
-	string commandName = tokens[0]->getValue();
-	assert(commandName == "print");
-	tokens.erase(tokens.begin());
-
-	// FIXME the rules is limited to one single operand, not an recursive
-	//       expression:
-	//             <arithmetic_expression> ::= <operand>
-	//
-	string objectName = tokens[1]->getValue();
-	floatingObject_ = objectTable.getFloatingObject(objectName);
-	if (floatingObject_ == NULL) {
-		stringObject_ = objectTable.getStringObject(objectName);
-		if (stringObject_ == NULL) {
-			throw SyntacticErrorException(lineNumber_);
-		}
-	}
-	assert((floatingObject_ != NULL) || (stringObject_ != NULL));
-	tokens.erase(tokens.begin());
+	parseExpression(tokens, objectTable);
 }
 
 //-----------------------------------------------------------------------------
@@ -109,6 +97,51 @@ void CommandStatement::evaluate()
 	else {
 		throw SemanticErrorException(lineNumber_);
 	}
+}
+
+//-----------------------------------------------------------------------------
+
+void CommandStatement::parseCommandKeyword(vector<Token*> &tokens)
+{
+	assert(!tokens.empty());
+
+	string commandKeyword = tokens[0]->getValue();
+	if (commandKeyword != COMMAND_KEYWORD) {
+		throw SyntacticErrorException(lineNumber_);
+	}
+	assert(commandKeyword == COMMAND_KEYWORD);
+
+	// Remove the keyword from the list of tokens
+	tokens.erase(tokens.begin());
+}
+
+//-----------------------------------------------------------------------------
+
+void CommandStatement::parseExpression(
+	vector<Token*> &tokens,
+	ObjectTable &objectTable)
+{
+	assert(!tokens.empty());
+	assert((floatingObject_ == NULL) && (stringObject_ == NULL));
+
+	// FIXME This rule is limited to one single operand, not a recursive
+	//       expression:
+	//             <arithmetic_expression> ::= <operand>
+	//
+	// FIXME  May we get a generic pointer to any Object specialization?
+	//
+	string objectName = tokens[0]->getValue();
+	floatingObject_ = objectTable.getFloatingObject(objectName);
+	if (floatingObject_ == NULL) {
+		stringObject_ = objectTable.getStringObject(objectName);
+		if (stringObject_ == NULL) {
+			throw SyntacticErrorException(lineNumber_);
+		}
+	}
+	assert((floatingObject_ != NULL) || (stringObject_ != NULL));
+
+	// Remove the operand from the list of tokens
+	tokens.erase(tokens.begin());
 }
 
 

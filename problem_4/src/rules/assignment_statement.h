@@ -55,6 +55,33 @@ public:
 	virtual void evaluate();
 
 private:
+	/**
+	 * Parse the <readwrite_object> token from the production rule
+	 *
+	 *    <assignment_statement> ::= <readwrite_object> "=" <arithmetic_expression>
+	 */
+	void parseObject(
+			std::vector<Token*> &tokens,
+			ObjectTable &objectTable);
+
+	/**
+	 * Parse the "=" operator token from the production rule
+	 *
+	 *    <assignment_statement> ::= <readwrite_object> "=" <arithmetic_expression>
+	 */
+	void parseAssignmentOperator(std::vector<Token*> &tokens);
+
+	/**
+	 * Parse the <arithmetic_expression> token from the production rule
+	 *
+	 *    <assignment_statement> ::= <readwrite_object> "=" <arithmetic_expression>
+	 */
+	void parseExpression(
+			std::vector<Token*> &tokens,
+			ObjectTable &objectTable);
+
+	static const std::string ASSIGNMENT_OPERATOR;
+
 	FloatingObject *lvalueObject_;
 	ArithmeticExpression *rvalueExpression_;
 

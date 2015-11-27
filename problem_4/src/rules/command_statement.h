@@ -54,6 +54,25 @@ public:
 	virtual void evaluate();
 
 private:
+	/**
+	 * Parse the "print" keyword token from the production rule
+	 *
+	 *    <command_statement> ::= <command> <expression>
+	 *    <command>           ::= "print"
+	 */
+	void parseCommandKeyword(std::vector<Token*> &tokens);
+
+	/**
+	 * Parse the <expression> token from the production rule
+	 *
+	 *    <command_statement> ::= <command> <expression>
+	 */
+	void parseExpression(
+			std::vector<Token*> &tokens,
+			ObjectTable &objectTable);
+
+	static const std::string COMMAND_KEYWORD;
+
 	// FIXME  May we have a generic pointer to any Object specialization?
 	FloatingObject *floatingObject_;
 	StringObject *stringObject_;

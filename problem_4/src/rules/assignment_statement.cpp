@@ -34,6 +34,10 @@ using namespace std;
 // AssignmentStatement class
 //-----------------------------------------------------------------------------
 
+const string AssignmentStatement::ASSIGNMENT_OPERATOR = "=";
+
+//-----------------------------------------------------------------------------
+
 AssignmentStatement::AssignmentStatement(const int lineNumber)
 : Statement(lineNumber),
   lvalueObject_(NULL),
@@ -68,23 +72,13 @@ void AssignmentStatement::parse(
 	//     <assignment_statement> ::= <readwrite_object> "=" <arithmetic_expression>
 
 	// Consume left hand side token, that is the variable (object) name
-	string objectName = tokens[0]->getValue();
-	lvalueObject_ = objectTable.getFloatingObject(objectName);
-	if (lvalueObject_ == NULL) {
-		throw SyntacticErrorException(lineNumber_);
-	}
-	assert(lvalueObject_ != NULL);
-	tokens.erase(tokens.begin());
+	parseObject(tokens, objectTable);
 
 	// Consume the assignment operator
-	string operatorSymbol = tokens[0]->getValue();
-	assert(operatorSymbol == "=");
-	tokens.erase(tokens.begin());
+	parseAssignmentOperator(tokens);
 
 	// Expression can consume only the right hand side tokens
-	rvalueExpression_ = new ArithmeticExpression(lineNumber_);
-	assert(rvalueExpression_ != NULL);
-	rvalueExpression_->parse(tokens, objectTable);
+	parseExpression(tokens, objectTable);
 }
 
 //-----------------------------------------------------------------------------
@@ -94,12 +88,63 @@ void AssignmentStatement::evaluate()
 	assert(lvalueObject_ != NULL);
 	assert(rvalueExpression_ != NULL);
 
-	// <readonly_object> can't be lvalues!
+	// Because <readonly_object> can't be lvalues!
+	// We ensure that only <readwrite_object> are evaluated!
 	if (lvalueObject_->isRulesReadOnly()) {
 		throw SemanticErrorException(lineNumber_);
 	}
 
 	lvalueObject_->setValue(rvalueExpression_->evaluate());
+}
+
+//-----------------------------------------------------------------------------
+
+void AssignmentStatement::parseObject(
+	vector<Token*> &tokens,
+	ObjectTable &objectTable)
+{
+	assert(!tokens.empty());
+	assert(lvalueObject_ == NULL);
+
+	string objectName = tokens[0]->getValue();
+	lvalueObject_ = objectTable.getFloatingObject(objectName);
+	if (lvalueObject_ == NULL) {
+		throw SyntacticErrorException(lineNumber_);
+	}
+	assert(lvalueObject_ != NULL);
+
+	// Remove the operand from the list of tokens
+	tokens.erase(tokens.begin());
+}
+
+//-----------------------------------------------------------------------------
+
+void AssignmentStatement::parseAssignmentOperator(vector<Token*> &tokens)
+{
+	assert(!tokens.empty());
+
+	string operatorSymbol = tokens[0]->getValue();
+	if (operatorSymbol != ASSIGNMENT_OPERATOR) {
+		throw SyntacticErrorException(lineNumber_);
+	}
+	assert(operatorSymbol == ASSIGNMENT_OPERATOR);
+
+	// Remove the operator from the list of tokens
+	tokens.erase(tokens.begin());
+}
+
+//-----------------------------------------------------------------------------
+
+void AssignmentStatement::parseExpression(
+	vector<Token*> &tokens,
+	ObjectTable &objectTable)
+{
+	assert(!tokens.empty());
+	assert(rvalueExpression_ == NULL);
+
+	rvalueExpression_ = new ArithmeticExpression(lineNumber_);
+	assert(rvalueExpression_ != NULL);
+	rvalueExpression_->parse(tokens, objectTable);
 }
 
 
