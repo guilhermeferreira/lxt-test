@@ -37,9 +37,9 @@ using namespace std;
 //-----------------------------------------------------------------------------
 
 CommandStatement::CommandStatement(const int lineNumber)
-: floatingObject_(NULL),
-  stringObject_(NULL),
-  lineNumber_(lineNumber)
+: Statement(lineNumber),
+  floatingObject_(NULL),
+  stringObject_(NULL)
 {
 }
 

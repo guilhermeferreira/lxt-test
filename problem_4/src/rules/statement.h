@@ -39,7 +39,7 @@ namespace luxoft {
  */
 class Statement {
 public:
-	Statement();
+	explicit Statement(const int lineNumber);
 
 	virtual ~Statement();
 
@@ -48,6 +48,9 @@ public:
 		ObjectTable &objectTable) = 0;
 
 	virtual void evaluate() = 0;
+
+protected:
+	int lineNumber_;
 
 };
 

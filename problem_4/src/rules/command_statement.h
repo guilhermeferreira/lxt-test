@@ -57,7 +57,6 @@ private:
 	// FIXME  May we have a generic pointer to any Object specialization?
 	FloatingObject *floatingObject_;
 	StringObject *stringObject_;
-	int lineNumber_;
 
 };
 

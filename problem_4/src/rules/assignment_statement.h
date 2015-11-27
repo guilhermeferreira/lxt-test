@@ -57,7 +57,6 @@ public:
 private:
 	FloatingObject *lvalueObject_;
 	ArithmeticExpression *rvalueExpression_;
-	int lineNumber_;
 
 };
 

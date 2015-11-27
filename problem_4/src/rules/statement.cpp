@@ -31,7 +31,8 @@ using namespace std;
 // Statement class
 //-----------------------------------------------------------------------------
 
-Statement::Statement()
+Statement::Statement(const int lineNumber)
+: lineNumber_(lineNumber)
 {
 }
 

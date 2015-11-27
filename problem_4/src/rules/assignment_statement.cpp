@@ -35,9 +35,9 @@ using namespace std;
 //-----------------------------------------------------------------------------
 
 AssignmentStatement::AssignmentStatement(const int lineNumber)
-: lvalueObject_(NULL),
-  rvalueExpression_(NULL),
-  lineNumber_(lineNumber)
+: Statement(lineNumber),
+  lvalueObject_(NULL),
+  rvalueExpression_(NULL)
 {
 }
 
