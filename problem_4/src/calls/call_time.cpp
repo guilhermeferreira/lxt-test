@@ -81,13 +81,18 @@ int CallTime::operator-(const CallTime& other)
 
 istream& operator>>(istream &is, CallTime& dt)
 {
+	is.seekg(0, is.end);
+	streampos length = is.tellg();
+	is.seekg(0, is.beg);
+	assert(length == (sizeof("hh:mm:ss") - 1));
+
+	char colon[2];
+
 	is >> dt.hour_;
-	char hour[3];
-	is.getline(hour, sizeof(hour), ':');
+	is.getline(colon, sizeof(colon), ':');
 
 	is >> dt.minutes_;
-	char minutes[3];
-	is.getline(minutes, sizeof(minutes), ':');
+	is.getline(colon, sizeof(colon), ':');
 
 	is >> dt.seconds_;
 
