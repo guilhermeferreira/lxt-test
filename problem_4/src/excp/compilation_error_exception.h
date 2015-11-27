@@ -39,7 +39,9 @@ namespace luxoft {
 class CompilationErrorException: public std::exception
 {
 public:
-	CompilationErrorException(int lineNumber, std::string errorMsg)
+	CompilationErrorException(
+		int lineNumber,
+		const std::string &errorMsg)
 	: lineNumber_(lineNumber), errorMsg_(errorMsg)
 	{
 	}
@@ -52,11 +54,10 @@ public:
 	{
 		std::stringstream ss;
 		ss << lineNumber_;
+		ss << ": ";
+		ss << errorMsg_;
+
 		std::string msg = ss.str();
-
-		msg += ": ";
-
-		msg += errorMsg_;
 
 		return msg.c_str();
 	}

@@ -37,7 +37,7 @@ namespace luxoft {
 class SyntacticErrorException: public CompilationErrorException
 {
 public:
-	SyntacticErrorException(int lineNumber)
+	explicit SyntacticErrorException(int lineNumber)
 	: CompilationErrorException(lineNumber, "Syntactic error")
 	{
 	}

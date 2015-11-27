@@ -37,7 +37,7 @@ namespace luxoft {
 class SemanticErrorException: public CompilationErrorException
 {
 public:
-	SemanticErrorException(int lineNumber)
+	explicit SemanticErrorException(int lineNumber)
 	: CompilationErrorException(lineNumber, "Semantic error")
 	{
 	}
