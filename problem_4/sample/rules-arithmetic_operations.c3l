@@ -4,9 +4,9 @@
 # -------------------------------------
 
 
-call_connection_cost = 0.45 + 1.00
+call_connection_cost = 0.45 + 3.00
 
-call_minute_cost = 0.50 * 2 + call_connection_cost
+call_minute_cost = call_connection_cost + 0.50 * 2
 
 call_total_cost = call_connection_cost + call_minute_cost * call_duration_minute
 
