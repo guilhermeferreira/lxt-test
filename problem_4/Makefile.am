@@ -9,6 +9,7 @@ COMMON_SOURCES  = src/rules/rules_file.cpp
 COMMON_SOURCES += src/rules/rules.cpp
 COMMON_SOURCES += src/rules/rule_line.cpp
 COMMON_SOURCES += src/rules/statement.cpp
+COMMON_SOURCES += src/rules/statement_factory.cpp
 COMMON_SOURCES += src/rules/assignment_statement.cpp
 COMMON_SOURCES += src/rules/command_statement.cpp
 COMMON_SOURCES += src/rules/object.cpp

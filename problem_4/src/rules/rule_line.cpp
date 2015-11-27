@@ -23,8 +23,7 @@
 
 #include <cassert>
 
-#include "assignment_statement.h"
-#include "command_statement.h"
+#include "statement_factory.h"
 #include "syntactic_error_exception.h"
 
 
@@ -46,6 +45,9 @@ RuleLine::RuleLine(const int lineNumber)
 
 RuleLine::~RuleLine()
 {
+	// This class creates the Tokens, so it must destroy them!
+	assert(!tokens_.empty());
+
 	// TODO This a place where a std::shared_ptr or a boost::shared_ptr would
 	//      save us from deleting all pointers. Because the vector::~vector()
 	//      destroys the elements (pointer), not the element it points to!
@@ -68,12 +70,13 @@ void RuleLine::tokenize(const string &line)
 	assert(tokens_.empty());
 	assert(statement_ == NULL);
 
-	string consumableLine = line;
+	// Don't modify the original line, use a consumable copy instead
+	string consumableLine = removeLeadingWhitespaces(line);
 
 	// Place a symbol at the end so the algorithm can find the last token.
 	// This has the same purpose as the ';' at the end of C++ statements
 	const string tokenDelimiters = " ";
-	consumableLine.push_back(tokenDelimiters[0]);
+	consumableLine = addTrailingWhitespaces(line, tokenDelimiters);
 
 	size_t tokenEndPos = consumableLine.find_first_of(tokenDelimiters);
 	while (tokenEndPos != string::npos) {
@@ -96,24 +99,16 @@ void RuleLine::parse(ObjectTable &objectTable)
 	assert(!tokens_.empty());
 	assert(statement_ == NULL);
 
-	const string firstToken = tokens_[0]->getValue();
-	size_t firstTokenPrefixEndPos = firstToken.find_first_of("_");
-	if (firstTokenPrefixEndPos == string::npos) {
-		firstTokenPrefixEndPos = firstToken.length();
-	}
-
-	const string firstTokenPrefix = firstToken.substr(0, firstTokenPrefixEndPos);
-	if (firstTokenPrefix == "call") {
-		statement_ = new AssignmentStatement(lineNumber_);
-		statement_->parse(tokens_, objectTable);
-	} else if (firstTokenPrefix == "print") {
-		statement_ = new CommandStatement(lineNumber_);
-		statement_->parse(tokens_, objectTable);
-	} else {
+	const string keyword = StatementFactory::getStatementKeyword(tokens_);
+	statement_ = StatementFactory::createStatement(keyword, lineNumber_);
+	if (statement_ == NULL) {
+		// TODO What about create an InvalidStatement object that throws errors
+		//      when parsed or evaluated?
 		throw SyntacticErrorException(lineNumber_);
 	}
 
-
+	assert(statement_ != NULL);
+	statement_->parse(tokens_, objectTable);
 }
 
 //-----------------------------------------------------------------------------
@@ -125,6 +120,32 @@ void RuleLine::evaluate()
 
 	statement_->evaluate();
 }
+
+//-----------------------------------------------------------------------------
+
+string RuleLine::removeLeadingWhitespaces(const string &line) const
+{
+	size_t nonWhitespacePos = line.find_first_not_of(" \t");
+	if (nonWhitespacePos != std::string::npos) {
+		return line.substr(nonWhitespacePos);
+	}
+
+	return line;
+}
+
+//-----------------------------------------------------------------------------
+
+string RuleLine::addTrailingWhitespaces(
+	const string &line,
+	const string &lineDelimiter) const
+{
+	string terminatedLine = line;
+	terminatedLine.push_back(lineDelimiter[0]);
+
+	return terminatedLine;
+}
+
+//-----------------------------------------------------------------------------
 
 
 } // namespace luxoft

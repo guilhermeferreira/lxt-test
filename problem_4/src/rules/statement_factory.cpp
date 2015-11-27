@@ -19,70 +19,62 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULE_LINE_H
-#define RULE_LINE_H
+#include "statement_factory.h"
 
-#include <string>
-#include <vector>
+#include <cassert>
 
-#include "object_table.h"
-#include "statement.h"
-#include "token.h"
+#include "assignment_statement.h"
+#include "command_statement.h"
 
 
 namespace luxoft {
 
+using namespace std;
+
+
 //-----------------------------------------------------------------------------
-// RuleLine class
+// StatementFactory class
 //-----------------------------------------------------------------------------
 
-/**
- * \brief A rule line in the C3L
- */
-class RuleLine {
-public:
-	/**
-	 * \brief Create a rule from a line
-	 */
-	explicit RuleLine(const int lineNumber);
+Statement *StatementFactory::createStatement(
+	const string &keyword,
+	const int lineNumber)
+{
+	Statement *statement = NULL;
 
-	virtual ~RuleLine();
+	if (keyword == "call") {
+		statement = new AssignmentStatement(lineNumber);
+	} else if (keyword == "print") {
+		statement = new CommandStatement(lineNumber);
+	} /*
+	// TODO What about create an invalid statement object that throws errors
+	//      when parsed or evaluated?
+	else {
+		statement = new InvalidStatement(lineNumber);
+	}
+	*/
 
-	/**
-	 * \brief Separate (tokenize) all elements of a line
-	 */
-	void tokenize(const std::string &line);
+	return statement;
+}
 
-	/**
-	 * \brief Create a parse tree for a line
-	 */
-	void parse(ObjectTable &objectTable) /* throws SyntacticErrorException */;
+//-----------------------------------------------------------------------------
 
-	/**
-	 * \brief Execute the rule at this line
-	 */
-	void evaluate() /* throws SemanticErrorException */;
+string StatementFactory::getStatementKeyword(
+	const vector<Token*> &statementTokens)
+{
+	// According to C3L Grammar, all keywords are at the first position
+	// in the line
+	const string firstToken = statementTokens[0]->getValue();
+	size_t firstTokenPrefixEndPos = firstToken.find_first_of("_");
+	if (firstTokenPrefixEndPos == string::npos) {
+		firstTokenPrefixEndPos = firstToken.length();
+	}
+	const string firstTokenPrefix = firstToken.substr(0, firstTokenPrefixEndPos);
 
-private:
-	/**
-	 * \brief Get a COPY of the line without whitespace characters
-	 */
-	std::string removeLeadingWhitespaces(const std::string &line) const;
+	return firstTokenPrefix;
+}
 
-	/**
-	 * \brief Get a COPY of the line with a symbol to mark the end of the line
-	 */
-	std::string addTrailingWhitespaces(
-		const std::string &line,
-		const std::string &lineDelimiter) const;
-
-	std::vector<Token*> tokens_;
-	Statement *statement_;
-	int lineNumber_;
-
-};
+//-----------------------------------------------------------------------------
 
 
 } // namespace luxoft
-
-#endif /* RULE_LINE_H */

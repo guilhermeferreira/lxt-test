@@ -19,70 +19,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULE_LINE_H
-#define RULE_LINE_H
+#ifndef STATEMENT_FACTORY_H
+#define STATEMENT_FACTORY_H
 
 #include <string>
-#include <vector>
 
-#include "object_table.h"
 #include "statement.h"
-#include "token.h"
 
 
 namespace luxoft {
 
 //-----------------------------------------------------------------------------
-// RuleLine class
+// StatementFactory class
 //-----------------------------------------------------------------------------
 
 /**
- * \brief A rule line in the C3L
+ * \brief A Statement creator class
  */
-class RuleLine {
+class StatementFactory {
 public:
-	/**
-	 * \brief Create a rule from a line
-	 */
-	explicit RuleLine(const int lineNumber);
-
-	virtual ~RuleLine();
 
 	/**
-	 * \brief Separate (tokenize) all elements of a line
+	 * \brief Create a Statement object for the given keyword
 	 */
-	void tokenize(const std::string &line);
+	static Statement *createStatement(
+		const std::string &keyword,
+		const int lineNumber);
 
 	/**
-	 * \brief Create a parse tree for a line
+	 * \brief Get the keyword in this rule line
 	 */
-	void parse(ObjectTable &objectTable) /* throws SyntacticErrorException */;
-
-	/**
-	 * \brief Execute the rule at this line
-	 */
-	void evaluate() /* throws SemanticErrorException */;
-
-private:
-	/**
-	 * \brief Get a COPY of the line without whitespace characters
-	 */
-	std::string removeLeadingWhitespaces(const std::string &line) const;
-
-	/**
-	 * \brief Get a COPY of the line with a symbol to mark the end of the line
-	 */
-	std::string addTrailingWhitespaces(
-		const std::string &line,
-		const std::string &lineDelimiter) const;
-
-	std::vector<Token*> tokens_;
-	Statement *statement_;
-	int lineNumber_;
+	static std::string getStatementKeyword(
+		const std::vector<Token*> &statementTokens);
 
 };
 
 
 } // namespace luxoft
 
-#endif /* RULE_LINE_H */
+
+#endif /* STATEMENT_FACTORY_H */
