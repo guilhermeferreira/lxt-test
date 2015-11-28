@@ -38,6 +38,12 @@ namespace luxoft {
 
 /**
  * \brief The <arithmetic_expression> non-terminal symbol
+ *
+ *    <arithmetic_expression> ::= <operand> "+" <arithmetic_expression>
+ *                              | <operand> "-" <arithmetic_expression>
+ *                              | <operand> "*" <arithmetic_expression>
+ *                              | <operand> "/" <arithmetic_expression>
+ *                              | <operand>
  */
 class ArithmeticExpression : public Expression {
 public:
@@ -58,6 +64,31 @@ public:
 	float evaluate() const;
 
 private:
+	/**
+	 * \brief Parse the <operand> token from the production rule
+	 *
+	 *     <arithmetic_expression> ::= <operand> "op" <arithmetic_expression>
+	 */
+	void parseOperand(
+			std::vector<Token*> &tokens,
+			ObjectTable &objectTable);
+
+	/**
+	 * \brief Parse the operator "op" token from the production rule
+	 *
+	 *     <arithmetic_expression> ::= <operand> "op" <arithmetic_expression>
+	 */
+	void parseArithmeticOperator(std::vector<Token*> &tokens);
+
+	/**
+	 * \brief Parse the <arithmetic_expression> token from the production rule
+	 *
+	 *     <arithmetic_expression> ::= <operand> "op" <arithmetic_expression>
+	 */
+	void parseExpression(
+			std::vector<Token*> &tokens,
+			ObjectTable &objectTable);
+
 	FloatingObject *operand_;
 	ArithmeticExpression *expression_;
 	const Operation *operation_;

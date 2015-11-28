@@ -101,6 +101,7 @@ private:
 	static const std::string MEMBERSHIP_OPERATOR;
 	static const std::string CONDITION_BEGIN_OPERATOR;
 	static const std::string CONDITION_END_OPERATOR;
+	static const std::string CONDITION_SEPARATOR_OPERATOR;
 
 	StringObject *stringOperand_;
 	std::string constantList_;

@@ -64,65 +64,27 @@ void ArithmeticExpression::parse(
 {
 	assert(!tokens.empty());
 
-	// This loop process only the first 1 or 2 elements:
+	// Consume the first two elements, <operand> and arithmetic operator:
 	//
-	//    <object>
-	//    <object> "+"
-	//    <object> "-"
-	//    <object> "*"
-	//    <object> "/"
-	//    <constant>
+	//      <arithmetic_expression>::= <operand> "+" <arithmetic_expression>
+	//                               | <operand> "-" <arithmetic_expression>
+	//                               | <operand> "*" <arithmetic_expression>
+	//                               | <operand> "/" <arithmetic_expression>
+	//                               | <operand>
 	//
 	// The remaining <arithmetic_expression> is processed recursively (i.e. it's a context-
 	// free grammar anyways)
 
-
 	// Process expressions with a single operand, variable (object) or constant
-	Token *firstToken = tokens[0];
-	switch (firstToken->getType()) {
-		// The production rule is <arithmetic_expression> ::= <object>
-		case TOKEN_TYPE_OBJECT: {
-			string objectName = firstToken->getValue();
-			operand_ = objectTable.getFloatingObject(objectName);
-			if (operand_ == NULL) {
-				throw SyntacticErrorException(lineNumber_);
-			}
-			break;
-		}
-		// The production rule is <arithmetic_expression> ::= <constant>
-		case TOKEN_TYPE_NUMERIC_CONSTANT: {
-			string numericValue = firstToken->getValue();
-			istringstream stream(numericValue);
-			stream >> constant_;
-			break;
-		}
-		default:
-			throw SyntacticErrorException(lineNumber_);
-			break;
-	}
-	tokens.erase(tokens.begin());
+	parseOperand(tokens, objectTable);
 
 	// Process expressions that have operand, arithmetic operator and another
 	// expression (e.g. <arithmetic_expression> ::= <object> "+" <arithmetic_expression>)
 	if (tokens.size() > 1) {
-		Token *secondToken = tokens[0];
-		switch (secondToken->getType()) {
-			case TOKEN_TYPE_ARITHMETIC_OPERATOR: {
-				string operationSymbol = secondToken->getValue();
-				operation_ = OperationTable::getOperation(operationSymbol);
-				break;
-			}
-			default:
-				throw SyntacticErrorException(lineNumber_);
-				break;
-		}
-		tokens.erase(tokens.begin());
+		parseArithmeticOperator(tokens);
 
-		assert(expression_ == NULL); // Avoid dangling pointers (and memory leak)
-		expression_ = new ArithmeticExpression(lineNumber_);
-		expression_->parse(tokens, objectTable);
+		parseExpression(tokens, objectTable);
 	}
-
 }
 
 //-----------------------------------------------------------------------------
@@ -158,6 +120,80 @@ float ArithmeticExpression::evaluate() const
 
 	}
 }
+
+//-----------------------------------------------------------------------------
+
+void ArithmeticExpression::parseOperand(
+	vector<Token*> &tokens,
+	ObjectTable &objectTable)
+{
+	assert(!tokens.empty());
+	assert(operand_ == NULL);
+
+	Token *operandToken = tokens[0];
+	switch (operandToken->getType()) {
+		// The production rule is <arithmetic_expression> ::= <object>
+		case TOKEN_TYPE_OBJECT: {
+			string objectName = operandToken->getValue();
+			operand_ = objectTable.getFloatingObject(objectName);
+			if (operand_ == NULL) {
+				throw SyntacticErrorException(lineNumber_);
+			}
+			break;
+		}
+		// The production rule is <arithmetic_expression> ::= <constant>
+		case TOKEN_TYPE_NUMERIC_CONSTANT: {
+			string numericValue = operandToken->getValue();
+			istringstream stream(numericValue);
+			stream >> constant_;
+			break;
+		}
+		default:
+			throw SyntacticErrorException(lineNumber_);
+			break;
+	}
+
+	// Remove the operand token from the list of tokens
+	tokens.erase(tokens.begin());
+}
+
+//-----------------------------------------------------------------------------
+
+void ArithmeticExpression::parseArithmeticOperator(vector<Token*> &tokens)
+{
+	assert(!tokens.empty());
+
+	Token *operatorToken = tokens[0];
+	switch (operatorToken->getType()) {
+		case TOKEN_TYPE_ARITHMETIC_OPERATOR: {
+			string operationSymbol = operatorToken->getValue();
+			operation_ = OperationTable::getOperation(operationSymbol);
+			assert(operation_ != NULL);
+			break;
+		}
+		default:
+			throw SyntacticErrorException(lineNumber_);
+			break;
+	}
+	// Remove the operator token from the list of tokens
+	tokens.erase(tokens.begin());
+}
+
+//-----------------------------------------------------------------------------
+
+void ArithmeticExpression::parseExpression(
+	vector<Token*> &tokens,
+	ObjectTable &objectTable)
+{
+	assert(!tokens.empty());
+	assert(expression_ == NULL); // Avoid dangling pointers (and memory leak)
+
+	expression_ = new ArithmeticExpression(lineNumber_);
+	assert(expression_ != NULL);
+	expression_->parse(tokens, objectTable);
+}
+
+//-----------------------------------------------------------------------------
 
 
 } // namespace luxoft

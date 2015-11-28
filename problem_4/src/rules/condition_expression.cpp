@@ -40,6 +40,7 @@ using namespace std;
 const string ConditionExpression::MEMBERSHIP_OPERATOR = "in";
 const string ConditionExpression::CONDITION_BEGIN_OPERATOR = "[";
 const string ConditionExpression::CONDITION_END_OPERATOR = "]";
+const string ConditionExpression::CONDITION_SEPARATOR_OPERATOR = " ";
 
 //-----------------------------------------------------------------------------
 
@@ -92,7 +93,7 @@ float ConditionExpression::evaluate() const
 	assert(!constantList_.empty());
 
 	string item = stringOperand_->getValue();
-	bool memberOf = (constantList_.find(stringOperand_->getValue()) != string::npos);
+	bool memberOf = (constantList_.find(item) != string::npos);
 
 	return (memberOf ? 1 : 0);
 }
@@ -179,7 +180,7 @@ void ConditionExpression::parseConstantList(vector<Token*> &tokens)
 	while (tokens[0]->getValue() != CONDITION_END_OPERATOR) {
 		string item = tokens[0]->getValue();
 		constantList_.append(item);
-		constantList_.append(" ");
+		constantList_.append(CONDITION_SEPARATOR_OPERATOR);
 
 		// Remove a constant token from the <constant_list> list of tokens
 		tokens.erase(tokens.begin());
