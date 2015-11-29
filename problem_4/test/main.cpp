@@ -26,6 +26,7 @@
 #include "arithmetic_expression_test.h"
 #include "call_record_test.h"
 #include "call_time_test.h"
+#include "rule_line_test.h"
 
 using namespace std;
 using namespace luxoft;
@@ -46,6 +47,9 @@ int main(int argc, char *argv[])
 
 	CallTimeTest callTimeTest;
 	callTimeTest.run(output, false);
+
+	RuleLineTest ruleLineTest;
+	ruleLineTest.run(output, false);
 
 	return EXIT_SUCCESS;
 }

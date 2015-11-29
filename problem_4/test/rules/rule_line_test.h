@@ -19,73 +19,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef RULE_LINE_H
-#define RULE_LINE_H
+#ifndef RULE_LINE_TEST_H
+#define RULE_LINE_TEST_H
 
-#include <string>
-#include <vector>
+#include "rule_line.h"
 
-#include "object_table.h"
-#include "statement.h"
-#include "token.h"
+#include <cpptest.h>
 
-
-namespace luxoft {
 
 //-----------------------------------------------------------------------------
-// RuleLine class
+// RuleLineTest class
 //-----------------------------------------------------------------------------
 
-/**
- * \brief A rule line in the C3L
- */
-class RuleLine {
+class RuleLineTest: public Test::Suite
+{
 public:
-	/**
-	 * \brief Create a rule from a line
-	 */
-	explicit RuleLine(const int lineNumber);
-
-	virtual ~RuleLine();
-
-	/**
-	 * \brief Separate (tokenize) all elements of a line
-	 */
-	void tokenize(const std::string &line);
-
-	/**
-	 * \brief Create a parse tree for a line
-	 */
-	void parse(ObjectTable &objectTable) /* throws SyntacticErrorException */;
-
-	/**
-	 * \brief Execute the rule at this line
-	 */
-	void evaluate() /* throws SemanticErrorException */;
+	RuleLineTest();
 
 private:
-	/**
-	 * \brief Get a COPY of the line without whitespace characters
-	 */
-	std::string removeLeadingWhitespaces(const std::string &line) const;
-
-	/**
-	 * \brief Get a COPY of the line with a symbol to mark the end of the line
-	 *
-	 * This has the same purpose as the ';' at the end of C++ statements
-	 */
-	std::string addTrailingWhitespaces(const std::string &line) const;
-
-	static const std::string TOKEN_DELIMITER_CHARACTERS;
-	static const std::string TOKEN_ESCAPE_CHARACTERS;
-
-	std::vector<Token*> tokens_;
-	Statement *statement_;
-	int lineNumber_;
+	void constantAssignmentStatement_Test();
+	void expressionAssignmentStatement_Test();
+	void trueSelectionStatement_Test();
+	void falseSelectionStatement_Test();
 
 };
 
-
-} // namespace luxoft
-
-#endif /* RULE_LINE_H */
+#endif /* RULE_LINE_TEST_H */

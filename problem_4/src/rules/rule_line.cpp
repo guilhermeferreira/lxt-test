@@ -35,6 +35,11 @@ using namespace std;
 // RuleLine class
 //-----------------------------------------------------------------------------
 
+const string RuleLine::TOKEN_DELIMITER_CHARACTERS = " ";
+const string RuleLine::TOKEN_ESCAPE_CHARACTERS = " \t";
+
+//-----------------------------------------------------------------------------
+
 RuleLine::RuleLine(const int lineNumber)
 : statement_(NULL),
   lineNumber_(lineNumber)
@@ -75,10 +80,9 @@ void RuleLine::tokenize(const string &line)
 
 	// Place a symbol at the end so the algorithm can find the last token.
 	// This has the same purpose as the ';' at the end of C++ statements
-	const string tokenDelimiters = " ";
-	consumableLine = addTrailingWhitespaces(line, tokenDelimiters);
+	consumableLine = addTrailingWhitespaces(consumableLine);
 
-	size_t tokenEndPos = consumableLine.find_first_of(tokenDelimiters);
+	size_t tokenEndPos = consumableLine.find_first_of(TOKEN_DELIMITER_CHARACTERS);
 	while (tokenEndPos != string::npos) {
 		const string &tokenValue = consumableLine.substr(0, tokenEndPos);
 		TokenType tokenType = Token::discoverType(tokenValue);
@@ -88,7 +92,7 @@ void RuleLine::tokenize(const string &line)
 
 		consumableLine.erase(0, tokenEndPos + 1);
 
-		tokenEndPos = consumableLine.find_first_of(tokenDelimiters);
+		tokenEndPos = consumableLine.find_first_of(TOKEN_DELIMITER_CHARACTERS);
 	}
 }
 
@@ -129,7 +133,7 @@ void RuleLine::evaluate()
 
 string RuleLine::removeLeadingWhitespaces(const string &line) const
 {
-	size_t nonWhitespacePos = line.find_first_not_of(" \t");
+	size_t nonWhitespacePos = line.find_first_not_of(TOKEN_ESCAPE_CHARACTERS);
 	if (nonWhitespacePos != std::string::npos) {
 		return line.substr(nonWhitespacePos);
 	}
@@ -139,12 +143,10 @@ string RuleLine::removeLeadingWhitespaces(const string &line) const
 
 //-----------------------------------------------------------------------------
 
-string RuleLine::addTrailingWhitespaces(
-	const string &line,
-	const string &lineDelimiter) const
+string RuleLine::addTrailingWhitespaces(const string &line) const
 {
 	string terminatedLine = line;
-	terminatedLine.push_back(lineDelimiter[0]);
+	terminatedLine.push_back(TOKEN_DELIMITER_CHARACTERS[0]);
 
 	return terminatedLine;
 }
