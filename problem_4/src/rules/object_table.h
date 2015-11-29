@@ -57,8 +57,8 @@ public:
 private:
 	// When we reference "call_total_cost", for example, we reference
 	// one single object
-	std::map<std::string, FloatingObject*> symbolTable_;
-	std::map<std::string, StringObject*> detailSymbolTable_;
+	std::map<std::string, FloatingObject*> floatingObjectTable_;
+	std::map<std::string, StringObject*> stringObjectTable_;
 
 	// Floating-point monetary costs
 	FloatingObject callTotalCost;

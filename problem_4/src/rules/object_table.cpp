@@ -54,16 +54,16 @@ ObjectTable::ObjectTable()
   callDestinationPrefix(ObjectTable::CALL_DESTINATION_PREFIX, "", true),
   callPeriodDay(ObjectTable::CALL_PERIOD_DAY, "", true)
 {
-	symbolTable_[ObjectTable::CALL_TOTAL_COST] = &callTotalCost;
-	symbolTable_[ObjectTable::CALL_MINUTE_COST] = &callMinuteCost;
-	symbolTable_[ObjectTable::CALL_CONNECTION_COST] = &callConnectionCost;
+	floatingObjectTable_[ObjectTable::CALL_TOTAL_COST] = &callTotalCost;
+	floatingObjectTable_[ObjectTable::CALL_MINUTE_COST] = &callMinuteCost;
+	floatingObjectTable_[ObjectTable::CALL_CONNECTION_COST] = &callConnectionCost;
 
-	symbolTable_[ObjectTable::CALL_DURATION_MINUTE] = &callDurationMinute;
-	symbolTable_[ObjectTable::CALL_BONUS_QUANTITY_MINUTE] = &callBonusQuantityMinute;
-	symbolTable_[ObjectTable::CALL_BONUS_VALIDITY_MINUTE] = &callBonusValityMinute;
+	floatingObjectTable_[ObjectTable::CALL_DURATION_MINUTE] = &callDurationMinute;
+	floatingObjectTable_[ObjectTable::CALL_BONUS_QUANTITY_MINUTE] = &callBonusQuantityMinute;
+	floatingObjectTable_[ObjectTable::CALL_BONUS_VALIDITY_MINUTE] = &callBonusValityMinute;
 
-	detailSymbolTable_[ObjectTable::CALL_DESTINATION_PREFIX] = &callDestinationPrefix;
-	detailSymbolTable_[ObjectTable::CALL_PERIOD_DAY] = &callPeriodDay;
+	stringObjectTable_[ObjectTable::CALL_DESTINATION_PREFIX] = &callDestinationPrefix;
+	stringObjectTable_[ObjectTable::CALL_PERIOD_DAY] = &callPeriodDay;
 }
 
 //-----------------------------------------------------------------------------
@@ -77,9 +77,9 @@ ObjectTable::~ObjectTable()
 FloatingObject *ObjectTable::getFloatingObject(const string &objectName)
 {
 	assert(!objectName.empty());
-	assert(!symbolTable_.empty());
+	assert(!floatingObjectTable_.empty());
 
-	return symbolTable_[objectName];
+	return floatingObjectTable_[objectName];
 }
 
 //-----------------------------------------------------------------------------
@@ -87,9 +87,9 @@ FloatingObject *ObjectTable::getFloatingObject(const string &objectName)
 StringObject *ObjectTable::getStringObject(const string &objectName)
 {
 	assert(!objectName.empty());
-	assert(!detailSymbolTable_.empty());
+	assert(!stringObjectTable_.empty());
 
-	return detailSymbolTable_[objectName];
+	return stringObjectTable_[objectName];
 }
 
 //-----------------------------------------------------------------------------
