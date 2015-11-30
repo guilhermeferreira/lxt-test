@@ -34,6 +34,7 @@ problem_4_SOURCES  = src/main.cpp
 problem_4_SOURCES += ${COMMON_SOURCES}
 
 TEST_SOURCES  = test/rules/arithmetic_expression_test.cpp
+TEST_SOURCES += test/rules/assignment_statement_test.cpp
 TEST_SOURCES += test/rules/rule_line_test.cpp
 TEST_SOURCES += test/calls/call_record_test.cpp
 TEST_SOURCES += test/calls/call_time_test.cpp
