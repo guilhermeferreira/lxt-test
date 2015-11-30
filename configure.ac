@@ -1,5 +1,5 @@
 AC_INIT(luxoft-test, 1.0, guilherme.maciel.ferreira@gmail.com)
-AM_INIT_AUTOMAKE(foreign -Wall)
+AM_INIT_AUTOMAKE(foreign -Wall subdir-objects)
 
 AC_PROG_CXX
 AM_PROG_CC_C_O
