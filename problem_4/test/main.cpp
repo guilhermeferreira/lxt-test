@@ -24,6 +24,7 @@
 #include <iostream>
 
 #include "arithmetic_expression_test.h"
+#include "assignment_statement_test.h"
 #include "call_record_test.h"
 #include "call_time_test.h"
 #include "rule_line_test.h"
@@ -39,8 +40,11 @@ int main(int argc, char *argv[])
 
 	Test::TextOutput output(Test::TextOutput::Verbose);
 
-	ArithmeticExpressionTest expressionTest;
-	expressionTest.run(output, false);
+	ArithmeticExpressionTest arithmeticExpressionTest;
+	arithmeticExpressionTest.run(output, false);
+
+	AssignmentStatementTest assignmentStatementTest;
+	assignmentStatementTest.run(output, false);
 
 	CallRecordTest callRecordTest;
 	callRecordTest.run(output, false);

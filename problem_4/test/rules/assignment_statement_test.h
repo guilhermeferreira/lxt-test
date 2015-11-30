@@ -19,45 +19,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#ifndef ARITHMETIC_EXPRESSION_TEST_H
-#define ARITHMETIC_EXPRESSION_TEST_H
+#ifndef ASSIGNMENT_STATEMENT_TEST_H
+#define ASSIGNMENT_STATEMENT_TEST_H
 
-#include "arithmetic_expression.h"
+#include "assignment_statement.h"
 
 #include <cpptest.h>
 
 
 //-----------------------------------------------------------------------------
-// ArithmeticExpressionTest class
+// AssignmentStatementTest class
 //-----------------------------------------------------------------------------
 
-class ArithmeticExpressionTest: public Test::Suite
+class AssignmentStatementTest: public Test::Suite
 {
 public:
-	ArithmeticExpressionTest();
+	AssignmentStatementTest();
 
 private:
-	void parse_IntegerConstant_Test();
-	void parse_FloatConstant_Test();
-	void parse_Object_Test();
-
-	void parse_Addition_2_ConstantOperands_Test();
-	void parse_Addition_2_ObjectOperands_Test();
-	void parse_Addition_3_Operands_Test();
-	void parse_Addition_4_Operands_Test();
-
-	void parse_Subtraction_2_ConstantOperands_Test();
-	void parse_Subtraction_2_ObjectOperands_Test();
-
-	void parse_Multiplication_2_ConstantOperands_Test();
-	void parse_Multiplication_2_ObjectOperands_Test();
-
-	void parse_Division_2_ConstantOperands_Test();
-	void parse_Division_2_ObjectOperands_Test();
-
-	void parse_3_Operands_Test();
-	void parse_4_Operands_Test();
+	void constantAssignmentStatement_Test();
+	void expressionAssignmentStatement_Test();
 
 };
 
-#endif /* ARITHMETIC_EXPRESSION_TEST_H */
+#endif /* ASSIGNMENT_STATEMENT_TEST_H */
