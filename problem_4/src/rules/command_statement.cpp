@@ -87,12 +87,12 @@ void CommandStatement::evaluate()
 	if (floatingObject_ != NULL) {
 		assert(!floatingObject_->getName().empty());
 
-		cout << floatingObject_->getName() << " = " << floatingObject_->getValue() << endl;
+		cout << "  " << floatingObject_->getName() << " = " << floatingObject_->getValue() << endl;
 	}
 	else if (stringObject_ != NULL) {
 		assert(!stringObject_->getName().empty());
 
-		cout << stringObject_->getName() << " = " << stringObject_->getValue() << endl;
+		cout << "  "  << stringObject_->getName() << " = " << stringObject_->getValue() << endl;
 	}
 	else {
 		throw SemanticErrorException(lineNumber_);

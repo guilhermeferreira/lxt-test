@@ -36,30 +36,33 @@ using namespace luxoft;
 
 int main(int argc, char *argv[])
 {
-	cout << "Problem #4" << endl;
+	cout << "Problem #4" << '\n' << endl;
 
 	string rulesFileName;
 	vector<string> callsFilesNames;
 
-	// ./program_4 rules.c3l input1.call input2.call ... inputn.call
+	// ./program_4 rules.c3l calls_input1.rec calls_input2.rec ... calls_inputN.rec
 	if (argc >= 3) {
 		rulesFileName = argv[1]; // e.g. rules.c3l
 
 		for (int callFileIdx = 2; callFileIdx < argc; ++callFileIdx) {
-			callsFilesNames.push_back(argv[callFileIdx]); // e.g. inputx.call
+			callsFilesNames.push_back(argv[callFileIdx]); // e.g. inputx.rec
 		}
 
 		try {
+			cout << '\n' << "Rules file: \"" << rulesFileName << "\"" << endl;
 			RulesFile rulesFile(rulesFileName);
 			rulesFile.tokenize();
 			rulesFile.parse();
 
 			//
-			// Apply the same rules file to each calls file
+			// Apply the same rules file to all calls file
 			//
 			for (vector<string>::iterator it = callsFilesNames.begin(); it != callsFilesNames.end(); ++it) {
-				CallsFile callsFile(*it);
+				const string &callFileName = *it;
 
+				cout << '\n' << "Calls file: \"" << callFileName << "\"" << endl;
+				CallsFile callsFile(callFileName);
 				callsFile.process(rulesFile.getRules());
 			}
 		} catch (exception &ex) {
