@@ -60,9 +60,9 @@ degree of freedom to define call cost formula. Each line represents a statement
 in the rules file. Basically, each language element has three methods:
  - tokenize() that performs the lexical analysis, breaking the input string into
    tokens recognized by the language;
- - parse() that performs the syntactic analysis of the tokesn, creating a parse-
+ - parse() that performs the syntactic analysis of the tokens, creating a parse-
    tree as result; and
- - execute() that performs the semantic analysis.
+ - evaluate() that performs the semantic analysis.
 Section 2.2 describes the C3L grammar.
 
 The other input is a file with a list of call records. Each line in this file
