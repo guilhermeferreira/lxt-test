@@ -22,7 +22,7 @@
 #ifndef COMPILATION_ERROR_EXCEPTION_H
 #define COMPILATION_ERROR_EXCEPTION_H
 
-#include <exception>
+#include <stdexcept>
 #include <string>
 #include <sstream>
 
@@ -36,13 +36,13 @@ namespace luxoft {
 /**
  * \brief Generic compilation error
  */
-class CompilationErrorException: public std::exception
+class CompilationErrorException: public std::runtime_error
 {
 public:
 	CompilationErrorException(
 		int lineNumber,
 		const std::string &errorMsg)
-	: lineNumber_(lineNumber), errorMsg_(errorMsg)
+	: runtime_error(errorMsg), lineNumber_(lineNumber)
 	{
 	}
 
@@ -55,7 +55,7 @@ public:
 		std::stringstream ss;
 		ss << lineNumber_;
 		ss << ": ";
-		ss << errorMsg_;
+		ss << runtime_error::what();
 
 		std::string msg = ss.str();
 
@@ -64,8 +64,6 @@ public:
 
 private:
 	int lineNumber_;
-	std::string errorMsg_;
-
 
 };
 

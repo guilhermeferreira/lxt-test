@@ -72,11 +72,17 @@ void Calls::process(istream &callsStream, Rules &rules)
 		//          the previous record computation
 		ObjectTable copyObjTable = rules.getObjectTable();
 
-		record->process(line, copyObjTable);
+		// If we can't process a record, go to the next. Does NOT halt
+		// the program! Keep going!
+		try {
+			record->process(line, copyObjTable);
 
-		rules.evaluate();
+			rules.evaluate();
 
-		records_.push_back(record);
+			records_.push_back(record);
+		} catch (exception &ex) {
+			cerr << "Error: " << ex.what() << endl;
+		}
 
 		++lineNumber;
 	}

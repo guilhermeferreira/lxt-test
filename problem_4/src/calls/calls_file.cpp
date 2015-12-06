@@ -25,7 +25,9 @@
 
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 #include <string>
+#include <sstream>
 
 #include "rules.h"
 
@@ -58,11 +60,15 @@ void CallsFile::process(Rules &rules)
 
 	ifstream callsFile(fileName_.c_str());
 	if (!callsFile) {
-		cerr << "File '" << fileName_ << "' not found" << endl;
+		stringstream errmsg;
+		errmsg << "File '" << fileName_ << "' not found";
+		throw runtime_error(errmsg.str());
 	}
 
 	if (!callsFile.is_open()) {
-		cerr << "File '" << fileName_ << "' could not be open" << endl;
+		stringstream errmsg;
+		errmsg << "File '" << fileName_ << "' could not be open";
+		throw runtime_error(errmsg.str());
 	}
 
 	calls.process(callsFile, rules);

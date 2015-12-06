@@ -25,6 +25,7 @@
 #include <cmath>
 
 #include <iostream>
+#include <stdexcept>
 #include <sstream>
 
 #include "call_time.h"
@@ -83,18 +84,24 @@ void CallRecord::process(
 
 			} else {
 				// Negative call durations are invalid
-				cerr << "Error: "  << lineNumber_ << ": invalid call duration" << endl;
+				stringstream errmsg;
+				errmsg << lineNumber_ << ": Invalid call duration";
+				throw runtime_error(errmsg.str());
 			}
 
 		} else {
 			// The same call cannot span different days
-			cerr << "Error: "  << lineNumber_ << ": same call cannot span different days" << endl;
+			stringstream errmsg;
+			errmsg << lineNumber_ << ": Same call cannot span different days";
+			throw runtime_error(errmsg.str());
 		}
 
 	} else {
 		// If the record is not well-formatted, do not proceed, but don't
 		// throw an exception. So the next record can be processed
-		cerr << "Error: "  << lineNumber_ << ": invalid record" << endl;
+		stringstream errmsg;
+		errmsg << lineNumber_ << ": Invalid record";
+		throw runtime_error(errmsg.str());
 	}
 
 }

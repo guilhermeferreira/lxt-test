@@ -25,7 +25,9 @@
 
 #include <fstream>
 #include <iostream>
+#include <stdexcept>
 #include <string>
+#include <sstream>
 
 #include "rules.h"
 
@@ -57,11 +59,15 @@ void RulesFile::tokenize() /* throws SyntacticErrorException */
 
 	ifstream rulesFile(rulesFileName_.c_str());
 	if (!rulesFile) {
-		cerr << "File '" << rulesFileName_ << "' not found" << endl;
+		stringstream errmsg;
+		errmsg << "File '" << rulesFileName_ << "' not found";
+		throw runtime_error(errmsg.str());
 	}
 
 	if (!rulesFile.is_open()) {
-		cerr << "File '" << rulesFileName_ << "' could not be open" << endl;
+		stringstream errmsg;
+		errmsg << "File '" << rulesFileName_ << "' could not be open";
+		throw runtime_error(errmsg.str());
 	}
 
 	rules_.tokenize(rulesFile);
