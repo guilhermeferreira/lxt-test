@@ -22,6 +22,7 @@
 #include "selection_statement.h"
 
 #include <cassert>
+#include <limits>
 
 #include "statement_factory.h"
 #include "syntactic_error_exception.h"
@@ -108,7 +109,7 @@ void SelectionStatement::evaluate()
 	assert(conditionExpression_ != NULL);
 	assert(ifStatement_ != NULL);
 
-	if (conditionExpression_->evaluate() != 0) {
+	if ((conditionExpression_->evaluate() - 0) <= numeric_limits<float>::epsilon()) {
 		ifStatement_->evaluate();
 	}
 }

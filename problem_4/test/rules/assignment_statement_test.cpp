@@ -21,8 +21,8 @@
  */
 #include "assignment_statement_test.h"
 
-#include <cfloat>
 #include <cmath>
+#include <limits>
 
 using namespace std;
 using namespace luxoft;
@@ -55,9 +55,9 @@ void AssignmentStatementTest::constantAssignmentStatement_Test()
 	FloatingObject *callTotalCost = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	AssignmentStatement assignment(1);
 	assignment.parse(tokens, objTable);
-	TEST_ASSERT(fabs(callTotalCost->getValue() - 14.2f) > FLT_EPSILON);
+	TEST_ASSERT(fabs(callTotalCost->getValue() - 14.2f) > numeric_limits<float>::epsilon());
 	assignment.evaluate();
-	TEST_ASSERT(fabs(callTotalCost->getValue() - 14.2f) < FLT_EPSILON);
+	TEST_ASSERT(fabs(callTotalCost->getValue() - 14.2f) < numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -81,7 +81,7 @@ void AssignmentStatementTest::expressionAssignmentStatement_Test()
 	FloatingObject *callTotalCost = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	AssignmentStatement assignment(1);
 	assignment.parse(tokens, objTable);
-	TEST_ASSERT(fabs(callTotalCost->getValue() - 20.0f) > FLT_EPSILON);
+	TEST_ASSERT(fabs(callTotalCost->getValue() - 20.0f) > numeric_limits<float>::epsilon());
 	assignment.evaluate();
-	TEST_ASSERT(fabs(callTotalCost->getValue() - 20.0f) < FLT_EPSILON);
+	TEST_ASSERT(fabs(callTotalCost->getValue() - 20.0f) < numeric_limits<float>::epsilon());
 }

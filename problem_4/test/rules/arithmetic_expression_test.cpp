@@ -21,8 +21,8 @@
  */
 #include "arithmetic_expression_test.h"
 
-#include <cfloat>
 #include <cmath>
+#include <limits>
 
 using namespace std;
 using namespace luxoft;
@@ -67,7 +67,7 @@ void ArithmeticExpressionTest::parse_IntegerConstant_Test()
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(fabs(expression.evaluate() - 20.0) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 20.0) <= numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -82,7 +82,7 @@ void ArithmeticExpressionTest::parse_FloatConstant_Test()
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(fabs(expression.evaluate() - 20.5) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 20.5) <= numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ void ArithmeticExpressionTest::parse_Object_Test()
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(fabs(expression.evaluate() - 30.0) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 30.0) <= numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -120,7 +120,7 @@ void ArithmeticExpressionTest::parse_Addition_2_ConstantOperands_Test()
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(fabs(expression.evaluate() - 60.0) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 60.0) <= numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ void ArithmeticExpressionTest::parse_Addition_2_ObjectOperands_Test()
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(fabs(expression.evaluate() - 60.0) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 60.0) <= numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -174,7 +174,7 @@ void ArithmeticExpressionTest::parse_Addition_3_Operands_Test()
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(fabs(expression.evaluate() - 111.5) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 111.5) <= numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -211,7 +211,7 @@ void ArithmeticExpressionTest::parse_Addition_4_Operands_Test()
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
-	TEST_ASSERT(fabs(expression.evaluate() - 112.5) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 112.5) <= numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -233,7 +233,7 @@ void ArithmeticExpressionTest::parse_Subtraction_2_ConstantOperands_Test()
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(fabs(expression.evaluate() - 5.0) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 5.0) <= numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -259,7 +259,7 @@ void ArithmeticExpressionTest::parse_Subtraction_2_ObjectOperands_Test()
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(fabs(expression.evaluate() - 5.0) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 5.0) <= numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -281,7 +281,7 @@ void ArithmeticExpressionTest::parse_Multiplication_2_ConstantOperands_Test()
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(fabs(expression.evaluate() - 4.0) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 4.0) <= numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -307,7 +307,7 @@ void ArithmeticExpressionTest::parse_Multiplication_2_ObjectOperands_Test()
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(fabs(expression.evaluate() - 4.0) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 4.0) <= numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -329,7 +329,7 @@ void ArithmeticExpressionTest::parse_Division_2_ConstantOperands_Test()
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(fabs(expression.evaluate() - 25.0) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 25.0) <= numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -355,7 +355,7 @@ void ArithmeticExpressionTest::parse_Division_2_ObjectOperands_Test()
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(fabs(expression.evaluate() - 25.0) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 25.0) <= numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -385,7 +385,7 @@ void ArithmeticExpressionTest::parse_3_Operands_Test()
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
 
-	TEST_ASSERT(fabs(expression.evaluate() - 40.0) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 40.0) <= numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -427,5 +427,5 @@ void ArithmeticExpressionTest::parse_4_Operands_Test()
 	// commutative operations (i.e. subtraction and division) are not
 	// evaluated properly when expressions contain more than two operands
 
-	TEST_ASSERT(fabs(expression.evaluate() - 20.0) <= FLT_EPSILON);
+	TEST_ASSERT(fabs(expression.evaluate() - 20.0) <= numeric_limits<float>::epsilon());
 }
