@@ -51,7 +51,7 @@ public:
 	virtual ~SelectionStatement();
 
 	virtual void parse(
-		std::vector<Token*> &tokens,
+		std::vector< std::tr1::shared_ptr<Token> > &tokens,
 		ObjectTable &objectTable);
 
 	virtual void evaluate();
@@ -62,7 +62,8 @@ private:
 	 *
 	 *    <selection_statement>  ::= "if" <condition_expression> "then" <statement> "end"
 	 */
-	void parseSelectionKeyword(std::vector<Token*> &tokens);
+	void parseSelectionKeyword(
+		std::vector< std::tr1::shared_ptr<Token> > &tokens);
 
 	/**
 	 * Parse the <condition_expression> token from the production rule
@@ -70,7 +71,7 @@ private:
 	 *    <selection_statement>  ::= "if" <condition_expression> "then" <statement> "end"
 	 */
 	void parseConditionExpression(
-		std::vector<Token*> &tokens,
+		std::vector< std::tr1::shared_ptr<Token> > &tokens,
 		ObjectTable &objectTable);
 
 	/**
@@ -78,14 +79,16 @@ private:
 	 *
 	 *    <selection_statement>  ::= "if" <condition_expression> "then" <statement> "end"
 	 */
-	void parseSelectionBeginOperator(std::vector<Token*> &tokens);
+	void parseSelectionBeginOperator(
+		std::vector< std::tr1::shared_ptr<Token> > &tokens);
 
 	/**
 	 * Parse the "end" keyword token from the production rule
 	 *
 	 *    <selection_statement>  ::= "if" <condition_expression> "then" <statement> "end"
 	 */
-	void parseSelectionEndOperator(std::vector<Token*> &tokens);
+	void parseSelectionEndOperator(
+		std::vector< std::tr1::shared_ptr<Token> > &tokens);
 
 	/**
 	 * Parse the <statement> non-terminal tokens from the production rule
@@ -93,15 +96,15 @@ private:
 	 *    <selection_statement>  ::= "if" <condition_expression> "then" <statement> "end"
 	 */
 	void parseStatement(
-		std::vector<Token*> &tokens,
+		std::vector< std::tr1::shared_ptr<Token> > &tokens,
 		ObjectTable &objectTable);
 
 	static const std::string SELECTION_KEYWORD;
 	static const std::string SELECTION_BEGIN_OPERATOR;
 	static const std::string SELECTION_END_OPERATOR;
 
-	Expression *conditionExpression_;
-	Statement *ifStatement_;
+	std::tr1::shared_ptr<Expression> conditionExpression_;
+	std::tr1::shared_ptr<Statement> ifStatement_;
 
 };
 

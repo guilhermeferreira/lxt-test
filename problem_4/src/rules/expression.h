@@ -22,6 +22,7 @@
 #ifndef EXPRESSION_H
 #define EXPRESSION_H
 
+#include <tr1/memory>
 #include <vector>
 
 #include "object.h"
@@ -48,7 +49,7 @@ public:
 	 * \brief Build the <expression> non-terminal parsing-tree
 	 */
 	virtual void parse(
-		std::vector<Token*> &tokens,
+		std::vector< std::tr1::shared_ptr<Token> > &tokens,
 		ObjectTable &objectTable) = 0;
 
 	/**

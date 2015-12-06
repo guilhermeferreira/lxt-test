@@ -22,6 +22,7 @@
 #ifndef COMMAND_STATEMENT_H
 #define COMMAND_STATEMENT_H
 
+#include <tr1/memory>
 #include <vector>
 
 #include "statement.h"
@@ -48,7 +49,7 @@ public:
 	virtual ~CommandStatement();
 
 	virtual void parse(
-		std::vector<Token*> &tokens,
+		std::vector< std::tr1::shared_ptr<Token> > &tokens,
 		ObjectTable &objectTable);
 
 	virtual void evaluate();
@@ -60,7 +61,8 @@ private:
 	 *    <command_statement> ::= <command> <expression>
 	 *    <command>           ::= "print"
 	 */
-	void parseCommandKeyword(std::vector<Token*> &tokens);
+	void parseCommandKeyword(
+		std::vector< std::tr1::shared_ptr<Token> > &tokens);
 
 	/**
 	 * Parse the <expression> token from the production rule
@@ -68,14 +70,14 @@ private:
 	 *    <command_statement> ::= <command> <expression>
 	 */
 	void parseExpression(
-			std::vector<Token*> &tokens,
+			std::vector< std::tr1::shared_ptr<Token> > &tokens,
 			ObjectTable &objectTable);
 
 	static const std::string COMMAND_KEYWORD;
 
 	// FIXME  May we have a generic pointer to any Object specialization?
-	FloatingObject *floatingObject_;
-	StringObject *stringObject_;
+	std::tr1::shared_ptr<FloatingObject> floatingObject_;
+	std::tr1::shared_ptr<StringObject> stringObject_;
 
 };
 

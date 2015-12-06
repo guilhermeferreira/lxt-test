@@ -39,7 +39,7 @@ Token::Token(const string &value, TokenType type)
 
 //-----------------------------------------------------------------------------
 
-string Token::getValue() const
+const string& Token::getValue() const
 {
 	return value_;
 }

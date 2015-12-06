@@ -30,24 +30,27 @@
 namespace luxoft {
 
 using namespace std;
-
+using namespace std::tr1;
 
 //-----------------------------------------------------------------------------
 // StatementFactory class
 //-----------------------------------------------------------------------------
 
-Statement *StatementFactory::createStatement(
+shared_ptr<Statement> StatementFactory::createStatement(
 	const string &keyword,
 	const int lineNumber)
 {
-	Statement *statement = NULL;
+	shared_ptr<Statement> statement;
 
 	if (keyword == "call") {
-		statement = new AssignmentStatement(lineNumber);
+		// FIXME Could use std::make_shared() if C++11 was available
+		statement.reset(new AssignmentStatement(lineNumber));
 	} else if (keyword == "print") {
-		statement = new CommandStatement(lineNumber);
+		// FIXME Could use std::make_shared() if C++11 was available
+		statement.reset(new CommandStatement(lineNumber));
 	} else if (keyword == "if") {
-		statement = new SelectionStatement(lineNumber);
+		// FIXME Could use std::make_shared() if C++11 was available
+		statement.reset(new SelectionStatement(lineNumber));
 	}
 	/*
 	// TODO What about create an invalid statement object that throws errors
@@ -63,7 +66,7 @@ Statement *StatementFactory::createStatement(
 //-----------------------------------------------------------------------------
 
 string StatementFactory::getStatementKeyword(
-	const vector<Token*> &statementTokens)
+	const vector< shared_ptr<Token> > &statementTokens)
 {
 	// According to C3L Grammar, all keywords are at the first position
 	// in the line

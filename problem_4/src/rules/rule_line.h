@@ -23,6 +23,7 @@
 #define RULE_LINE_H
 
 #include <string>
+#include <tr1/memory>
 #include <vector>
 
 #include "object_table.h"
@@ -79,8 +80,8 @@ private:
 	static const std::string TOKEN_DELIMITER_CHARACTERS;
 	static const std::string TOKEN_ESCAPE_CHARACTERS;
 
-	std::vector<Token*> tokens_;
-	Statement *statement_;
+	std::vector< std::tr1::shared_ptr<Token> > tokens_;
+	std::tr1::shared_ptr<Statement> statement_;
 	int lineNumber_;
 
 };

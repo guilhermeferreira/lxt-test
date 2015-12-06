@@ -25,6 +25,7 @@
 #include <limits>
 
 using namespace std;
+using namespace std::tr1;
 using namespace luxoft;
 
 
@@ -61,9 +62,9 @@ void ArithmeticExpressionTest::parse_IntegerConstant_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	Token t1("20", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t1);
+	std::vector< shared_ptr<Token> > tokens;
+	Token *t1 = new Token("20", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
@@ -76,9 +77,9 @@ void ArithmeticExpressionTest::parse_FloatConstant_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	Token t1("20.5", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t1);
+	std::vector< shared_ptr<Token> > tokens;
+	Token *t1 = new Token("20.5", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
@@ -90,12 +91,12 @@ void ArithmeticExpressionTest::parse_FloatConstant_Test()
 void ArithmeticExpressionTest::parse_Object_Test()
 {
 	ObjectTable objTable;
-	FloatingObject *obj = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
+	shared_ptr<FloatingObject> obj = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj->setValue(30);
 
-	std::vector<Token*> tokens;
-	Token t1(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t1);
+	std::vector< shared_ptr<Token> > tokens;
+	Token *t1 = new Token(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
@@ -108,15 +109,15 @@ void ArithmeticExpressionTest::parse_Addition_2_ConstantOperands_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	Token t1("50", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t1);
+	std::vector< shared_ptr<Token> > tokens;
+	Token *t1 = new Token("50", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
-	Token t2("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t2);
+	Token *t2 = new Token("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t2));
 
-	Token t3("10", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t3);
+	Token *t3 = new Token("10", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t3));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
@@ -129,19 +130,19 @@ void ArithmeticExpressionTest::parse_Addition_2_ObjectOperands_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
+	std::vector< shared_ptr<Token> > tokens;
+	shared_ptr<FloatingObject> obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(50);
-	Token t1(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t1);
+	Token *t1 = new Token(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
-	Token t2("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t2);
+	Token *t2 = new Token("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t2));
 
-	FloatingObject *obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
+	shared_ptr<FloatingObject> obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
 	obj2->setValue(10);
-	Token t3(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t3);
+	Token *t3 = new Token(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t3));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
@@ -154,23 +155,23 @@ void ArithmeticExpressionTest::parse_Addition_3_Operands_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	Token t1("100", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t1);
+	std::vector< shared_ptr<Token> > tokens;
+	Token *t1 = new Token("100", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
-	Token t2("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t2);
+	Token *t2 = new Token("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t2));
 
-	Token t3("10", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t3);
+	Token *t3 = new Token("10", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t3));
 
-	Token t4("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t4);
+	Token *t4 = new Token("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t4));
 
-	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
+	shared_ptr<FloatingObject> obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(1.5);
-	Token t5(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t5);
+	Token *t5 = new Token(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t5));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
@@ -183,31 +184,31 @@ void ArithmeticExpressionTest::parse_Addition_4_Operands_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
+	std::vector< shared_ptr<Token> > tokens;
+	shared_ptr<FloatingObject> obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(50);
-	Token t1(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t1);
+	Token *t1 = new Token(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
-	Token t2("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t2);
+	Token *t2 = new Token("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t2));
 
-	Token t3("50", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t3);
+	Token *t3 = new Token("50", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t3));
 
-	Token t4("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t4);
+	Token *t4 = new Token("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t4));
 
-	FloatingObject *obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
+	shared_ptr<FloatingObject> obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
 	obj2->setValue(2.5);
-	Token t5(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t5);
+	Token *t5 = new Token(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t5));
 
-	Token t6("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t6);
+	Token *t6 = new Token("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t6));
 
-	Token t7("10", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t7);
+	Token *t7 = new Token("10", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t7));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
@@ -220,15 +221,15 @@ void ArithmeticExpressionTest::parse_Subtraction_2_ConstantOperands_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	Token t1("10", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t1);
+	std::vector< shared_ptr<Token> > tokens;
+	Token *t1 = new Token("10", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
-	Token t2("-", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t2);
+	Token *t2 = new Token("-", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t2));
 
-	Token t3("5", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t3);
+	Token *t3 = new Token("5", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t3));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
@@ -242,19 +243,19 @@ void ArithmeticExpressionTest::parse_Subtraction_2_ObjectOperands_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
+	std::vector< shared_ptr<Token> > tokens;
+	shared_ptr<FloatingObject> obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(10);
-	Token t1(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t1);
+	Token *t1 = new Token(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
-	Token t2("-", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t2);
+	Token *t2 = new Token("-", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t2));
 
-	FloatingObject *obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
+	shared_ptr<FloatingObject> obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
 	obj2->setValue(5);
-	Token t3(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t3);
+	Token *t3 = new Token(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t3));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
@@ -268,15 +269,15 @@ void ArithmeticExpressionTest::parse_Multiplication_2_ConstantOperands_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	Token t1("2", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t1);
+	std::vector< shared_ptr<Token> > tokens;
+	Token *t1 = new Token("2", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
-	Token t2("*", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t2);
+	Token *t2 = new Token("*", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t2));
 
-	Token t3("2", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t3);
+	Token *t3 = new Token("2", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t3));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
@@ -290,19 +291,19 @@ void ArithmeticExpressionTest::parse_Multiplication_2_ObjectOperands_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
+	std::vector< shared_ptr<Token> > tokens;
+	shared_ptr<FloatingObject> obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(2);
-	Token t1(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t1);
+	Token *t1 = new Token(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
-	Token t2("*", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t2);
+	Token *t2 = new Token("*", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t2));
 
-	FloatingObject *obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
+	shared_ptr<FloatingObject> obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
 	obj2->setValue(2);
-	Token t3(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t3);
+	Token *t3 = new Token(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t3));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
@@ -316,15 +317,15 @@ void ArithmeticExpressionTest::parse_Division_2_ConstantOperands_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	Token t1("50", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t1);
+	std::vector< shared_ptr<Token> > tokens;
+	Token *t1 = new Token("50", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
-	Token t2("/", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t2);
+	Token *t2 = new Token("/", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t2));
 
-	Token t3("2", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t3);
+	Token *t3 = new Token("2", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t3));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
@@ -338,19 +339,19 @@ void ArithmeticExpressionTest::parse_Division_2_ObjectOperands_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
+	std::vector< shared_ptr<Token> > tokens;
+	shared_ptr<FloatingObject> obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(50);
-	Token t1(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t1);
+	Token *t1 = new Token(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
-	Token t2("/", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t2);
+	Token *t2 = new Token("/", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t2));
 
-	FloatingObject *obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
+	shared_ptr<FloatingObject> obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
 	obj2->setValue(2);
-	Token t3(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t3);
+	Token *t3 = new Token(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t3));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
@@ -364,23 +365,23 @@ void ArithmeticExpressionTest::parse_3_Operands_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	Token t1("50", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t1);
+	std::vector< shared_ptr<Token> > tokens;
+	Token *t1 = new Token("50", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
-	Token t2("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t2);
+	Token *t2 = new Token("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t2));
 
-	Token t3("10", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t3);
+	Token *t3 = new Token("10", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t3));
 
-	Token t4("-", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t4);
+	Token *t4 = new Token("-", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t4));
 
-	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
+	shared_ptr<FloatingObject> obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(20);
-	Token t5(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t5);
+	Token *t5 = new Token(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t5));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);
@@ -394,31 +395,31 @@ void ArithmeticExpressionTest::parse_4_Operands_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	Token t1("200", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t1);
+	std::vector< shared_ptr<Token> > tokens;
+	Token *t1 = new Token("200", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t1));
 
-	Token t2("/", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t2);
+	Token *t2 = new Token("/", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t2));
 
-	FloatingObject *obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
+	shared_ptr<FloatingObject> obj1 = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	obj1->setValue(50);
-	Token t3(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t3);
+	Token *t3 = new Token(ObjectTable::CALL_TOTAL_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t3));
 
-	Token t4("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t4);
+	Token *t4 = new Token("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t4));
 
-	FloatingObject *obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
+	shared_ptr<FloatingObject> obj2 = objTable.getFloatingObject(ObjectTable::CALL_MINUTE_COST);
 	obj2->setValue(10);
-	Token t5(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t5);
+	Token *t5 = new Token(ObjectTable::CALL_MINUTE_COST, TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t5));
 
-	Token t6("*", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t6);
+	Token *t6 = new Token("*", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t6));
 
-	Token t7("2", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t7);
+	Token *t7 = new Token("2", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t7));
 
 	ArithmeticExpression expression(1);
 	expression.parse(tokens, objTable);

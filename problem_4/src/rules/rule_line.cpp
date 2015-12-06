@@ -30,6 +30,7 @@
 namespace luxoft {
 
 using namespace std;
+using namespace std::tr1;
 
 //-----------------------------------------------------------------------------
 // RuleLine class
@@ -41,7 +42,7 @@ const string RuleLine::TOKEN_ESCAPE_CHARACTERS = " \t";
 //-----------------------------------------------------------------------------
 
 RuleLine::RuleLine(const int lineNumber)
-: statement_(NULL),
+: statement_(),
   lineNumber_(lineNumber)
 {
 }
@@ -50,22 +51,6 @@ RuleLine::RuleLine(const int lineNumber)
 
 RuleLine::~RuleLine()
 {
-	// This class creates the Tokens, so it must destroy them!
-	assert(!tokens_.empty());
-
-	// FIXME This a place where a std::shared_ptr or a boost::shared_ptr would
-	//       save us from deleting all pointers. Because the vector::~vector()
-	//       destroys the elements (pointer), not the element it points to!
-	for (vector<Token*>::iterator it = tokens_.begin(); it != tokens_.end(); ++it) {
-		Token *token = *it;
-
-		delete token;
-	}
-
-	if (statement_ != NULL) {
-		delete statement_;
-		statement_ = NULL;
-	}
 }
 
 //-----------------------------------------------------------------------------
@@ -86,7 +71,7 @@ void RuleLine::tokenize(const string &line)
 	while (tokenEndPos != string::npos) {
 		const string &tokenValue = consumableLine.substr(0, tokenEndPos);
 		TokenType tokenType = Token::discoverType(tokenValue);
-		Token *token = new Token(tokenValue, tokenType);
+		shared_ptr<Token> token(new Token(tokenValue, tokenType));
 
 		tokens_.push_back(token);
 
@@ -112,7 +97,7 @@ void RuleLine::parse(ObjectTable &objectTable)
 	}
 
 	assert(statement_ != NULL);
-	vector<Token*> consumableTokens(tokens_);
+	vector< shared_ptr<Token> > consumableTokens(tokens_);
 	statement_->parse(consumableTokens, objectTable);
 	// Statements MUST consume all tokens, otherwise the rule is mal-formed
 	// and should throw an exception

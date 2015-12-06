@@ -22,6 +22,7 @@
 #ifndef STATEMENT_H
 #define STATEMENT_H
 
+#include <tr1/memory>
 #include <vector>
 
 #include "object_table.h"
@@ -48,7 +49,7 @@ public:
 	virtual ~Statement();
 
 	virtual void parse(
-		std::vector<Token*> &tokens,
+		std::vector< std::tr1::shared_ptr<Token> > &tokens,
 		ObjectTable &objectTable) = 0;
 
 	virtual void evaluate() = 0;

@@ -23,6 +23,7 @@
 #define STATEMENT_FACTORY_H
 
 #include <string>
+#include <tr1/memory>
 
 #include "statement.h"
 
@@ -42,7 +43,7 @@ public:
 	/**
 	 * \brief Create a Statement object for the given keyword
 	 */
-	static Statement *createStatement(
+	static std::tr1::shared_ptr<Statement> createStatement(
 		const std::string &keyword,
 		const int lineNumber);
 
@@ -50,7 +51,7 @@ public:
 	 * \brief Get the keyword in this rule line
 	 */
 	static std::string getStatementKeyword(
-		const std::vector<Token*> &statementTokens);
+		const std::vector< std::tr1::shared_ptr<Token> > &statementTokens);
 
 };
 

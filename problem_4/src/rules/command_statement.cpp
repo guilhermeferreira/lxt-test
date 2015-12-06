@@ -31,6 +31,7 @@
 namespace luxoft {
 
 using namespace std;
+using namespace std::tr1;
 
 //-----------------------------------------------------------------------------
 // CommandStatement class
@@ -42,8 +43,8 @@ const string CommandStatement::COMMAND_KEYWORD = "print";
 
 CommandStatement::CommandStatement(const int lineNumber)
 : Statement(lineNumber),
-  floatingObject_(NULL),
-  stringObject_(NULL)
+  floatingObject_(),
+  stringObject_()
 {
 }
 
@@ -51,15 +52,12 @@ CommandStatement::CommandStatement(const int lineNumber)
 
 CommandStatement::~CommandStatement()
 {
-	// FIXME Don't destroy the object_, because this class has not
-	//       instantiated it. This a place where a std::shared_ptr or a
-	//       boost::shared_ptr would save us from deleting the object_.
 }
 
 //-----------------------------------------------------------------------------
 
 void CommandStatement::parse(
-	vector<Token*> &tokens,
+	vector< shared_ptr<Token> > &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
@@ -101,7 +99,8 @@ void CommandStatement::evaluate()
 
 //-----------------------------------------------------------------------------
 
-void CommandStatement::parseCommandKeyword(vector<Token*> &tokens)
+void CommandStatement::parseCommandKeyword(
+	vector< shared_ptr<Token> > &tokens)
 {
 	assert(!tokens.empty());
 
@@ -118,7 +117,7 @@ void CommandStatement::parseCommandKeyword(vector<Token*> &tokens)
 //-----------------------------------------------------------------------------
 
 void CommandStatement::parseExpression(
-	vector<Token*> &tokens,
+	vector< shared_ptr<Token> > &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());

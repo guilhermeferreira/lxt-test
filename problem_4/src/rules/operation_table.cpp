@@ -32,38 +32,32 @@
 namespace luxoft {
 
 using namespace std;
+using namespace std::tr1;
 
 //-----------------------------------------------------------------------------
 // OperationTable class
 //-----------------------------------------------------------------------------
 
-static const AdditionOperation addOp;
-static const SubtractionOperation subOp;
-static const MultiplicationOperation mulOp;
-static const DivisionOperation divOp;
-
-//-----------------------------------------------------------------------------
-
-const Operation *OperationTable::getOperation(const string &symbol)
+shared_ptr<Operation> OperationTable::getOperation(
+	const string &symbol)
 {
 	assert(!symbol.empty());
 
 	if (symbol == "+") {
-		return &addOp;
+		return shared_ptr<Operation>(new AdditionOperation);
 	}
 	else if (symbol == "-") {
-		return &subOp;
+		return shared_ptr<Operation>(new SubtractionOperation);
 	}
 	else if (symbol == "*") {
-		return &mulOp;
+		return shared_ptr<Operation>(new MultiplicationOperation);
 	}
 	else if (symbol == "/") {
-		return &divOp;
+		return shared_ptr<Operation>(new DivisionOperation);
 	}
 	else {
-		return NULL;
+		return shared_ptr<Operation>();
 	}
-
 }
 
 } // namespace luxoft

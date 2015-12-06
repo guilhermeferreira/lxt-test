@@ -47,7 +47,7 @@ class Token {
 public:
 	Token(const std:: string &value, TokenType type);
 
-	std::string getValue() const;
+	const std::string& getValue() const;
 
 	TokenType getType() const;
 

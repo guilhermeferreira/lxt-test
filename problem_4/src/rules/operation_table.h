@@ -22,6 +22,7 @@
 #ifndef OPERATION_TABLE_H
 #define OPERATION_TABLE_H
 
+#include <tr1/memory>
 #include <string>
 
 #include "operation.h"
@@ -45,7 +46,8 @@ public:
 	 *
 	 * \return An Operation subclass
 	 */
-	static const Operation *getOperation(const std::string &symbol);
+	static std::tr1::shared_ptr<Operation> getOperation(
+		const std::string &symbol);
 
 };
 

@@ -24,6 +24,7 @@
 
 #include <map>
 #include <string>
+#include <tr1/memory>
 
 #include "object.h"
 
@@ -51,34 +52,14 @@ public:
 	ObjectTable();
 	virtual ~ObjectTable();
 
-	FloatingObject *getFloatingObject(const std::string &objectName);
-	StringObject *getStringObject(const std::string &objectName);
+	std::tr1::shared_ptr<FloatingObject> getFloatingObject(const std::string &objectName);
+	std::tr1::shared_ptr<StringObject> getStringObject(const std::string &objectName);
 
 private:
 	// When we reference "call_total_cost", for example, we reference
 	// one single object
-	std::map<std::string, FloatingObject*> floatingObjectTable_;
-	std::map<std::string, StringObject*> stringObjectTable_;
-
-	// Floating-point monetary costs
-	FloatingObject callTotalCost;
-	FloatingObject callMinuteCost;
-	FloatingObject callConnectionCost;
-
-	// FIXME I decided to make the Minute objects floating-point because
-	//       they are writable and must share the same methods as the costs.
-	//       Otherwise I would have to make a special cases to handle
-	//       integer or floating-point objects. This decision simplifies
-	//       the code
-
-	// Integer duration in minutes
-	FloatingObject callDurationMinute;
-	FloatingObject callBonusQuantityMinute;
-	FloatingObject callBonusValityMinute;
-
-	// String details
-	StringObject callDestinationPrefix;
-	StringObject callPeriodDay;
+	std::map<std::string, std::tr1::shared_ptr<FloatingObject> > floatingObjectTable_;
+	std::map<std::string, std::tr1::shared_ptr<StringObject> > stringObjectTable_;
 
 };
 

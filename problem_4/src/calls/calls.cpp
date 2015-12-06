@@ -32,6 +32,7 @@
 namespace luxoft {
 
 using namespace std;
+using namespace std::tr1;
 
 //-----------------------------------------------------------------------------
 // Calls class
@@ -45,14 +46,6 @@ Calls::Calls()
 
 Calls::~Calls()
 {
-	// FIXME This is a place where a std::shared_ptr or a boost::shared_ptr would
-	//       save us from deleting all pointers. Because the vector::~vector()
-	//       destroys the elements (pointer), not the element it points to!
-	for (vector<CallRecord*>::iterator it = records_.begin(); it != records_.end(); ++it) {
-		CallRecord *record = *it;
-
-		delete record;
-	}
 }
 
 //-----------------------------------------------------------------------------
@@ -64,7 +57,7 @@ void Calls::process(istream &callsStream, Rules &rules)
 	string line;
 	int lineNumber = 1;
 	while (getline(callsStream, line)) {
-		CallRecord *record = new CallRecord(lineNumber);
+		shared_ptr<CallRecord> record(new CallRecord(lineNumber));
 
 		// WARNING: MAKE A COPY OF OBJECT TABLE for each CallRecord !!!
 		//          DO NOT modify the objects' values, otherwise the next

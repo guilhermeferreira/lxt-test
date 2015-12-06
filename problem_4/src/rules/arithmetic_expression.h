@@ -22,6 +22,7 @@
 #ifndef ARITHMETIC_EXPRESSION_H
 #define ARITHMETIC_EXPRESSION_H
 
+#include <tr1/memory>
 #include <vector>
 
 #include "expression.h"
@@ -55,7 +56,7 @@ public:
 	 * \brief Recursively build the <arithmetic_expression> non-terminal parsing-tree
 	 */
 	void parse(
-		std::vector<Token*> &tokens,
+		std::vector< std::tr1::shared_ptr<Token> > &tokens,
 		ObjectTable &objectTable);
 
 	/**
@@ -70,7 +71,7 @@ private:
 	 *     <arithmetic_expression> ::= <operand> "op" <arithmetic_expression>
 	 */
 	void parseOperand(
-			std::vector<Token*> &tokens,
+			std::vector< std::tr1::shared_ptr<Token> > &tokens,
 			ObjectTable &objectTable);
 
 	/**
@@ -78,7 +79,8 @@ private:
 	 *
 	 *     <arithmetic_expression> ::= <operand> "op" <arithmetic_expression>
 	 */
-	void parseArithmeticOperator(std::vector<Token*> &tokens);
+	void parseArithmeticOperator(
+		std::vector< std::tr1::shared_ptr<Token> > &tokens);
 
 	/**
 	 * \brief Parse the <arithmetic_expression> token from the production rule
@@ -86,12 +88,12 @@ private:
 	 *     <arithmetic_expression> ::= <operand> "op" <arithmetic_expression>
 	 */
 	void parseExpression(
-			std::vector<Token*> &tokens,
+			std::vector< std::tr1::shared_ptr<Token> > &tokens,
 			ObjectTable &objectTable);
 
-	FloatingObject *operand_;
-	ArithmeticExpression *expression_;
-	const Operation *operation_;
+	std::tr1::shared_ptr<FloatingObject> operand_;
+	std::tr1::shared_ptr<ArithmeticExpression> expression_;
+	std::tr1::shared_ptr<Operation> operation_;
 	float constant_;
 
 };

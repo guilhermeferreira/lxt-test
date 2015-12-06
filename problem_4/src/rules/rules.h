@@ -24,6 +24,7 @@
 
 #include <iostream>
 #include <string>
+#include <tr1/memory>
 #include <vector>
 
 #include "rule_line.h"
@@ -70,7 +71,7 @@ public:
 private:
 	bool isValidLine(const std::string &line);
 
-	std::vector<RuleLine*> ruleLines_;
+	std::vector< std::tr1::shared_ptr<RuleLine> > ruleLines_;
 	ObjectTable objectTable_;
 
 };

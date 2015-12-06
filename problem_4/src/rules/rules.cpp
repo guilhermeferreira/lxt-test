@@ -31,6 +31,7 @@
 namespace luxoft {
 
 using namespace std;
+using namespace std::tr1;
 
 //-----------------------------------------------------------------------------
 // Rules class
@@ -44,14 +45,6 @@ Rules::Rules()
 
 Rules::~Rules()
 {
-	// FIXME This is a place where a std::shared_ptr or a boost::shared_ptr would
-	//       save us from deleting all pointers. Because the vector::~vector()
-	//       destroys the elements (pointer), not the element it points to!
-	for (vector<RuleLine*>::iterator it = ruleLines_.begin(); it != ruleLines_.end(); ++it) {
-		RuleLine *ruleLine = *it;
-
-		delete ruleLine;
-	}
 }
 
 //-----------------------------------------------------------------------------
@@ -75,7 +68,7 @@ void Rules::tokenize(std::istream &ruleStream) /* throws SyntacticErrorException
 		// Discard comments and white space characters
 		if (isValidLine(line)) {
 
-			RuleLine *ruleLine = new RuleLine(lineNumber);
+			shared_ptr<RuleLine> ruleLine(new RuleLine(lineNumber));
 			ruleLine->tokenize(line);
 
 			ruleLines_.push_back(ruleLine);
@@ -99,8 +92,8 @@ void Rules::parse()  /* throws SyntacticErrorException */
 
 	assert(!ruleLines_.empty());
 
-	for (vector<RuleLine*>::iterator it = ruleLines_.begin(); it != ruleLines_.end(); ++it) {
-		RuleLine *ruleLine = *it;
+	for (vector< shared_ptr<RuleLine> >::iterator it = ruleLines_.begin(); it != ruleLines_.end(); ++it) {
+		shared_ptr<RuleLine> ruleLine = *it;
 		ruleLine->parse(objectTable_);
 	}
 
@@ -124,8 +117,8 @@ void Rules::evaluate() /* throws SemanticErrorException */
 
 	assert(!ruleLines_.empty());
 
-	for (vector<RuleLine*>::iterator it = ruleLines_.begin(); it != ruleLines_.end(); ++it) {
-		RuleLine *ruleLine = *it;
+	for (vector< shared_ptr<RuleLine> >::iterator it = ruleLines_.begin(); it != ruleLines_.end(); ++it) {
+		shared_ptr<RuleLine> ruleLine = *it;
 		ruleLine->evaluate();
 	}
 

@@ -25,6 +25,7 @@
 #include <limits>
 
 using namespace std;
+using namespace std::tr1;
 using namespace luxoft;
 
 
@@ -44,15 +45,15 @@ void AssignmentStatementTest::constantAssignmentStatement_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	Token t1("call_total_cost", TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t1);
-	Token t2("=", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t2);
-	Token t3("14.2", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t3);
+	std::vector< shared_ptr<Token> > tokens;
+	Token *t1 = new Token("call_total_cost", TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t1));
+	Token *t2 = new Token("=", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t2));
+	Token *t3 = new Token("14.2", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t3));
 
-	FloatingObject *callTotalCost = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
+	shared_ptr<FloatingObject> callTotalCost = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	AssignmentStatement assignment(1);
 	assignment.parse(tokens, objTable);
 	TEST_ASSERT(fabs(callTotalCost->getValue() - 14.2f) > numeric_limits<float>::epsilon());
@@ -66,19 +67,19 @@ void AssignmentStatementTest::expressionAssignmentStatement_Test()
 {
 	ObjectTable objTable;
 
-	std::vector<Token*> tokens;
-	Token t1("call_total_cost", TOKEN_TYPE_OBJECT);
-	tokens.push_back(&t1);
-	Token t2("=", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t2);
-	Token t3("14.2", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t3);
-	Token t4("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
-	tokens.push_back(&t4);
-	Token t5("5.8", TOKEN_TYPE_NUMERIC_CONSTANT);
-	tokens.push_back(&t5);
+	std::vector< shared_ptr<Token> > tokens;
+	Token *t1 = new Token("call_total_cost", TOKEN_TYPE_OBJECT);
+	tokens.push_back(shared_ptr<Token>(t1));
+	Token *t2 = new Token("=", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t2));
+	Token *t3 = new Token("14.2", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t3));
+	Token *t4 = new Token("+", TOKEN_TYPE_ARITHMETIC_OPERATOR);
+	tokens.push_back(shared_ptr<Token>(t4));
+	Token *t5 = new Token("5.8", TOKEN_TYPE_NUMERIC_CONSTANT);
+	tokens.push_back(shared_ptr<Token>(t5));
 
-	FloatingObject *callTotalCost = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
+	shared_ptr<FloatingObject> callTotalCost = objTable.getFloatingObject(ObjectTable::CALL_TOTAL_COST);
 	AssignmentStatement assignment(1);
 	assignment.parse(tokens, objTable);
 	TEST_ASSERT(fabs(callTotalCost->getValue() - 20.0f) > numeric_limits<float>::epsilon());

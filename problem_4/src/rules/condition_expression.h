@@ -49,7 +49,7 @@ public:
 	 * \brief Build the <condition_expression> non-terminal parsing-tree
 	 */
 	void parse(
-		std::vector<Token*> &tokens,
+		std::vector< std::tr1::shared_ptr<Token> > &tokens,
 		ObjectTable &objectTable);
 
 	/**
@@ -64,7 +64,7 @@ private:
 	 *     <condition_expression> ::= <operand> "in" "[" <constant_list> "]"
 	 */
 	void parseOperand(
-		std::vector<Token*> &tokens,
+		std::vector< std::tr1::shared_ptr<Token> > &tokens,
 		ObjectTable &objectTable);
 
 	/**
@@ -72,21 +72,24 @@ private:
 	 *
 	 *     <condition_expression> ::= <operand> "in" "[" <constant_list> "]"
 	 */
-	void parseMembershipOperator(std::vector<Token*> &tokens);
+	void parseMembershipOperator(
+		std::vector< std::tr1::shared_ptr<Token> > &tokens);
 
 	/**
 	 * \brief Parse the "[" operator token from the production rule
 	 *
 	 *     <condition_expression> ::= <operand> "in" "[" <constant_list> "]"
 	 */
-	void parseConditionBeginOperator(std::vector<Token*> &tokens);
+	void parseConditionBeginOperator(
+		std::vector< std::tr1::shared_ptr<Token> > &tokens);
 
 	/**
 	 * \brief Parse the "]" operator token from the production rule
 	 *
 	 *     <condition_expression> ::= <operand> "in" "[" <constant_list> "]"
 	 */
-	void parseConditionEndOperator(std::vector<Token*> &tokens);
+	void parseConditionEndOperator(
+		std::vector< std::tr1::shared_ptr<Token> > &tokens);
 
 	/**
 	 * \brief Parse the <constant_list> tokens from the production rule
@@ -96,14 +99,15 @@ private:
 	 *     <constant_list>        ::= <numeric_constant>
      *                              | <textual_constant>
 	 */
-	void parseConstantList(std::vector<Token*> &tokens);
+	void parseConstantList(
+		std::vector< std::tr1::shared_ptr<Token> > &tokens);
 
 	static const std::string MEMBERSHIP_OPERATOR;
 	static const std::string CONDITION_BEGIN_OPERATOR;
 	static const std::string CONDITION_END_OPERATOR;
 	static const std::string CONDITION_SEPARATOR_OPERATOR;
 
-	StringObject *stringOperand_;
+	std::tr1::shared_ptr<StringObject> stringOperand_;
 	std::string constantList_;
 
 };

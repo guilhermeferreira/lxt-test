@@ -29,6 +29,7 @@
 namespace luxoft {
 
 using namespace std;
+using namespace std::tr1;
 
 //-----------------------------------------------------------------------------
 // AssignmentStatement class
@@ -40,8 +41,8 @@ const string AssignmentStatement::ASSIGNMENT_OPERATOR = "=";
 
 AssignmentStatement::AssignmentStatement(const int lineNumber)
 : Statement(lineNumber),
-  lvalueObject_(NULL),
-  rvalueExpression_(NULL)
+  lvalueObject_(),
+  rvalueExpression_()
 {
 }
 
@@ -49,19 +50,12 @@ AssignmentStatement::AssignmentStatement(const int lineNumber)
 
 AssignmentStatement::~AssignmentStatement()
 {
-	// WARNING: Don't destroy the "lvalueObject_" pointer, because this
-	//          class has not not instantiated it!
-
-	if (rvalueExpression_ != NULL) {
-		delete rvalueExpression_;
-		rvalueExpression_ = NULL;
-	}
 }
 
 //-----------------------------------------------------------------------------
 
 void AssignmentStatement::parse(
-	vector<Token*> &tokens,
+	vector< shared_ptr<Token> > &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
@@ -100,7 +94,7 @@ void AssignmentStatement::evaluate()
 //-----------------------------------------------------------------------------
 
 void AssignmentStatement::parseObject(
-	vector<Token*> &tokens,
+	vector< shared_ptr<Token> > &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
@@ -119,7 +113,8 @@ void AssignmentStatement::parseObject(
 
 //-----------------------------------------------------------------------------
 
-void AssignmentStatement::parseAssignmentOperator(vector<Token*> &tokens)
+void AssignmentStatement::parseAssignmentOperator(
+	vector< shared_ptr<Token> > &tokens)
 {
 	assert(!tokens.empty());
 
@@ -136,13 +131,13 @@ void AssignmentStatement::parseAssignmentOperator(vector<Token*> &tokens)
 //-----------------------------------------------------------------------------
 
 void AssignmentStatement::parseExpression(
-	vector<Token*> &tokens,
+	vector< shared_ptr<Token> > &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
 	assert(rvalueExpression_ == NULL);
 
-	rvalueExpression_ = new ArithmeticExpression(lineNumber_);
+	rvalueExpression_.reset(new ArithmeticExpression(lineNumber_));
 	assert(rvalueExpression_ != NULL);
 	rvalueExpression_->parse(tokens, objectTable);
 }

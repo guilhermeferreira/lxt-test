@@ -22,6 +22,7 @@
 #ifndef ASSIGNMENT_STATEMENT_H
 #define ASSIGNMENT_STATEMENT_H
 
+#include <tr1/memory>
 #include <vector>
 
 #include "statement.h"
@@ -49,7 +50,7 @@ public:
 	virtual ~AssignmentStatement();
 
 	virtual void parse(
-		std::vector<Token*> &tokens,
+		std::vector< std::tr1::shared_ptr<Token> > &tokens,
 		ObjectTable &objectTable);
 
 	virtual void evaluate();
@@ -61,7 +62,7 @@ private:
 	 *    <assignment_statement> ::= <readwrite_object> "=" <arithmetic_expression>
 	 */
 	void parseObject(
-			std::vector<Token*> &tokens,
+			std::vector< std::tr1::shared_ptr<Token> > &tokens,
 			ObjectTable &objectTable);
 
 	/**
@@ -69,7 +70,8 @@ private:
 	 *
 	 *    <assignment_statement> ::= <readwrite_object> "=" <arithmetic_expression>
 	 */
-	void parseAssignmentOperator(std::vector<Token*> &tokens);
+	void parseAssignmentOperator(
+		std::vector< std::tr1::shared_ptr<Token> > &tokens);
 
 	/**
 	 * Parse the <arithmetic_expression> token from the production rule
@@ -77,13 +79,13 @@ private:
 	 *    <assignment_statement> ::= <readwrite_object> "=" <arithmetic_expression>
 	 */
 	void parseExpression(
-			std::vector<Token*> &tokens,
+			std::vector< std::tr1::shared_ptr<Token> > &tokens,
 			ObjectTable &objectTable);
 
 	static const std::string ASSIGNMENT_OPERATOR;
 
-	FloatingObject *lvalueObject_;
-	ArithmeticExpression *rvalueExpression_;
+	std::tr1::shared_ptr<FloatingObject> lvalueObject_;
+	std::tr1::shared_ptr<ArithmeticExpression> rvalueExpression_;
 
 };
 

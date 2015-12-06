@@ -32,6 +32,7 @@
 namespace luxoft {
 
 using namespace std;
+using namespace std::tr1;
 
 //-----------------------------------------------------------------------------
 // ArithmeticExpression class
@@ -39,9 +40,9 @@ using namespace std;
 
 ArithmeticExpression::ArithmeticExpression(const int lineNumber)
 : Expression(lineNumber),
-  operand_(NULL),
-  expression_(NULL),
-  operation_(NULL),
+  operand_(),
+  expression_(),
+  operation_(),
   constant_(0)
 {
 }
@@ -50,16 +51,12 @@ ArithmeticExpression::ArithmeticExpression(const int lineNumber)
 
 ArithmeticExpression::~ArithmeticExpression()
 {
-	if (expression_ != NULL) {
-		delete expression_;
-		expression_ = NULL;
-	}
 }
 
 //-----------------------------------------------------------------------------
 
 void ArithmeticExpression::parse(
-	vector<Token*> &tokens,
+	vector< shared_ptr<Token> > &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
@@ -124,17 +121,17 @@ float ArithmeticExpression::evaluate() const
 //-----------------------------------------------------------------------------
 
 void ArithmeticExpression::parseOperand(
-	vector<Token*> &tokens,
+	vector< shared_ptr<Token> > &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
 	assert(operand_ == NULL);
 
-	Token *operandToken = tokens[0];
+	shared_ptr<Token> operandToken = tokens[0];
 	switch (operandToken->getType()) {
 		// The production rule is <arithmetic_expression> ::= <object>
 		case TOKEN_TYPE_OBJECT: {
-			string objectName = operandToken->getValue();
+			const string &objectName = operandToken->getValue();
 			operand_ = objectTable.getFloatingObject(objectName);
 			if (operand_ == NULL) {
 				throw SyntacticErrorException(lineNumber_);
@@ -159,11 +156,12 @@ void ArithmeticExpression::parseOperand(
 
 //-----------------------------------------------------------------------------
 
-void ArithmeticExpression::parseArithmeticOperator(vector<Token*> &tokens)
+void ArithmeticExpression::parseArithmeticOperator(
+	vector< shared_ptr<Token> > &tokens)
 {
 	assert(!tokens.empty());
 
-	Token *operatorToken = tokens[0];
+	shared_ptr<Token> operatorToken = tokens[0];
 	switch (operatorToken->getType()) {
 		case TOKEN_TYPE_ARITHMETIC_OPERATOR: {
 			string operationSymbol = operatorToken->getValue();
@@ -182,13 +180,13 @@ void ArithmeticExpression::parseArithmeticOperator(vector<Token*> &tokens)
 //-----------------------------------------------------------------------------
 
 void ArithmeticExpression::parseExpression(
-	vector<Token*> &tokens,
+	vector< shared_ptr<Token> > &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
 	assert(expression_ == NULL); // Avoid dangling pointers (and memory leak)
 
-	expression_ = new ArithmeticExpression(lineNumber_);
+	expression_.reset(new ArithmeticExpression(lineNumber_));
 	assert(expression_ != NULL);
 	expression_->parse(tokens, objectTable);
 }

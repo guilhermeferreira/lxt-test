@@ -32,6 +32,7 @@
 namespace luxoft {
 
 using namespace std;
+using namespace std::tr1;
 
 //-----------------------------------------------------------------------------
 // ConditionExpression class
@@ -46,7 +47,7 @@ const string ConditionExpression::CONDITION_SEPARATOR_OPERATOR = " ";
 
 ConditionExpression::ConditionExpression(const int lineNumber)
 : Expression(lineNumber),
-  stringOperand_(NULL)
+  stringOperand_()
 {
 }
 
@@ -59,7 +60,7 @@ ConditionExpression::~ConditionExpression()
 //-----------------------------------------------------------------------------
 
 void ConditionExpression::parse(
-	vector<Token*> &tokens,
+	vector< shared_ptr<Token> > &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
@@ -101,13 +102,13 @@ float ConditionExpression::evaluate() const
 //-----------------------------------------------------------------------------
 
 void ConditionExpression::parseOperand(
-	vector<Token*> &tokens,
+	vector< shared_ptr<Token> > &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
 	assert(stringOperand_ == NULL);
 
-	Token *operandToken = tokens[0];
+	shared_ptr<Token> operandToken = tokens[0];
 	if (operandToken->getType() == TOKEN_TYPE_OBJECT) {
 		string objectName = operandToken->getValue();
 		stringOperand_ = objectTable.getStringObject(objectName);
@@ -124,7 +125,8 @@ void ConditionExpression::parseOperand(
 
 //-----------------------------------------------------------------------------
 
-void ConditionExpression::parseMembershipOperator(vector<Token*> &tokens)
+void ConditionExpression::parseMembershipOperator(
+	vector< shared_ptr<Token> > &tokens)
 {
 	assert(!tokens.empty());
 
@@ -140,7 +142,8 @@ void ConditionExpression::parseMembershipOperator(vector<Token*> &tokens)
 
 //-----------------------------------------------------------------------------
 
-void ConditionExpression::parseConditionBeginOperator(vector<Token*> &tokens)
+void ConditionExpression::parseConditionBeginOperator(
+	vector< shared_ptr<Token> > &tokens)
 {
 	assert(!tokens.empty());
 
@@ -156,7 +159,8 @@ void ConditionExpression::parseConditionBeginOperator(vector<Token*> &tokens)
 
 //-----------------------------------------------------------------------------
 
-void ConditionExpression::parseConditionEndOperator(vector<Token*> &tokens)
+void ConditionExpression::parseConditionEndOperator(
+	vector< shared_ptr<Token> > &tokens)
 {
 	assert(!tokens.empty());
 
@@ -172,7 +176,8 @@ void ConditionExpression::parseConditionEndOperator(vector<Token*> &tokens)
 
 //-----------------------------------------------------------------------------
 
-void ConditionExpression::parseConstantList(vector<Token*> &tokens)
+void ConditionExpression::parseConstantList(
+	vector< shared_ptr<Token> > &tokens)
 {
 	assert(!tokens.empty());
 	assert(constantList_.empty());

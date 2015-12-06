@@ -23,6 +23,7 @@
 #define CALLS_H
 
 #include <iostream>
+#include <tr1/memory>
 #include <vector>
 
 #include "call_record.h"
@@ -51,7 +52,7 @@ public:
 	void process(std::istream &callsStream, Rules &rules);
 
 private:
-	std::vector<CallRecord*> records_;
+	std::vector< std::tr1::shared_ptr<CallRecord> > records_;
 
 };
 

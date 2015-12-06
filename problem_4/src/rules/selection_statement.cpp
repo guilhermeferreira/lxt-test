@@ -32,6 +32,7 @@
 namespace luxoft {
 
 using namespace std;
+using namespace std::tr1;
 
 //-----------------------------------------------------------------------------
 // SelectionStatement class
@@ -45,8 +46,8 @@ const string SelectionStatement::SELECTION_END_OPERATOR = "end";
 
 SelectionStatement::SelectionStatement(const int lineNumber)
 : Statement(lineNumber),
-  conditionExpression_(NULL),
-  ifStatement_(NULL)
+  conditionExpression_(),
+  ifStatement_()
 {
 }
 
@@ -54,24 +55,12 @@ SelectionStatement::SelectionStatement(const int lineNumber)
 
 SelectionStatement::~SelectionStatement()
 {
-	assert(conditionExpression_ != NULL);
-	assert(ifStatement_ != NULL);
-
-	if (ifStatement_ != NULL) {
-		delete ifStatement_;
-		ifStatement_ = NULL;
-	}
-
-	if (conditionExpression_ != NULL) {
-		delete conditionExpression_;
-		conditionExpression_ = NULL;
-	}
 }
 
 //-----------------------------------------------------------------------------
 
 void SelectionStatement::parse(
-	vector<Token*> &tokens,
+	vector< shared_ptr<Token> > &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
@@ -116,7 +105,8 @@ void SelectionStatement::evaluate()
 
 //-----------------------------------------------------------------------------
 
-void SelectionStatement::parseSelectionKeyword(vector<Token*> &tokens)
+void SelectionStatement::parseSelectionKeyword(
+	vector< shared_ptr<Token> > &tokens)
 {
 	assert(!tokens.empty());
 
@@ -133,20 +123,21 @@ void SelectionStatement::parseSelectionKeyword(vector<Token*> &tokens)
 //-----------------------------------------------------------------------------
 
 void SelectionStatement::parseConditionExpression(
-	vector<Token*> &tokens,
+	vector< shared_ptr<Token> > &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
 	assert(conditionExpression_ == NULL);
 
-	conditionExpression_ = new ConditionExpression(lineNumber_);
+	conditionExpression_.reset(new ConditionExpression(lineNumber_));
 	assert(conditionExpression_ != NULL);
 	conditionExpression_->parse(tokens, objectTable);
 }
 
 //-----------------------------------------------------------------------------
 
-void SelectionStatement::parseSelectionBeginOperator(vector<Token*> &tokens)
+void SelectionStatement::parseSelectionBeginOperator(
+	vector< shared_ptr<Token> > &tokens)
 {
 	assert(!tokens.empty());
 
@@ -162,7 +153,8 @@ void SelectionStatement::parseSelectionBeginOperator(vector<Token*> &tokens)
 
 //-----------------------------------------------------------------------------
 
-void SelectionStatement::parseSelectionEndOperator(vector<Token*> &tokens)
+void SelectionStatement::parseSelectionEndOperator(
+	vector< shared_ptr<Token> > &tokens)
 {
 	assert(!tokens.empty());
 
@@ -179,7 +171,7 @@ void SelectionStatement::parseSelectionEndOperator(vector<Token*> &tokens)
 //-----------------------------------------------------------------------------
 
 void SelectionStatement::parseStatement(
-	vector<Token*> &tokens,
+	vector< shared_ptr<Token> > &tokens,
 	ObjectTable &objectTable)
 {
 	assert(!tokens.empty());
