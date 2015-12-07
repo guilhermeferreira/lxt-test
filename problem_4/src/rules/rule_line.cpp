@@ -36,8 +36,8 @@ using namespace std::tr1;
 // RuleLine class
 //-----------------------------------------------------------------------------
 
-const string RuleLine::TOKEN_DELIMITER_CHARACTERS = " ";
-const string RuleLine::TOKEN_ESCAPE_CHARACTERS = " \t";
+static const char TOKEN_DELIMITER_CHARACTERS[] = " ";
+static const char TOKEN_ESCAPE_CHARACTERS[] = " \t";
 
 //-----------------------------------------------------------------------------
 

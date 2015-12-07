@@ -22,6 +22,7 @@
 #ifndef CONDITION_EXPRESSION_H
 #define CONDITION_EXPRESSION_H
 
+#include <string>
 #include <vector>
 
 #include "expression.h"
@@ -101,11 +102,6 @@ private:
 	 */
 	void parseConstantList(
 		std::vector< std::tr1::shared_ptr<Token> > &tokens);
-
-	static const std::string MEMBERSHIP_OPERATOR;
-	static const std::string CONDITION_BEGIN_OPERATOR;
-	static const std::string CONDITION_END_OPERATOR;
-	static const std::string CONDITION_SEPARATOR_OPERATOR;
 
 	std::tr1::shared_ptr<StringObject> stringOperand_;
 	std::string constantList_;

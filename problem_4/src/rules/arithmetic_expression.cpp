@@ -23,7 +23,9 @@
 
 #include <cassert>
 
+#include <string>
 #include <sstream>
+#include <vector>
 
 #include "operation_table.h"
 #include "syntactic_error_exception.h"

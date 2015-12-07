@@ -35,7 +35,7 @@ using namespace std::tr1;
 // AssignmentStatement class
 //-----------------------------------------------------------------------------
 
-const string AssignmentStatement::ASSIGNMENT_OPERATOR = "=";
+static const char ASSIGNMENT_OPERATOR[] = "=";
 
 //-----------------------------------------------------------------------------
 

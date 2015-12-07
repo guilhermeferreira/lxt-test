@@ -77,9 +77,6 @@ private:
 	 */
 	std::string addTrailingWhitespaces(const std::string &line) const;
 
-	static const std::string TOKEN_DELIMITER_CHARACTERS;
-	static const std::string TOKEN_ESCAPE_CHARACTERS;
-
 	std::vector< std::tr1::shared_ptr<Token> > tokens_;
 	std::tr1::shared_ptr<Statement> statement_;
 	int lineNumber_;

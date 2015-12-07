@@ -37,7 +37,7 @@ using namespace std::tr1;
 // CommandStatement class
 //-----------------------------------------------------------------------------
 
-const string CommandStatement::COMMAND_KEYWORD = "print";
+static const char COMMAND_KEYWORD[] = "print";
 
 //-----------------------------------------------------------------------------
 

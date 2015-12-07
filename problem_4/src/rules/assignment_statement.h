@@ -82,8 +82,6 @@ private:
 			std::vector< std::tr1::shared_ptr<Token> > &tokens,
 			ObjectTable &objectTable);
 
-	static const std::string ASSIGNMENT_OPERATOR;
-
 	std::tr1::shared_ptr<FloatingObject> lvalueObject_;
 	std::tr1::shared_ptr<ArithmeticExpression> rvalueExpression_;
 

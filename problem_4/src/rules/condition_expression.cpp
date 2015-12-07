@@ -23,7 +23,9 @@
 
 #include <cassert>
 
+#include <string>
 #include <sstream>
+#include <vector>
 
 #include "operation_table.h"
 #include "syntactic_error_exception.h"
@@ -38,10 +40,10 @@ using namespace std::tr1;
 // ConditionExpression class
 //-----------------------------------------------------------------------------
 
-const string ConditionExpression::MEMBERSHIP_OPERATOR = "in";
-const string ConditionExpression::CONDITION_BEGIN_OPERATOR = "[";
-const string ConditionExpression::CONDITION_END_OPERATOR = "]";
-const string ConditionExpression::CONDITION_SEPARATOR_OPERATOR = " ";
+static const char MEMBERSHIP_OPERATOR[] = "in";
+static const char CONDITION_BEGIN_OPERATOR[] = "[";
+static const char CONDITION_END_OPERATOR[] = "]";
+static const char CONDITION_SEPARATOR_OPERATOR[] = " ";
 
 //-----------------------------------------------------------------------------
 

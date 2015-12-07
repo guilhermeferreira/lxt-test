@@ -38,9 +38,9 @@ using namespace std::tr1;
 // SelectionStatement class
 //-----------------------------------------------------------------------------
 
-const string SelectionStatement::SELECTION_KEYWORD = "if";
-const string SelectionStatement::SELECTION_BEGIN_OPERATOR = "then";
-const string SelectionStatement::SELECTION_END_OPERATOR = "end";
+static const char SELECTION_KEYWORD[] = "if";
+static const char SELECTION_BEGIN_OPERATOR[] = "then";
+static const char SELECTION_END_OPERATOR[] = "end";
 
 //-----------------------------------------------------------------------------
 

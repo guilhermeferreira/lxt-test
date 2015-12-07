@@ -73,8 +73,6 @@ private:
 			std::vector< std::tr1::shared_ptr<Token> > &tokens,
 			ObjectTable &objectTable);
 
-	static const std::string COMMAND_KEYWORD;
-
 	// FIXME  May we have a generic pointer to any Object specialization?
 	std::tr1::shared_ptr<FloatingObject> floatingObject_;
 	std::tr1::shared_ptr<StringObject> stringObject_;

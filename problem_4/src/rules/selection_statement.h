@@ -99,10 +99,6 @@ private:
 		std::vector< std::tr1::shared_ptr<Token> > &tokens,
 		ObjectTable &objectTable);
 
-	static const std::string SELECTION_KEYWORD;
-	static const std::string SELECTION_BEGIN_OPERATOR;
-	static const std::string SELECTION_END_OPERATOR;
-
 	std::tr1::shared_ptr<Expression> conditionExpression_;
 	std::tr1::shared_ptr<Statement> ifStatement_;
 
