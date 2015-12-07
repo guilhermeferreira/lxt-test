@@ -98,7 +98,7 @@ void SelectionStatement::evaluate()
 	assert(conditionExpression_ != NULL);
 	assert(ifStatement_ != NULL);
 
-	if ((conditionExpression_->evaluate() - 0) <= numeric_limits<float>::epsilon()) {
+	if ((conditionExpression_->evaluate() - 0) >= numeric_limits<float>::epsilon()) {
 		ifStatement_->evaluate();
 	}
 }
