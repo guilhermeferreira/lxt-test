@@ -5,7 +5,7 @@ if [ "$1" == "DEBUG" ]; then
 	DEBUGGER+="valgrind --tool=memcheck --leak-check=full --track-origins=yes"
 fi
 
-LD_LIBRARY_PATH=. $DEBUGGER ./problem_4_test
+LD_LIBRARY_PATH=../cpptest-install/lib $DEBUGGER ./problem_4_test
 
 echo ""
 echo "---------------------------------------";

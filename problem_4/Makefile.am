@@ -78,6 +78,7 @@ TEST_CPPFLAGS  = -I.
 TEST_CPPFLAGS += -I./test
 TEST_CPPFLAGS += -I./test/calls
 TEST_CPPFLAGS += -I./test/rules
+TEST_CPPFLAGS += -I../cpptest-install/inc
 
 problem_4_test_CPPFLAGS  = ${COMMON_CPPFLAGS}
 problem_4_test_CPPFLAGS += ${TEST_CPPFLAGS}
@@ -87,4 +88,4 @@ problem_4_test_CPPFLAGS += ${TEST_CPPFLAGS}
 # Linking Flags
 ###############################################################################
 
-problem_4_test_LDADD = -L. -lcpptest
+problem_4_test_LDADD = -L../cpptest-install/lib -lcpptest
