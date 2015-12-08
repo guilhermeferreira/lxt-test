@@ -1,8 +1,9 @@
 bin_PROGRAMS = problem_1
 
 problem_1_SOURCES  = src/main.cpp
+problem_1_SOURCES += src/rotation.cpp
 
-problem_1_CPPFLAGS  = -I.
+problem_1_CPPFLAGS  = -I./src
 problem_1_CPPFLAGS += -Wall
 problem_1_CPPFLAGS += -Wextra
 problem_1_CPPFLAGS += -Weffc++
