@@ -18,3 +18,4 @@ $DEBUGGER ./problem_1 helloworld llowurldhe
 $DEBUGGER ./problem_1 helloworld loworfdhel
 $DEBUGGER ./problem_1 helloworld owcrldhell
 $DEBUGGER ./problem_1 helloworld worldhillo
+$DEBUGGER ./problem_1 hello      helol
