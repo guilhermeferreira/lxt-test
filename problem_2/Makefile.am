@@ -1,6 +1,6 @@
 bin_PROGRAMS = problem_2
 
-problem_2_SOURCES = main.cpp
+problem_2_SOURCES  = src/main.cpp
 
 problem_2_CPPFLAGS  = -I.
 problem_2_CPPFLAGS += -Wall
