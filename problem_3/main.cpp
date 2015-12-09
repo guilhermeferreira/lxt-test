@@ -10,7 +10,14 @@
 
 #include "linearchamber.h"
 
-using namespace std;
+using std::auto_ptr;
+using std::cin;
+using std::cerr;
+using std::cout;
+using std::endl;
+using std::istringstream;
+using std::string;
+using std::vector;
 
 //-----------------------------------------------------------------------------
 
