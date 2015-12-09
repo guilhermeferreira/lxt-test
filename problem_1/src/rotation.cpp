@@ -33,20 +33,35 @@ bool isRotation(
 	const std::string &s1,
 	const std::string &s2)
 {
-	// If we imagine that s1 and s2 are two sets of characters, this problem
-	// can be reduced to know if both sets have the same elements. We might
-	// perform a lexicographical ordering on both sets and check if the
-	// resulting sets are equal.
-	std::string sorted_s1 = s1;
-	std::string sorted_s2 = s2;
+	if (s1.length() != s2.length()) {
+		return false;
+	}
 
-	std::sort(sorted_s1.begin(), sorted_s1.end());
-	std::sort(sorted_s2.begin(), sorted_s2.end());
+	// Check if s2 is a substring of concatenated s1 + s1
+	// <s2>    <concat_s1>
+	//
+	// hello   hellohello
+	//         ^^^^^
+	// elloh   hellohello
+	//          ^^^^^
+	// llohe   hellohello
+	//           ^^^^^
+	// lohel   hellohello
+	//            ^^^^^
+	// ohell   hellohello
+	//             ^^^^^
+	std::string concat_s1 = s1 + s1;
+	size_t pos = concat_s1.find(s2);
+	bool found = (pos != std::string::npos);
 
-	std::cout << "sorted s1 = '" << sorted_s1 << "'" << std::endl;
-	std::cout << "sorted s2 = '" << sorted_s2 << "'" << std::endl;
+	if (found) {
+		std::string shifted_s2 = s2;
+		shifted_s2.insert(0, pos, ' ');
+		std::cout << "concat_s1  = '" << concat_s1 << "'" << std::endl;
+		std::cout << "shifted_s2 = '" << shifted_s2 << "'" << std::endl;
+	}
 
-	return (sorted_s1.compare(sorted_s2) == 0);
+	return found;
 }
 
 } // namespace luxoft
