@@ -1,7 +1,7 @@
 #!/bin/sh
 
 DEBUGGER=""
-if [ "$1" == "DEBUG" ]; then
+if test "$1" = "DEBUG"; then
 	DEBUGGER+="valgrind --leak-check=full"
 fi
 
