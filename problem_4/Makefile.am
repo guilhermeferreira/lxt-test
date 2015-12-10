@@ -1,3 +1,5 @@
+include ../cpptest_build.conf
+
 bin_PROGRAMS  = problem_4
 bin_PROGRAMS += problem_4_test
 
@@ -78,7 +80,7 @@ TEST_CPPFLAGS  = -I.
 TEST_CPPFLAGS += -I./test
 TEST_CPPFLAGS += -I./test/calls
 TEST_CPPFLAGS += -I./test/rules
-TEST_CPPFLAGS += -I../cpptest-install/inc
+TEST_CPPFLAGS += -I../${CPPTEST_INC_DIR}
 
 problem_4_test_CPPFLAGS  = ${COMMON_CPPFLAGS}
 problem_4_test_CPPFLAGS += ${TEST_CPPFLAGS}
@@ -88,4 +90,4 @@ problem_4_test_CPPFLAGS += ${TEST_CPPFLAGS}
 # Linking Flags
 ###############################################################################
 
-problem_4_test_LDADD = -L../cpptest-install/lib -lcpptest
+problem_4_test_LDADD = -L../${CPPTEST_LIB_DIR} -lcpptest

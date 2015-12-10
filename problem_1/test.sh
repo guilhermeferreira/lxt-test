@@ -1,11 +1,13 @@
 #!/bin/sh
 
+. ${PWD}/../cpptest_build.conf
+
 DEBUGGER=""
 if test "$1" = "DEBUG"; then
 	DEBUGGER+="valgrind --leak-check=full"
 fi
 
-LD_LIBRARY_PATH=../cpptest-install/lib $DEBUGGER ./problem_1_test
+LD_LIBRARY_PATH=../${CPPTEST_LIB_DIR} $DEBUGGER ./problem_1_test
 
 # Success
 $DEBUGGER ./problem_1 helloworld elloworldh

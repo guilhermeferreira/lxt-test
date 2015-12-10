@@ -1,3 +1,5 @@
+include ../cpptest_build.conf
+
 bin_PROGRAMS = problem_1
 bin_PROGRAMS += problem_1_test
 
@@ -27,10 +29,10 @@ problem_1_CPPFLAGS += -Wcast-qual
 problem_1_CPPFLAGS += -Wconversion
 
 problem_1_test_CPPFLAGS  = ${problem_1_CPPFLAGS}
-problem_1_test_CPPFLAGS += -I../cpptest-install/inc
+problem_1_test_CPPFLAGS += -I../${CPPTEST_INC_DIR}
 
 ###############################################################################
 # Linking Flags
 ###############################################################################
 
-problem_1_test_LDADD = -L../cpptest-install/lib -lcpptest
+problem_1_test_LDADD = -L../${CPPTEST_LIB_DIR} -lcpptest

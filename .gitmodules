@@ -1,0 +1,3 @@
+[submodule "cpptest"]
+	path = cpptest_source
+	url = git://git.code.sf.net/p/cpptest/code
