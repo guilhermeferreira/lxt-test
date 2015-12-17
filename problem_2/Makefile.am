@@ -1,8 +1,9 @@
 bin_PROGRAMS = problem_2
 
 problem_2_SOURCES  = src/main.cpp
+problem_2_SOURCES += src/missing_letters.cpp
 
-problem_2_CPPFLAGS  = -I.
+problem_2_CPPFLAGS  = -I./src
 problem_2_CPPFLAGS += -Wall
 problem_2_CPPFLAGS += -Wextra
 problem_2_CPPFLAGS += -Weffc++

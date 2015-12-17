@@ -19,40 +19,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <cstdlib>
+#ifndef MISSING_LETTERS_H
+#define MISSING_LETTERS_H
 
-#include <algorithm>
-#include <iostream>
-
-#include "missing_letters.h"
+#include <string>
 
 
-using std::cout;
-using std::cin;
-using std::endl;
-using std::string;
-using luxoft::getMissingLetters;
+namespace luxoft {
 
-int main(int argc, char *argv[])
-{
-	cout << "Problem #2" << endl;
+/**
+ * \brief Return which letters from alphabet are missing from the sentence
+ */
+std::string getMissingLetters(const std::string &sentence);
 
-	string sentence;
+} // namespace luxoft
 
-	// The user provided the strings in the command line
-	if (argc >= 2) {
-		sentence = argv[1];
-	}
-	// The user didn't provide the strings in the command line
-	else {
-		cout << "Enter sentence: ";
-		cin >> sentence;
-	}
-
-	string missing_letters = getMissingLetters(sentence);
-
-	cout << "There are " << missing_letters.size()
-	     << " missing letters: " << missing_letters << endl;
-
-	return EXIT_SUCCESS;
-}
+#endif /* MISSING_LETTERS_H */
