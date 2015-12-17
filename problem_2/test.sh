@@ -5,6 +5,8 @@ if test "$1" = "DEBUG"; then
 	DEBUGGER+="valgrind --leak-check=full"
 fi
 
+LD_LIBRARY_PATH=../cpptest-install/lib $DEBUGGER ./problem_2_test
+
 # Pangrams
 $DEBUGGER ./problem_2 "A quick brown fox jumps over the lazy dog"
 $DEBUGGER ./problem_2 "Pack my box with five dozen liquor jugs."
