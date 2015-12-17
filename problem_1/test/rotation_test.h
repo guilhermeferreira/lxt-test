@@ -19,25 +19,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include "rotation_test.h"
+#ifndef ROTATION_TEST_H
+#define ROTATION_TEST_H
 
-#include <cstdlib>
-
-#include <iostream>
 #include <cpptest.h>
 
 
-using std::cout;
-using std::endl;
+//-----------------------------------------------------------------------------
+// RotationTest class
+//-----------------------------------------------------------------------------
 
-int main(int argc, char *argv[])
+class RotationTest: public Test::Suite
 {
-	cout << "Problem #1 Test" << endl;
+public:
+	RotationTest();
 
-	Test::TextOutput output(Test::TextOutput::Verbose);
+private:
+	void isRotation_true_Test();
+	void isRotation_false_Test();
 
-	RotationTest test;
-	test.run(output, false);
+};
 
-	return EXIT_SUCCESS;
-}
+#endif /* ROTATION_TEST_H */
