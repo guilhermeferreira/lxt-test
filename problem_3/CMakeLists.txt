@@ -2,27 +2,20 @@
 project(problem_3)
 set(VERSION 0.1)
 set(VERSION_REVISION 1)
-set(TARGET ${PROJECT_NAME})
-set(TARGET_DIR ${PROJECT_SOURCE_DIR})
-
-# package: find external packages
-include(FindPkgConfig)
+set(TARGET_DIR ${PROJECT_SOURCE_DIR}/src)
 
 # compiler: include directories where the target source code is located
 include_directories(${TARGET_DIR})
+include_directories(${TEST_DIR})
 
 # compiler: source code files
-set(SOURCES
-    linearchamber.cpp
-    chamber.cpp
-    particle.cpp
-    main.cpp
+set(TARGET_SOURCES
+    ${TARGET_DIR}/linearchamber.cpp
+    ${TARGET_DIR}/chamber.cpp
+    ${TARGET_DIR}/particle.cpp
 )
 
-# compiler: creates the binary
-add_executable(${TARGET} ${SOURCES})
-
-# cmake: install
-install(TARGETS ${TARGET} DESTINATION ${PROJECT_SOURCE_DIR})
+# cmake: build the application in the source directory
+add_subdirectory(src)
 
 include(CPack)
