@@ -2,7 +2,9 @@
 project(problem_3)
 set(VERSION 0.1)
 set(VERSION_REVISION 1)
+set(TEST   ${PROJECT_NAME}_test)
 set(TARGET_DIR ${PROJECT_SOURCE_DIR}/src)
+set(TEST_DIR   ${PROJECT_SOURCE_DIR}/test)
 
 # compiler: include directories where the target source code is located
 include_directories(${TARGET_DIR})
@@ -17,5 +19,8 @@ set(TARGET_SOURCES
 
 # cmake: build the application in the source directory
 add_subdirectory(src)
+
+# cmake: build the test cases
+add_subdirectory(test)
 
 include(CPack)
