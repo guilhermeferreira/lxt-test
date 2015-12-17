@@ -19,25 +19,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include "rotation_test.h"
-
 #include <cstdlib>
 
+#include <algorithm>
 #include <iostream>
-#include <cpptest.h>
+
+#include "missing_letters.h"
 
 
 using std::cout;
+using std::cin;
 using std::endl;
+using std::string;
+using luxoft::getMissingLetters;
 
 int main(int argc, char *argv[])
 {
-	cout << "Problem #1 Test" << endl;
+	cout << "Problem #2" << endl;
 
-	Test::TextOutput output(Test::TextOutput::Verbose);
+	string sentence;
 
-	RotationTest test;
-	test.run(output, false);
+	// The user provided the strings in the command line
+	if (argc >= 2) {
+		sentence = argv[1];
+	}
+	// The user didn't provide the strings in the command line
+	else {
+		cout << "Enter sentence: ";
+		cin >> sentence;
+	}
+
+	string missing_letters = getMissingLetters(sentence);
+
+	cout << "There are " << missing_letters.size()
+	     << " missing letters: " << missing_letters << endl;
 
 	return EXIT_SUCCESS;
 }

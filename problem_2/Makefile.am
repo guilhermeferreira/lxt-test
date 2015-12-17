@@ -1,8 +1,16 @@
+include ../cpptest_build.conf
+
 bin_PROGRAMS = problem_2
+bin_PROGRAMS += problem_2_test
 
-problem_2_SOURCES = main.cpp
+problem_2_SOURCES  = src/main.cpp
+problem_2_SOURCES += src/missing_letters.cpp
 
-problem_2_CPPFLAGS  = -I.
+problem_2_test_SOURCES  = test/main.cpp
+problem_2_test_SOURCES += test/missing_letters_test.cpp
+problem_2_test_SOURCES += src/missing_letters.cpp
+
+problem_2_CPPFLAGS  = -I./src
 problem_2_CPPFLAGS += -Wall
 problem_2_CPPFLAGS += -Wextra
 problem_2_CPPFLAGS += -Weffc++
@@ -20,3 +28,13 @@ problem_2_CPPFLAGS += -Wswitch-default
 problem_2_CPPFLAGS += -Wfloat-equal
 problem_2_CPPFLAGS += -Wcast-qual
 problem_2_CPPFLAGS += -Wconversion
+
+problem_2_test_CPPFLAGS  = ${problem_2_CPPFLAGS}
+problem_2_test_CPPFLAGS += -I./test
+problem_2_test_CPPFLAGS += -I../${CPPTEST_INC_DIR}
+
+###############################################################################
+# Linking Flags
+###############################################################################
+
+problem_2_test_LDADD = -L../${CPPTEST_LIB_DIR} -lcpptest

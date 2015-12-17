@@ -19,25 +19,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include "rotation_test.h"
+#ifndef MISSING_LETTERS_TEST_H
+#define MISSING_LETTERS_TEST_H
 
-#include <cstdlib>
-
-#include <iostream>
 #include <cpptest.h>
 
 
-using std::cout;
-using std::endl;
+//-----------------------------------------------------------------------------
+// MissingLettersTest class
+//-----------------------------------------------------------------------------
 
-int main(int argc, char *argv[])
+class MissingLettersTest: public Test::Suite
 {
-	cout << "Problem #1 Test" << endl;
+public:
+	MissingLettersTest();
 
-	Test::TextOutput output(Test::TextOutput::Verbose);
+private:
+	void getMissingLetters_pangrams_Test();
+	void getMissingLetters_not_pangrams_Test();
 
-	RotationTest test;
-	test.run(output, false);
+};
 
-	return EXIT_SUCCESS;
-}
+#endif /* MISSING_LETTERS_TEST_H */

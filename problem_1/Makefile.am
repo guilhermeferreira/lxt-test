@@ -7,6 +7,7 @@ problem_1_SOURCES  = src/main.cpp
 problem_1_SOURCES += src/rotation.cpp
 
 problem_1_test_SOURCES  = test/main.cpp
+problem_1_test_SOURCES += test/rotation_test.cpp
 problem_1_test_SOURCES += src/rotation.cpp
 
 problem_1_CPPFLAGS  = -I./src
@@ -29,6 +30,7 @@ problem_1_CPPFLAGS += -Wcast-qual
 problem_1_CPPFLAGS += -Wconversion
 
 problem_1_test_CPPFLAGS  = ${problem_1_CPPFLAGS}
+problem_1_test_CPPFLAGS += -I./test
 problem_1_test_CPPFLAGS += -I../${CPPTEST_INC_DIR}
 
 ###############################################################################

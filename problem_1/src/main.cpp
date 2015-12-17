@@ -6,7 +6,11 @@
 #include "rotation.h"
 
 
-using namespace std;
+using std::cout;
+using std::cin;
+using std::endl;
+using std::string;
+using luxoft::isRotation;
 
 int main(int argc, char *argv[])
 {
@@ -32,7 +36,7 @@ int main(int argc, char *argv[])
 	cout << "s1 = '" << s1 << "'" << endl;
 	cout << "s2 = '" << s2 << "'" << endl;
 
-	if (luxoft::isRotation(s1, s2)) {
+	if (isRotation(s1, s2)) {
 		cout << "'" << s2 << "' is a rotation of string '" << s1 << "'\n" << endl;
 	} else {
 		cout << "'" << s2 << "' is NOT a rotation of string '" << s1 << "'\n" << endl;

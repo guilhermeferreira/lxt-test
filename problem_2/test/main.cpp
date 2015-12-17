@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include "rotation_test.h"
+#include "missing_letters_test.h"
 
 #include <cstdlib>
 
@@ -27,16 +27,15 @@
 #include <cpptest.h>
 
 
-using std::cout;
-using std::endl;
+using namespace std;
 
 int main(int argc, char *argv[])
 {
-	cout << "Problem #1 Test" << endl;
+	cout << "Problem #2 Test" << endl;
 
 	Test::TextOutput output(Test::TextOutput::Verbose);
 
-	RotationTest test;
+	MissingLettersTest test;
 	test.run(output, false);
 
 	return EXIT_SUCCESS;

@@ -19,25 +19,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include "rotation_test.h"
+#ifndef MISSING_LETTERS_H
+#define MISSING_LETTERS_H
 
-#include <cstdlib>
-
-#include <iostream>
-#include <cpptest.h>
+#include <string>
 
 
-using std::cout;
-using std::endl;
+namespace luxoft {
 
-int main(int argc, char *argv[])
-{
-	cout << "Problem #1 Test" << endl;
+/**
+ * \brief Return which letters from alphabet are missing from the sentence
+ */
+std::string getMissingLetters(const std::string &sentence);
 
-	Test::TextOutput output(Test::TextOutput::Verbose);
+} // namespace luxoft
 
-	RotationTest test;
-	test.run(output, false);
-
-	return EXIT_SUCCESS;
-}
+#endif /* MISSING_LETTERS_H */
