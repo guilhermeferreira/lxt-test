@@ -44,6 +44,17 @@ example data, but do not make it overly complicated.
  2. Solution description
 ------------------------------------------------------------------------------
 
+These are the options that I'm aware to solve this problem (i.e. define rules
+for calculating call cost):
+
+- Use of hardcoded rules and the variable values in the code;
+
+- Use of configuration files to parameterize the variable values, but still
+  having hardcoded rules;
+
+- Use of a domain specific language to parameterize both rules and variable
+  values.
+
 In order to make the rules easy to extend and modify, I created a very simple
 interpreted domain language called "Call Cost Calculation Language", or C3L.
 This principle follows the ones presented in sections 12 (Domain Languages) and
@@ -77,11 +88,11 @@ a parse-tree of the rules) and apply these rules to each call record.
 ------------------------------------------------------------------------------
 
 Enter a input file with list of calls
-Each .call file has
+
   $ ./problem_4 <call-rules-file> <list-of-call-input>
 
 Example command line:
-  $ ./problem_4 rules.c3l input1.call input2.call
+  $ ./problem_4 rules.c3l call1.rec call2.rec
 
 
 ------------------------------------------------------------------------------
