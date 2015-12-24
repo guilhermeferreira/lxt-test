@@ -2,19 +2,19 @@
 
 . ${PWD}/../cpptest_build.conf
 
-DEBUGGER=""
-if test "$1" = "DEBUG"; then
-	DEBUGGER+="valgrind --leak-check=full"
+TOOL=""
+if test "$1" = "DYN_ANALYSIS"; then
+	TOOL+="valgrind --leak-check=full"
 fi
 
-LD_LIBRARY_PATH=../${CPPTEST_LIB_DIR} $DEBUGGER ./problem_2_test
+LD_LIBRARY_PATH=../${CPPTEST_LIB_DIR} $TOOL ./problem_2_test
 
 # Pangrams
-$DEBUGGER ./problem_2 "A quick brown fox jumps over the lazy dog"
-$DEBUGGER ./problem_2 "Pack my box with five dozen liquor jugs."
-$DEBUGGER ./problem_2 "Despite having an excellent breakfast, Jacques was amazingly slow."
+$TOOL ./problem_2 "A quick brown fox jumps over the lazy dog"
+$TOOL ./problem_2 "Pack my box with five dozen liquor jugs."
+$TOOL ./problem_2 "Despite having an excellent breakfast, Jacques was amazingly slow."
 
 # Not pangrams
-$DEBUGGER ./problem_2 "This sentence contains A-Z but not the whole alphabet."
-$DEBUGGER ./problem_2 "Guadalajara seems to be a very promising place to work."
-$DEBUGGER ./problem_2 "I can speak bit of german. Ich moechte ein Brezel bitte. Ich mag das"
+$TOOL ./problem_2 "This sentence contains A-Z but not the whole alphabet."
+$TOOL ./problem_2 "Guadalajara seems to be a very promising place to work."
+$TOOL ./problem_2 "I can speak bit of german. Ich moechte ein Brezel bitte. Ich mag das"
