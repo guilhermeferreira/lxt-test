@@ -22,18 +22,17 @@ public:
 
 	void createParticles();
 
-	void moveParticles();
-
-	std::string printParticles();
-
-	bool isEmpty();
-
-protected:
 	Particle createParticle(
 		char direction,
 		int position);
 
 	bool isParticle(char direction);
+
+	void moveParticles();
+
+	std::string printParticles();
+
+	bool isEmpty();
 
 private:
 	std::vector<Particle> particles_;
