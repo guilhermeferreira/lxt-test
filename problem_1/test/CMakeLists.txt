@@ -7,6 +7,7 @@ include(${CMAKE_SOURCE_DIR}/cpptest_build.cmake)
 # compiler: creates the binaries
 add_executable(${TEST}
     ${TARGET_SOURCES}
+    ${TEST_DIR}/rotation_test.cpp
     ${TEST_DIR}/main.cpp
 )
 
