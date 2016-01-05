@@ -2,24 +2,32 @@
 
 . ${PWD}/../cpptest_build.conf
 
-DEBUGGER=""
-if test "$1" = "DEBUG"; then
-	DEBUGGER+="valgrind --leak-check=full"
+TOOL=""
+if test "$1" = "DYN_ANALYSIS"; then
+	TOOL+="valgrind --leak-check=full"
 fi
 
-LD_LIBRARY_PATH=../${CPPTEST_LIB_DIR} $DEBUGGER ./problem_1_test
+LD_LIBRARY_PATH=../${CPPTEST_LIB_DIR} $TOOL ./problem_1_test
 
-# Success
-$DEBUGGER ./problem_1 helloworld elloworldh
-$DEBUGGER ./problem_1 helloworld lloworldhe
-$DEBUGGER ./problem_1 helloworld loworldhel
-$DEBUGGER ./problem_1 helloworld oworldhell
-$DEBUGGER ./problem_1 helloworld worldhello
+if test "$1" = "FUZZ_TEST"; then
+	COUNTER=0
+	while [  $COUNTER -lt 10 ]; do
+		blab -e '[a-z]{5} " " [a-z]{5}' | xargs ./problem_1
+		let COUNTER=COUNTER+1
+	done
+else
+	# Success
+	$TOOL ./problem_1 helloworld elloworldh
+	$TOOL ./problem_1 helloworld lloworldhe
+	$TOOL ./problem_1 helloworld loworldhel
+	$TOOL ./problem_1 helloworld oworldhell
+	$TOOL ./problem_1 helloworld worldhello
 
-# Failure
-$DEBUGGER ./problem_1 helloworld alloworldh
-$DEBUGGER ./problem_1 helloworld llowurldhe
-$DEBUGGER ./problem_1 helloworld loworfdhel
-$DEBUGGER ./problem_1 helloworld owcrldhell
-$DEBUGGER ./problem_1 helloworld worldhillo
-$DEBUGGER ./problem_1 hello      helol
+	# Failure
+	$TOOL ./problem_1 helloworld alloworldh
+	$TOOL ./problem_1 helloworld llowurldhe
+	$TOOL ./problem_1 helloworld loworfdhel
+	$TOOL ./problem_1 helloworld owcrldhell
+	$TOOL ./problem_1 helloworld worldhillo
+	$TOOL ./problem_1 hello      helol
+fi
