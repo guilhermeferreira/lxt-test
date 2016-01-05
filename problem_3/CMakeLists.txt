@@ -2,6 +2,7 @@
 project(problem_3)
 set(VERSION 0.1)
 set(VERSION_REVISION 1)
+set(TARGET ${PROJECT_NAME})
 set(TEST   ${PROJECT_NAME}_test)
 set(TARGET_DIR ${PROJECT_SOURCE_DIR}/src)
 set(TEST_DIR   ${PROJECT_SOURCE_DIR}/test)
