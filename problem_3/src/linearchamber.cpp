@@ -98,7 +98,8 @@ string LinearChamber::printParticles()
 
 		// Avoid writing a 'X' out of string bounds (i.e. buffer overflow)
 		if ((0 <= pos) && (pos < chamber_size)) {
-			curr_chamber_[pos] = 'X';
+			unsigned int upos = static_cast<unsigned int>(pos);
+			curr_chamber_[upos] = 'X';
 		}
 	}
 
