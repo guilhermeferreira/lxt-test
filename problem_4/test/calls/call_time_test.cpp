@@ -22,6 +22,7 @@
 #include "call_time_test.h"
 
 #include <iostream>
+#include <limits>
 
 using namespace std;
 using namespace luxoft;
@@ -45,22 +46,22 @@ void CallTimeTest::minusOperator_Test()
 	CallTime ct1(12,  0,  0); // 12:00:00
 	CallTime ct2(12, 20,  0); // 12:20:00
 
-	TEST_ASSERT((ct1 - ct2) == -20);
-	TEST_ASSERT((ct2 - ct1) ==  20);
+	TEST_ASSERT(((ct1 - ct2) - -20) < numeric_limits<float>::epsilon());
+	TEST_ASSERT(((ct2 - ct1) - 20)  < numeric_limits<float>::epsilon());
 
 
 	CallTime ct3(17,  5,  0); // 17:05:00
 	CallTime ct4(18, 45,  0); // 18:45:00
 
-	TEST_ASSERT((ct3 - ct4) == -100);
-	TEST_ASSERT((ct4 - ct3) ==  100);
+	TEST_ASSERT(((ct3 - ct4) - -100)  < numeric_limits<float>::epsilon());
+	TEST_ASSERT(((ct4 - ct3) - 100)  < numeric_limits<float>::epsilon());
 
 
 	CallTime ct5( 7,  9, 30); // 07:09:30
 	CallTime ct6(13,  9, 40); // 13:09:40
 
-	TEST_ASSERT((ct5 - ct6) == -360);
-	TEST_ASSERT((ct6 - ct5) ==  360);
+	TEST_ASSERT(((ct5 - ct6) - -360)  < numeric_limits<float>::epsilon());
+	TEST_ASSERT(((ct6 - ct5) - 360)  < numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
@@ -75,8 +76,8 @@ void CallTimeTest::extractionOperator_Test()
 	CallTime ct2;
 	time2 >> ct2;
 
-	TEST_ASSERT((ct1 - ct2) == -20);
-	TEST_ASSERT((ct2 - ct1) ==  20);
+	TEST_ASSERT(((ct1 - ct2) - -20)  < numeric_limits<float>::epsilon());
+	TEST_ASSERT(((ct2 - ct1) - 20)  < numeric_limits<float>::epsilon());
 
 
 	stringstream time3("17:05:00");
@@ -87,8 +88,8 @@ void CallTimeTest::extractionOperator_Test()
 	CallTime ct4;
 	time4 >> ct4;
 
-	TEST_ASSERT((ct3 - ct4) == -100);
-	TEST_ASSERT((ct4 - ct3) ==  100);
+	TEST_ASSERT(((ct3 - ct4) - -100)  < numeric_limits<float>::epsilon());
+	TEST_ASSERT(((ct4 - ct3) - 100)  < numeric_limits<float>::epsilon());
 
 
 	stringstream time5("07:09:30");
@@ -99,8 +100,8 @@ void CallTimeTest::extractionOperator_Test()
 	CallTime ct6;
 	time6 >> ct6;
 
-	TEST_ASSERT((ct5 - ct6) == -360);
-	TEST_ASSERT((ct6 - ct5) ==  360);
+	TEST_ASSERT(((ct5 - ct6) - -360)  < numeric_limits<float>::epsilon());
+	TEST_ASSERT(((ct6 - ct5) - 360)  < numeric_limits<float>::epsilon());
 }
 
 //-----------------------------------------------------------------------------
