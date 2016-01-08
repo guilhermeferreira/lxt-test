@@ -56,7 +56,9 @@ std::string getMissingLetters(const std::string &sentence)
 			copySentence.begin(), copySentence.end(),
 			missing_letters.begin());
 
-	missing_letters.resize(it - missing_letters.begin());
+	// Resize the missing letters vector to remove extra items
+	std::string::iterator::difference_type missing_letters_count = it - missing_letters.begin();
+	missing_letters.resize(static_cast<std::string::size_type>(missing_letters_count));
 
 	// Convert sentence to upper case
 	std::transform(missing_letters.begin(), missing_letters.end(), missing_letters.begin(), ::toupper);
