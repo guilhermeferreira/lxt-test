@@ -34,7 +34,7 @@ using namespace luxoft;
 
 //-----------------------------------------------------------------------------
 
-int main(int argc, char *argv[])
+int main(void)
 {
 	cout << "Problem #4 Test" << endl;
 
