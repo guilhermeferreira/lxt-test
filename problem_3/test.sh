@@ -23,3 +23,9 @@ else
 	$TOOL ./problem_3 "..." 1
 	$TOOL ./problem_3 "LRRL.LR.LRR.R.LRRL." 1
 fi
+
+if test "$1" = "COVERAGE"; then
+	lcov -d ./src/ --base-directory ./ --capture --output-file coverage.info
+	genhtml coverage.info -o ./coverage
+	firefox ./coverage/index.html
+fi

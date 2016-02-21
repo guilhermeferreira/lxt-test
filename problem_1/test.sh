@@ -31,3 +31,9 @@ else
 	$TOOL ./problem_1 helloworld worldhillo
 	$TOOL ./problem_1 hello      helol
 fi
+
+if test "$1" = "COVERAGE"; then
+	lcov -d ./src/ --base-directory ./ --capture --output-file coverage.info
+	genhtml coverage.info -o ./coverage
+	firefox ./coverage/index.html
+fi

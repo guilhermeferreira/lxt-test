@@ -37,9 +37,13 @@ problem_3_CPPFLAGS += -Wconversion
 problem_3_test_CPPFLAGS  = ${problem_3_CPPFLAGS}
 problem_3_test_CPPFLAGS += -I./test
 problem_3_test_CPPFLAGS += -I../${CPPTEST_INC_DIR}
+problem_3_test_CPPFLAGS += -O0
+problem_3_test_CPPFLAGS += -fprofile-arcs
+problem_3_test_CPPFLAGS += -ftest-coverage
 
 ###############################################################################
 # Linking Flags
 ###############################################################################
 
 problem_3_test_LDADD = -L../${CPPTEST_LIB_DIR} -lcpptest
+problem_3_test_LDADD += -lgcov
