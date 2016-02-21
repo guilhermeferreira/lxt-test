@@ -84,6 +84,9 @@ TEST_CPPFLAGS += -I../${CPPTEST_INC_DIR}
 
 problem_4_test_CPPFLAGS  = ${COMMON_CPPFLAGS}
 problem_4_test_CPPFLAGS += ${TEST_CPPFLAGS}
+problem_4_test_CPPFLAGS += -O0
+problem_4_test_CPPFLAGS += -fprofile-arcs
+problem_4_test_CPPFLAGS += -ftest-coverage
 
 
 ###############################################################################
@@ -91,3 +94,4 @@ problem_4_test_CPPFLAGS += ${TEST_CPPFLAGS}
 ###############################################################################
 
 problem_4_test_LDADD = -L../${CPPTEST_LIB_DIR} -lcpptest
+problem_4_test_LDADD += -lgcov

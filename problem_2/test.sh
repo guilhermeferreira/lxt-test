@@ -26,3 +26,9 @@ else
 	$TOOL ./problem_2 "Guadalajara seems to be a very promising place to work."
 	$TOOL ./problem_2 "I can speak bit of german. Ich moechte ein Brezel bitte. Ich mag das"
 fi
+
+if test "$1" = "COVERAGE"; then
+	lcov -d ./src/ --base-directory ./ --capture --output-file coverage.info
+	genhtml coverage.info -o ./coverage
+	firefox ./coverage/index.html
+fi

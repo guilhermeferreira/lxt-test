@@ -32,3 +32,9 @@ echo "---------------------------------------";
 echo ""
 
 $TOOL ./problem_4 sample/rules-problem_4.c3l sample/calls1.rec
+
+if test "$1" = "COVERAGE"; then
+	lcov -d src/rules/ -d src/calls/ --base-directory ./ --capture --output-file coverage.info
+	genhtml coverage.info -o ./coverage
+	firefox ./coverage/index.html
+fi

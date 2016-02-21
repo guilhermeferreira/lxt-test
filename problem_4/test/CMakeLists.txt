@@ -9,6 +9,13 @@ include_directories(${TEST_DIR})
 include_directories(${TEST_DIR}/calls)
 include_directories(${TEST_DIR}/rules)
 
+# compiler: add coverage definitions to the compiler
+add_definitions(
+    -O0
+    -fprofile-arcs
+    -ftest-coverage
+)
+
 # compiler: test source code files
 set(TEST_SOURCES
     ${TEST_DIR}/calls/call_record_test.cpp
@@ -28,6 +35,7 @@ add_executable(${TEST}
 # linker: link the program against the libraries
 target_link_libraries(${TEST}
     ${CPPTEST_LIB}
+    -lgcov
 )
 
 # cmake: install
