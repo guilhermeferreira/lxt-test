@@ -50,43 +50,43 @@ problem_4_test_SOURCES += ${TEST_SOURCES}
 # Compilation Flags
 ###############################################################################
 
-COMMON_CPPFLAGS  = -I.
-COMMON_CPPFLAGS += -I./src
-COMMON_CPPFLAGS += -I./src/calls
-COMMON_CPPFLAGS += -I./src/excp
-COMMON_CPPFLAGS += -I./src/rules
-COMMON_CPPFLAGS += -g
-COMMON_CPPFLAGS += -Wall
-COMMON_CPPFLAGS += -Wextra
-#COMMON_CPPFLAGS += -Weffc++
-COMMON_CPPFLAGS += -Wshadow
-COMMON_CPPFLAGS += -Wabi
-COMMON_CPPFLAGS += -Winline
-COMMON_CPPFLAGS += -Wmissing-declarations
-COMMON_CPPFLAGS += -Wmissing-format-attribute
-COMMON_CPPFLAGS += -Woverloaded-virtual
-COMMON_CPPFLAGS += -Wpacked
-COMMON_CPPFLAGS += -Wredundant-decls
-COMMON_CPPFLAGS += -Wsign-promo
-COMMON_CPPFLAGS += -Wstack-protector -fstack-protector
-COMMON_CPPFLAGS += -Wswitch-default
-COMMON_CPPFLAGS += -Wfloat-equal
-COMMON_CPPFLAGS += -Wcast-qual
-COMMON_CPPFLAGS += -Wconversion
+COMMON_CXXFLAGS  = -I.
+COMMON_CXXFLAGS += -I./src
+COMMON_CXXFLAGS += -I./src/calls
+COMMON_CXXFLAGS += -I./src/excp
+COMMON_CXXFLAGS += -I./src/rules
+COMMON_CXXFLAGS += -g
+COMMON_CXXFLAGS += -Wall
+COMMON_CXXFLAGS += -Wextra
+#COMMON_CXXFLAGS += -Weffc++
+COMMON_CXXFLAGS += -Wshadow
+COMMON_CXXFLAGS += -Wabi
+COMMON_CXXFLAGS += -Winline
+COMMON_CXXFLAGS += -Wmissing-declarations
+COMMON_CXXFLAGS += -Wmissing-format-attribute
+COMMON_CXXFLAGS += -Woverloaded-virtual
+COMMON_CXXFLAGS += -Wpacked
+COMMON_CXXFLAGS += -Wredundant-decls
+COMMON_CXXFLAGS += -Wsign-promo
+COMMON_CXXFLAGS += -Wstack-protector -fstack-protector
+COMMON_CXXFLAGS += -Wswitch-default
+COMMON_CXXFLAGS += -Wfloat-equal
+COMMON_CXXFLAGS += -Wcast-qual
+COMMON_CXXFLAGS += -Wconversion
 
-problem_4_CPPFLAGS  = ${COMMON_CPPFLAGS}
+problem_4_CXXFLAGS  = ${COMMON_CXXFLAGS}
 
-TEST_CPPFLAGS  = -I.
-TEST_CPPFLAGS += -I./test
-TEST_CPPFLAGS += -I./test/calls
-TEST_CPPFLAGS += -I./test/rules
-TEST_CPPFLAGS += -I../${CPPTEST_INC_DIR}
+TEST_CXXFLAGS  = -I.
+TEST_CXXFLAGS += -I./test
+TEST_CXXFLAGS += -I./test/calls
+TEST_CXXFLAGS += -I./test/rules
+TEST_CXXFLAGS += -I../${CPPTEST_INC_DIR}
 
-problem_4_test_CPPFLAGS  = ${COMMON_CPPFLAGS}
-problem_4_test_CPPFLAGS += ${TEST_CPPFLAGS}
-problem_4_test_CPPFLAGS += -O0
-problem_4_test_CPPFLAGS += -fprofile-arcs
-problem_4_test_CPPFLAGS += -ftest-coverage
+problem_4_test_CXXFLAGS  = ${COMMON_CXXFLAGS}
+problem_4_test_CXXFLAGS += ${TEST_CXXFLAGS}
+problem_4_test_CXXFLAGS += -O0
+problem_4_test_CXXFLAGS += -fprofile-arcs
+problem_4_test_CXXFLAGS += -ftest-coverage
 
 
 ###############################################################################

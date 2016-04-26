@@ -4,20 +4,20 @@ SUBDIRS = \
 	problem_3 \
 	problem_4
 
-AM_CPPFLAGS  = -Wall
-AM_CPPFLAGS += -Wextra
-AM_CPPFLAGS += -Weffc++
-AM_CPPFLAGS += -Wshadow
-AM_CPPFLAGS += -Wabi
-AM_CPPFLAGS += -Winline
-AM_CPPFLAGS += -Wmissing-declarations
-AM_CPPFLAGS += -Wmissing-format-attribute
-AM_CPPFLAGS += -Woverloaded-virtual
-AM_CPPFLAGS += -Wpacked
-AM_CPPFLAGS += -Wredundant-decls
-AM_CPPFLAGS += -Wsign-promo
-AM_CPPFLAGS += -Wstack-protector -fstack-protector
-AM_CPPFLAGS += -Wswitch-default
-AM_CPPFLAGS += -Wfloat-equal
-AM_CPPFLAGS += -Wcast-qual
-AM_CPPFLAGS += -Wconversion
+AM_CXXFLAGS  = -Wall
+AM_CXXFLAGS += -Wextra
+AM_CXXFLAGS += -Weffc++
+AM_CXXFLAGS += -Wshadow
+AM_CXXFLAGS += -Wabi
+AM_CXXFLAGS += -Winline
+AM_CXXFLAGS += -Wmissing-declarations
+AM_CXXFLAGS += -Wmissing-format-attribute
+AM_CXXFLAGS += -Woverloaded-virtual
+AM_CXXFLAGS += -Wpacked
+AM_CXXFLAGS += -Wredundant-decls
+AM_CXXFLAGS += -Wsign-promo
+AM_CXXFLAGS += -Wstack-protector -fstack-protector
+AM_CXXFLAGS += -Wswitch-default
+AM_CXXFLAGS += -Wfloat-equal
+AM_CXXFLAGS += -Wcast-qual
+AM_CXXFLAGS += -Wconversion

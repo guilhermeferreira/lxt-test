@@ -15,31 +15,31 @@ problem_3_test_SOURCES += src/chamber.cpp
 problem_3_test_SOURCES += src/linearchamber.cpp
 problem_3_test_SOURCES += src/particle.cpp
 
-problem_3_CPPFLAGS  = -I./src
-problem_3_CPPFLAGS += -Wall
-problem_3_CPPFLAGS += -Wextra
-problem_3_CPPFLAGS += -Weffc++
-problem_3_CPPFLAGS += -Wshadow
-problem_3_CPPFLAGS += -Wabi
-problem_3_CPPFLAGS += -Winline
-problem_3_CPPFLAGS += -Wmissing-declarations
-problem_3_CPPFLAGS += -Wmissing-format-attribute
-problem_3_CPPFLAGS += -Woverloaded-virtual
-problem_3_CPPFLAGS += -Wpacked
-problem_3_CPPFLAGS += -Wredundant-decls
-problem_3_CPPFLAGS += -Wsign-promo
-problem_3_CPPFLAGS += -Wstack-protector -fstack-protector
-problem_3_CPPFLAGS += -Wswitch-default
-problem_3_CPPFLAGS += -Wfloat-equal
-problem_3_CPPFLAGS += -Wcast-qual
-problem_3_CPPFLAGS += -Wconversion
+problem_3_CXXFLAGS  = -I./src
+problem_3_CXXFLAGS += -Wall
+problem_3_CXXFLAGS += -Wextra
+problem_3_CXXFLAGS += -Weffc++
+problem_3_CXXFLAGS += -Wshadow
+problem_3_CXXFLAGS += -Wabi
+problem_3_CXXFLAGS += -Winline
+problem_3_CXXFLAGS += -Wmissing-declarations
+problem_3_CXXFLAGS += -Wmissing-format-attribute
+problem_3_CXXFLAGS += -Woverloaded-virtual
+problem_3_CXXFLAGS += -Wpacked
+problem_3_CXXFLAGS += -Wredundant-decls
+problem_3_CXXFLAGS += -Wsign-promo
+problem_3_CXXFLAGS += -Wstack-protector -fstack-protector
+problem_3_CXXFLAGS += -Wswitch-default
+problem_3_CXXFLAGS += -Wfloat-equal
+problem_3_CXXFLAGS += -Wcast-qual
+problem_3_CXXFLAGS += -Wconversion
 
-problem_3_test_CPPFLAGS  = ${problem_3_CPPFLAGS}
-problem_3_test_CPPFLAGS += -I./test
-problem_3_test_CPPFLAGS += -I../${CPPTEST_INC_DIR}
-problem_3_test_CPPFLAGS += -O0
-problem_3_test_CPPFLAGS += -fprofile-arcs
-problem_3_test_CPPFLAGS += -ftest-coverage
+problem_3_test_CXXFLAGS  = ${problem_3_CXXFLAGS}
+problem_3_test_CXXFLAGS += -I./test
+problem_3_test_CXXFLAGS += -I../${CPPTEST_INC_DIR}
+problem_3_test_CXXFLAGS += -O0
+problem_3_test_CXXFLAGS += -fprofile-arcs
+problem_3_test_CXXFLAGS += -ftest-coverage
 
 ###############################################################################
 # Linking Flags
