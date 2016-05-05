@@ -1,0 +1,24 @@
+#!/bin/sh
+
+./cpptest_build.sh
+
+# Run all tools in the right order
+autoreconf --install
+
+# Scan source for missing macros in configure.ac
+autoscan
+
+# Scan "configure.ac"
+aclocal
+
+#
+libtoolize --automake
+
+# Create "config.h.in" from "configure.ac"
+autoheader
+
+# Create "Makefile.in" from "Makefile.am" and "configure.ac"
+automake --add-missing
+
+# Create "configure" from "configure.ac"
+autoconf
